@@ -6,6 +6,7 @@
 package Login;
 
 import integratedproject1.SwitchWindow;
+import integratedproject1.SwitchWindow;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;

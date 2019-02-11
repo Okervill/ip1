@@ -6,6 +6,8 @@
 package Login;
 
 import integratedproject1.ReadWriteFile;
+import integratedproject1.ReadWriteFile;
+import integratedproject1.SwitchWindow;
 import integratedproject1.SwitchWindow;
 import java.io.IOException;
 import java.net.URL;
