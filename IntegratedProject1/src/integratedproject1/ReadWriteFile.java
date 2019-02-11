@@ -17,53 +17,62 @@ import java.util.ArrayList;
 
 
 public class ReadWriteFile {
+    
+    static String location = "test.txt";
 
     public static void main(String[] args) throws IOException {
         createFile();
-        readFile();
         updateFile();
-        readFile();
+        System.out.println(getUsernames());
+        System.out.println(getPasswords());
     }
 
     public static void createFile() throws FileNotFoundException, UnsupportedEncodingException {
-        try (PrintWriter writer = new PrintWriter("test.yml", "UTF-8")) {
+        try (PrintWriter writer = new PrintWriter(location, "UTF-8")) {
             writer.println("<!-- METADATA");
             writer.println("    SectionLength: 5");
             writer.println("--!>");
+            writer.println("");
         }
     }
 
     public static void updateFile() throws IOException {
-        File file = new File("test.yml");
+        File file = new File(location);
         FileWriter fr = new FileWriter(file, true);
         fr.write("Username: test01");
-        fr.write(System.getProperty("line.separator"));
+        newLine(fr);
         fr.write("Password: abcdef");
-        fr.write(System.getProperty("line.separator"));
+        newLine(fr);
         fr.write("Firstname: John");
-        fr.write(System.getProperty("line.separator"));
+        newLine(fr);
         fr.write("Surname: Doe");
-        fr.write(System.getProperty("line.separator"));
-        fr.write("Manager: No");
-        fr.write(System.getProperty("line.separator"));
+        newLine(fr);
+        fr.write("Manager: 0");
+        newLine(fr);
         fr.write("--");
-        fr.write(System.getProperty("line.separator"));
+        newLine(fr);
         fr.write("Username: test02");
-        fr.write(System.getProperty("line.separator"));
+        newLine(fr);
         fr.write("Password: ghijkl");
-        fr.write(System.getProperty("line.separator"));
+        newLine(fr);
         fr.write("Firstname: Jane");
-        fr.write(System.getProperty("line.separator"));
+        newLine(fr);
         fr.write("Surname: Doe");
-        fr.write(System.getProperty("line.separator"));
-        fr.write("Manager: Yes");
-        fr.write(System.getProperty("line.separator"));
+        newLine(fr);
+        fr.write("Manager: 1");
+        newLine(fr);
         fr.close();
     }
+    
+    public static void newLine(FileWriter fr) throws IOException{
+        fr.write(System.getProperty("line.separator"));
+    }
 
-    public static void readFile() throws IOException {
-
-        BufferedReader in = new BufferedReader(new FileReader("test.yml"));
+    public static ArrayList getUsernames() throws IOException {
+        
+        ArrayList<String> usernames = new ArrayList<>();
+        
+        BufferedReader in = new BufferedReader(new FileReader(location));
         String str;
 
         ArrayList<String> list = new ArrayList<>();
@@ -73,10 +82,30 @@ public class ReadWriteFile {
 
         for (int i = 0; i < list.size(); i++) {
             if (list.get(i).contains("Username:")) {
-                String user = list.get(i).substring(10);
-                System.out.println(user);
+                usernames.add(list.get(i).substring(10));
             }
         }
+        return usernames;
+    }
+    
+    public static ArrayList getPasswords() throws IOException {
+        
+        ArrayList<String> passwords = new ArrayList<>();
+        
+        BufferedReader in = new BufferedReader(new FileReader(location));
+        String str;
+
+        ArrayList<String> list = new ArrayList<>();
+        while ((str = in.readLine()) != null) {
+            list.add(str);
+        }
+
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).contains("Password:")) {
+                passwords.add(list.get(i).substring(10));
+            }
+        }
+        return passwords;
     }
 
 }
