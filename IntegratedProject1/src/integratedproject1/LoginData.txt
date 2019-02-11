@@ -1,0 +1,13 @@
+<!-- METADATA
+	SectionLength: 5
+--!>
+Name: Manager
+Username: Manager
+Password: Manager
+Manager: 0
+--
+Name: Test1
+Username: Test1
+Password: Test1
+Manager: 1
+--

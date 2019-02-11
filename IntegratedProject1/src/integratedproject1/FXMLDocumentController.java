@@ -28,6 +28,12 @@ public class FXMLDocumentController implements Initializable {
     
     @FXML
     private Label label;
+    @FXML
+    private Button button;
+    @FXML
+    private TextField inputuser;
+    @FXML
+    private TextField inputpass;
     
     @FXML
     private void handleButtonAction(ActionEvent event) {
