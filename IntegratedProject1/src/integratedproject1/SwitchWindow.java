@@ -8,10 +8,6 @@ package integratedproject1;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
-/**
- *
- * @author choco
- */
 public class SwitchWindow {
     
     public static void switchWindow(Stage window, Application app) {
