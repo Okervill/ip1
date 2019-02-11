@@ -31,7 +31,7 @@ public class IntegratedProject1 extends Application {
     public static void main(String[] args) throws FileNotFoundException, IOException {
         
         ReadWriteFile.createFile();
-        ReadWriteFile.updateFile();
+        Therapist t0 = new Therapist("Firstname", "Surname", "Password");
 
         launch(args);
     }

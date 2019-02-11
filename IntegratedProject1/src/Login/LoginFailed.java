@@ -17,8 +17,6 @@ public class LoginFailed extends Application {
     
 
     public void start(Stage stage) throws Exception {
-        ReadWriteFile.createFile();
-        ReadWriteFile.updateFile();
         
         Parent root = FXMLLoader.load(getClass().getResource("LoginFailed.fxml"));
         

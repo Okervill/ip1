@@ -22,7 +22,7 @@ public class ReadWriteFile {
 
     public static void main(String[] args) throws IOException {
         createFile();
-        updateFile();
+        demoUpdateFile();
     }
 
     public static void createFile() throws FileNotFoundException, UnsupportedEncodingException {
@@ -34,7 +34,7 @@ public class ReadWriteFile {
         }
     }
 
-    public static void updateFile() throws IOException {
+    public static void demoUpdateFile() throws IOException {
         File file = new File(location);
         FileWriter fr = new FileWriter(file, true);
         fr.write("Username: test01");
@@ -45,7 +45,7 @@ public class ReadWriteFile {
         newLine(fr);
         fr.write("Surname: Doe");
         newLine(fr);
-        fr.write("Manager: 0");
+        fr.write("Manager: False");
         newLine(fr);
         fr.write("--");
         newLine(fr);
@@ -57,7 +57,25 @@ public class ReadWriteFile {
         newLine(fr);
         fr.write("Surname: Doe");
         newLine(fr);
-        fr.write("Manager: 1");
+        fr.write("Manager: True");
+        newLine(fr);
+        fr.close();
+    }
+    
+    public static void updateFile(String f, String s, String u, String p, Boolean m) throws IOException {
+        File file = new File(location);
+        FileWriter fr = new FileWriter(file, true);
+        fr.write("Username: " + u);
+        newLine(fr);
+        fr.write("Password: " + p);
+        newLine(fr);
+        fr.write("Firstname: " + f);
+        newLine(fr);
+        fr.write("Surname: " + s);
+        newLine(fr);
+        fr.write("Manager: " + m);
+        newLine(fr);
+        fr.write("--");
         newLine(fr);
         fr.close();
     }

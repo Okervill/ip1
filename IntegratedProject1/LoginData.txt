@@ -2,14 +2,9 @@
     SectionLength: 5
 --!>
 
-Username: test01
-Password: abcdef
-Firstname: John
-Surname: Doe
-Manager: 0
+Username: SurnameF
+Password: Password
+Firstname: Firstname
+Surname: Surname
+Manager: false
 --
-Username: test02
-Password: ghijkl
-Firstname: Jane
-Surname: Doe
-Manager: 1
