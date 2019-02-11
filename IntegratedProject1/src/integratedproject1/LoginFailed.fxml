@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane id="AnchorPane" prefHeight="98.0" prefWidth="201.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="integratedproject1.LoginFailedController">
+   <children>
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="16.0" layoutY="11.0" prefHeight="38.0" prefWidth="170.0" text="Login Failed" textAlignment="CENTER" />
+      <Button fx:id="button" layoutX="67.0" layoutY="49.0" onAction="#ok" text="Try Again" />
+   </children>
+</AnchorPane>

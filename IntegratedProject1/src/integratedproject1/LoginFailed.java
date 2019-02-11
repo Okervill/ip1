@@ -5,35 +5,27 @@
  */
 package integratedproject1;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-public class IntegratedProject1 extends Application {
+public class LoginFailed extends Application {
+    
 
-    @Override
     public void start(Stage stage) throws Exception {
-
-        Parent root = FXMLLoader.load(getClass().getResource("Login.fxml"));
-
-        Scene scene = new Scene(root);
-
-        stage.setScene(scene);
-        stage.setTitle("Login");
-        stage.show();
-
-    }
-
-    public static void main(String[] args) throws FileNotFoundException, IOException {
-        
         ReadWriteFile.createFile();
         ReadWriteFile.updateFile();
-
-        launch(args);
+        
+        Parent root = FXMLLoader.load(getClass().getResource("LoginFailed.fxml"));
+        
+        Scene scene = new Scene(root);
+        
+        stage.setScene(scene);
+        stage.setTitle("LoginFailed");
+        stage.show();
+        
+        
     }
-
 }

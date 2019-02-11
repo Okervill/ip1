@@ -18,13 +18,11 @@ import java.util.ArrayList;
 
 public class ReadWriteFile {
     
-    static String location = "test.txt";
+    static String location = "LoginData.txt";
 
     public static void main(String[] args) throws IOException {
         createFile();
         updateFile();
-        System.out.println(getUsernames());
-        System.out.println(getPasswords());
     }
 
     public static void createFile() throws FileNotFoundException, UnsupportedEncodingException {
@@ -107,5 +105,4 @@ public class ReadWriteFile {
         }
         return passwords;
     }
-
 }
