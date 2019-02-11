@@ -5,16 +5,12 @@
  */
 package integratedproject1;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -47,10 +43,10 @@ public class FXMLDocumentController implements Initializable {
     private void login(ActionEvent event) {
         System.out.println("Login attempted.");
         
-        try (Scanner s = new Scanner(new File("LoginData.txt"))) {
-            ArrayList<String> loginData = new ArrayList<String>();
-            while (s.hasNext()){
-                loginData.add(s.next());
+        try (Scanner s = new Scanner(new File("src/integratedproject1/LoginData.txt"))) {
+            ArrayList<String> loginData = new ArrayList<>();
+            while (s.hasNextLine()){
+                loginData.add(s.nextLine());
             }
             s.close();
             
@@ -66,26 +62,38 @@ public class FXMLDocumentController implements Initializable {
                     //Metadata end
                     foundMetadata = true;
                 } else if (line.contains("SectionLength:")) {
-                    sectionLength = Integer.parseInt(line.split(" ")[1]);
+                    sectionLength = Integer.parseInt(line.split(": ")[1]);
                 }
                 currentIndex++;
             }
             
             boolean foundUsername = false;
             
-            while (!foundUsername) {
+            while (!foundUsername && currentIndex < loginData.size()) {
                 String line = loginData.get(currentIndex);
-                if (line.contains("username:")) {
+                if (line.contains("Username:")) {
                     //Username line found
                     //If username matches check password
-                    System.out.println("Found username");
-                    currentIndex += sectionLength;
+                    String input = inputuser.getText();
+                    String split = line.split(": ")[1];
+                    if (inputuser.getText().equals(line.split(": ")[1])) {
+                        //username match, check password
+                        if (inputpass.getText().equals(loginData.get(currentIndex + 1).split(": ")[1])) {
+                            //login details correct switch scene
+                            System.out.println("Logged in.");
+                            label.setText("Logged in.");
+                        }
+                    } else {
+                        //Found a username but no match, skip to next
+                        currentIndex += sectionLength;
+                    }
                 } else {
                     currentIndex++;
                 }
             }
         } catch (IOException ex) {
             //Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Exception");
         }
     }
     

@@ -8,7 +8,7 @@
 
 <AnchorPane id="AnchorPane" prefHeight="200" prefWidth="320" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="integratedproject1.FXMLDocumentController">
     <children>
-        <Button fx:id="button" layoutX="127.0" layoutY="144.0" onAction="#handleButtonAction" text="Login" />
+        <Button fx:id="button" layoutX="127.0" layoutY="144.0" onAction="#login" text="Login" />
         <Label fx:id="label" layoutX="126" layoutY="120" minHeight="16" minWidth="69" />
       <TextField fx:id="inputuser" layoutX="69.0" layoutY="59.0" promptText="Username" />
       <PasswordField fx:id="inputpass" layoutX="69.0" layoutY="100.0" promptText="Password" />
