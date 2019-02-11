@@ -26,14 +26,14 @@ public class ReadWriteFile {
     }
 
     public static void createFile() throws FileNotFoundException, UnsupportedEncodingException {
-        try (PrintWriter writer = new PrintWriter("/Users/patrick/test.txt", "UTF-8")) {
+        try (PrintWriter writer = new PrintWriter("test.txt", "UTF-8")) {
             writer.println("Username: test01");
             writer.println("Username: test02");
         }
     }
 
     public static void updateFile() throws IOException {
-        File file = new File("/Users/patrick/test.txt");
+        File file = new File("test.txt");
         FileWriter fr = new FileWriter(file, true);
         fr.write("Username: test03");
         fr.close();
@@ -41,7 +41,7 @@ public class ReadWriteFile {
 
     public static void readFile() throws IOException {
 
-        BufferedReader in = new BufferedReader(new FileReader("/Users/patrick/test.txt"));
+        BufferedReader in = new BufferedReader(new FileReader("test.txt"));
         String str;
 
         ArrayList<String> list = new ArrayList<>();
