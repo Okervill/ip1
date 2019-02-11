@@ -26,22 +26,44 @@ public class ReadWriteFile {
     }
 
     public static void createFile() throws FileNotFoundException, UnsupportedEncodingException {
-        try (PrintWriter writer = new PrintWriter("test.txt", "UTF-8")) {
-            writer.println("Username: test01");
-            writer.println("Username: test02");
+        try (PrintWriter writer = new PrintWriter("test.yml", "UTF-8")) {
+            writer.println("<!-- METADATA");
+            writer.println("    SectionLength: 5");
+            writer.println("--!>");
         }
     }
 
     public static void updateFile() throws IOException {
-        File file = new File("test.txt");
+        File file = new File("test.yml");
         FileWriter fr = new FileWriter(file, true);
-        fr.write("Username: test03");
+        fr.write("Username: test01");
+        fr.write(System.getProperty("line.separator"));
+        fr.write("Password: abcdef");
+        fr.write(System.getProperty("line.separator"));
+        fr.write("Firstname: John");
+        fr.write(System.getProperty("line.separator"));
+        fr.write("Surname: Doe");
+        fr.write(System.getProperty("line.separator"));
+        fr.write("Manager: No");
+        fr.write(System.getProperty("line.separator"));
+        fr.write("--");
+        fr.write(System.getProperty("line.separator"));
+        fr.write("Username: test02");
+        fr.write(System.getProperty("line.separator"));
+        fr.write("Password: ghijkl");
+        fr.write(System.getProperty("line.separator"));
+        fr.write("Firstname: Jane");
+        fr.write(System.getProperty("line.separator"));
+        fr.write("Surname: Doe");
+        fr.write(System.getProperty("line.separator"));
+        fr.write("Manager: Yes");
+        fr.write(System.getProperty("line.separator"));
         fr.close();
     }
 
     public static void readFile() throws IOException {
 
-        BufferedReader in = new BufferedReader(new FileReader("test.txt"));
+        BufferedReader in = new BufferedReader(new FileReader("test.yml"));
         String str;
 
         ArrayList<String> list = new ArrayList<>();
