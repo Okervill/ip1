@@ -34,9 +34,9 @@ public class IntegratedProject1 extends Application {
         File loginData = new File("src/Login/LoginData.txt");
         if (!loginData.exists()) {
             ReadWriteFile.createFile();
-            Therapist manager = new Therapist("admin", "admin", "admin", "admin");
+            Therapist manager = new Therapist("admin", "admin", "admin", "admin", true);
         }
-
+        System.out.println(ReadWriteFile.getData("admin"));
         launch(args);
     }
 

@@ -34,7 +34,7 @@ public class LoginController implements Initializable {
     private TextField inputpass;
 
     @FXML
-    private void login(ActionEvent event) {
+    private void login(ActionEvent event) throws IOException {
         
         String user = inputuser.getText();
         String pass = inputpass.getText();
@@ -49,7 +49,7 @@ public class LoginController implements Initializable {
 
             for (int i = 0; i < ReadWriteFile.getUsernames().size(); i++) {
                 //Check username and password are correct
-                if (user.equals(ReadWriteFile.getUsernames().get(i)) && pass.equals(ReadWriteFile.getPasswords().get(i))) {
+                if (user.equals(ReadWriteFile.getUsernames().get(i)) && pass.equals(ReadWriteFile.getData(user).get(1))) {
                     login = true;
                     break;
                 }

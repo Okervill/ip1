@@ -55,6 +55,30 @@ public class ReadWriteFile {
     public static void newLine(FileWriter fw) throws IOException {
         fw.write(System.getProperty("line.separator"));
     }
+    
+    public static ArrayList getData(String username) throws IOException {
+        
+        ArrayList<String> data = new ArrayList<>();
+        
+        BufferedReader in = new BufferedReader(new FileReader(location));
+        String str;
+        
+        ArrayList<String> allData = new ArrayList<>();
+        while((str = in.readLine()) != null) {
+            allData.add(str);
+        }
+        
+        for(int i = 0; i < allData.size(); i++){
+            if(allData.get(i).contains("Username: " + username)){
+                data.add(allData.get(i).substring(10));
+                data.add(allData.get(i + 1).substring(10));
+                data.add(allData.get(i + 2).substring(11));
+                data.add(allData.get(i + 3).substring(9));
+                data.add(allData.get(i + 4).substring(9));
+            }
+        }
+        return data;
+    }
 
     public static ArrayList getUsernames() throws IOException {
 
@@ -74,25 +98,5 @@ public class ReadWriteFile {
             }
         }
         return usernames;
-    }
-
-    public static ArrayList getPasswords() throws IOException {
-
-        ArrayList<String> passwords = new ArrayList<>();
-
-        BufferedReader in = new BufferedReader(new FileReader(location));
-        String str;
-
-        ArrayList<String> list = new ArrayList<>();
-        while ((str = in.readLine()) != null) {
-            list.add(str);
-        }
-
-        for (int i = 0; i < list.size(); i++) {
-            if (list.get(i).contains("Password:")) {
-                passwords.add(list.get(i).substring(10));
-            }
-        }
-        return passwords;
     }
 }

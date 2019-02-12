@@ -33,12 +33,12 @@ public class Therapist {
         }
     }
     
-    public Therapist(String f, String s, String p, String u){
+    public Therapist(String f, String s, String p, String u, boolean m){
         this.firstname = f;
         this.surname = s;
         this.password = p;
         this.username = u;
-        this.manager = true;
+        this.manager = m;
         try {
             ReadWriteFile.updateFile(firstname, surname, username, password, manager);
         } catch (IOException ex) {
