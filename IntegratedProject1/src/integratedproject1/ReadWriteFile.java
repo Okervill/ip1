@@ -6,21 +6,26 @@
 package integratedproject1;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.stream.Stream;
 
 public class ReadWriteFile {
 
-    static String location = "src/Login/LoginData.txt";
+    static String loginFile = "src/Login/LoginData.txt";
+    static String patientFile = "src/integratedproject1/PatientFile.txt";
 
-    public static void createFile() throws IOException, FileNotFoundException, UnsupportedEncodingException {
+    public static void createLoginFile() throws IOException, FileNotFoundException, UnsupportedEncodingException {
 
-        FileWriter fw = new FileWriter(location, false);
+        FileWriter fw = new FileWriter(loginFile, false);
         fw.write("<!-- METADATA");
         newLine(fw);
         fw.write("    SectionLength: 5");
@@ -34,8 +39,8 @@ public class ReadWriteFile {
         fw.close();
     }
 
-    public static void updateFile(String f, String s, String u, String p, Boolean m) throws IOException {
-        File file = new File(location);
+    public static void updateLoginFile(String f, String s, String u, String p, Boolean m) throws IOException {
+        File file = new File(loginFile);
         FileWriter fw = new FileWriter(file, true);
         fw.write("Username: " + u);
         newLine(fw);
@@ -55,26 +60,26 @@ public class ReadWriteFile {
     public static void newLine(FileWriter fw) throws IOException {
         fw.write(System.getProperty("line.separator"));
     }
-    
-    public static ArrayList getData(String username) throws IOException {
-        
+
+    public static ArrayList getLoginData(String username) throws IOException {
+
         ArrayList<String> data = new ArrayList<>();
-        
-        BufferedReader in = new BufferedReader(new FileReader(location));
+
+        BufferedReader in = new BufferedReader(new FileReader(loginFile));
         String str;
-        
+
         ArrayList<String> allData = new ArrayList<>();
-        while((str = in.readLine()) != null) {
+        while ((str = in.readLine()) != null) {
             allData.add(str);
         }
-        
-        for(int i = 0; i < allData.size(); i++){
-            if(allData.get(i).contains("Username: " + username)){
-                data.add(allData.get(i).substring(10));
-                data.add(allData.get(i + 1).substring(10));
-                data.add(allData.get(i + 2).substring(11));
-                data.add(allData.get(i + 3).substring(9));
-                data.add(allData.get(i + 4).substring(9));
+
+        for (int i = 0; i < allData.size(); i++) {
+            if (allData.get(i).contains("Username: " + username)) {
+                data.add(allData.get(i).substring(10));//username
+                data.add(allData.get(i + 1).substring(10));//password
+                data.add(allData.get(i + 2).substring(11));//firstname
+                data.add(allData.get(i + 3).substring(9));//surname
+                data.add(allData.get(i + 4).substring(9));//manager
             }
         }
         return data;
@@ -84,7 +89,7 @@ public class ReadWriteFile {
 
         ArrayList<String> usernames = new ArrayList<>();
 
-        BufferedReader in = new BufferedReader(new FileReader(location));
+        BufferedReader in = new BufferedReader(new FileReader(loginFile));
         String str;
 
         ArrayList<String> list = new ArrayList<>();
@@ -98,5 +103,80 @@ public class ReadWriteFile {
             }
         }
         return usernames;
+    }
+
+    public static void createPatientFile() throws IOException, FileNotFoundException, UnsupportedEncodingException {
+
+        FileWriter fw = new FileWriter(patientFile, false);
+        fw.write("<!-- METADATA");
+        newLine(fw);
+        fw.write("    SectionLength: 7");
+        newLine(fw);
+        fw.write("--!>");
+        newLine(fw);
+        fw.write("");
+        newLine(fw);
+        fw.write("--");
+        newLine(fw);
+        fw.close();
+    }
+
+    public static void updatePatientFile(String f, String s, String e, String m, String d, String g, String p) throws IOException { //(firstname, surname, email, mobile, dob, gender, postcode);
+        File file = new File(patientFile);
+        FileWriter fw = new FileWriter(file, true);
+        fw.write("Forename: " + f);
+        newLine(fw);
+        fw.write("Surname: " + s);
+        newLine(fw);
+        fw.write("Email: " + e);
+        newLine(fw);
+        fw.write("Mobile: " + m);
+        newLine(fw);
+        fw.write("DoB: " + d);
+        newLine(fw);
+        fw.write("Gender: " + g);
+        newLine(fw);
+        fw.write("Postcode: " + p);
+        newLine(fw);
+        fw.write("--");
+        newLine(fw);
+        fw.close();
+    }
+
+    static void editLoginFile(String oldString, String newString) {
+        File file = new File(loginFile);
+        String oldContent = "";
+        BufferedReader reader = null;
+        FileWriter writer = null;
+
+        try {
+            reader = new BufferedReader(new FileReader(file));
+
+            //Reading all the lines of input text file into oldContent
+            String line = reader.readLine();
+
+            while (line != null) {
+                oldContent = oldContent + line + System.lineSeparator();
+                line = reader.readLine();
+            }
+
+            //Replacing oldString with newString in the oldContent
+            String newContent = oldContent.replaceAll(oldString, newString);
+
+            //Rewriting the input text file with newContent
+            writer = new FileWriter(file);
+
+            writer.write(newContent);
+            
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                reader.close();
+                writer.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

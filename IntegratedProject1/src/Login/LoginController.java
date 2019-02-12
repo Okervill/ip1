@@ -49,7 +49,7 @@ public class LoginController implements Initializable {
 
             for (int i = 0; i < ReadWriteFile.getUsernames().size(); i++) {
                 //Check username and password are correct
-                if (user.equals(ReadWriteFile.getUsernames().get(i)) && pass.equals(ReadWriteFile.getData(user).get(1))) {
+                if (user.equals(ReadWriteFile.getUsernames().get(i)) && pass.equals(ReadWriteFile.getLoginData(user).get(1))) {
                     login = true;
                     break;
                 }

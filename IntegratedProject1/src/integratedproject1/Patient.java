@@ -5,24 +5,57 @@
  */
 package integratedproject1;
 
-import java.util.Date;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 public class Patient {
-    private String firstname;
+    private String forename;
     private String surname;
     private String email;
     private String mobile;
-    private Date dob;
+    private String dob;
     private String gender;
+    private String postcode;
     
-    public Patient(String f, String s, String e, String m, Date d, String g){
-        this.firstname = f;
+    public Patient(String f, String s, String e, String m, String d, String g, String p){
+        this.forename = f;
         this.surname = s;
         this.email = e;
         this.mobile = m;
         this.dob = d;
         this.gender = g;
+        this.postcode = p;
+        try {
+            ReadWriteFile.updatePatientFile(forename, surname, email, mobile, dob, gender, postcode);
+        } catch (IOException ex) {
+            Logger.getLogger(Patient.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
+    
+    public String getFirstname(){ return forename; }
+    public String getSurname(){ return surname; }
+    public String getEmail(){ return email; }
+    public String getMobile(){ return mobile; }
+    public String getDOB(){ return dob; }
+    public String getGender(){ return gender; }
+    public String getPostcode() { return postcode; }
+    
+    public ArrayList getData(){
+        ArrayList<String> info = new ArrayList<>();
+        
+        info.add(forename);
+        info.add(surname);
+        info.add(email);
+        info.add(mobile);
+        info.add(dob);
+        info.add(gender);
+        info.add(postcode);
+        
+        return info;
+    }
+    
     
 }

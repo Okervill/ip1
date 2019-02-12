@@ -7,5 +7,5 @@ Username: admin
 Password: admin
 Firstname: admin
 Surname: admin
-Manager: true
+Manager: admin
 --

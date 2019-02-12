@@ -27,7 +27,7 @@ public class Therapist {
         this.password = p;
         this.username = surname + firstname.charAt(0);
         try {
-            ReadWriteFile.updateFile(firstname, surname, username, password, manager);
+            ReadWriteFile.updateLoginFile(firstname, surname, username, password, manager);
         } catch (IOException ex) {
             Logger.getLogger(Therapist.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -40,7 +40,7 @@ public class Therapist {
         this.username = u;
         this.manager = m;
         try {
-            ReadWriteFile.updateFile(firstname, surname, username, password, manager);
+            ReadWriteFile.updateLoginFile(firstname, surname, username, password, manager);
         } catch (IOException ex) {
             Logger.getLogger(Therapist.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -49,6 +49,15 @@ public class Therapist {
     public String getFirstname(){ return firstname; }
     public String getSurname(){ return surname; }
     public String getFullname(){ return firstname + " " + surname; }
+    
+    public static void changePassword(String username, String newPassword){
+        try {
+            ReadWriteFile.editLoginFile("Password: " + (String) ReadWriteFile.getLoginData(username).get(1), "Password: " + newPassword);
+        } catch (IOException ex) {
+            Logger.getLogger(Therapist.class.getName()).log(Level.SEVERE, null, ex);
+        }
+                
+    }
     
     
 }

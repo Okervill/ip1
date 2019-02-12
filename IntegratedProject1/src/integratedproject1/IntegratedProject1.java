@@ -32,11 +32,16 @@ public class IntegratedProject1 extends Application {
     public static void main(String[] args) throws FileNotFoundException, IOException {
         
         File loginData = new File("src/Login/LoginData.txt");
-        if (!loginData.exists()) {
-            ReadWriteFile.createFile();
+        File patientData = new File("src/integratedproject1/PatientFile.txt");
+        
+        if (!loginData.exists()) { //Creates a file with test input
+            ReadWriteFile.createLoginFile();
             Therapist manager = new Therapist("admin", "admin", "admin", "admin", true);
         }
-        System.out.println(ReadWriteFile.getData("admin"));
+        if (!patientData.exists()){ //Creates a file with test input
+            ReadWriteFile.createPatientFile();
+            Patient test1 = new Patient("John", "Doe", "johndoe@gmail.com", "07000000000", "01/01/1970", "Male", "G1 0AA");
+        }
         launch(args);
     }
 
