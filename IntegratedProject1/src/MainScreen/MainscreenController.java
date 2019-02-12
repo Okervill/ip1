@@ -17,6 +17,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 /**
@@ -28,13 +29,15 @@ public class MainscreenController implements Initializable {
 
     @FXML
     private Button logout;
+    @FXML
+    private TextField findPatient;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        // TODO if user isn't a manager hide the add therapist button
     }    
 
     @FXML
@@ -43,4 +46,19 @@ public class MainscreenController implements Initializable {
         SwitchWindow.switchWindow((Stage)logout.getScene().getWindow(), new Login());
     }
     
+    @FXML
+    private void newPatient(ActionEvent event) {
+    }
+    
+    @FXML
+    private void newAppointment(ActionEvent event) {
+    }
+    
+    @FXML
+    private void addTherapist(ActionEvent event) {
+    }
+    
+    @FXML
+    private void findPatient(ActionEvent event) {
+    }
 }
