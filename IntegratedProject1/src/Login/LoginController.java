@@ -6,8 +6,6 @@
 package Login;
 
 import integratedproject1.ReadWriteFile;
-import integratedproject1.ReadWriteFile;
-import integratedproject1.SwitchWindow;
 import integratedproject1.SwitchWindow;
 import java.io.IOException;
 import java.net.URL;
@@ -62,6 +60,7 @@ public class LoginController implements Initializable {
         if (login) {
             //Swap Scene
             System.out.println("Login Sucessful");
+            SwitchWindow.switchWindow((Stage)button.getScene().getWindow(), new Mainscreen());
         } else {
             //Pop up error?
             SwitchWindow.switchWindow((Stage)button.getScene().getWindow(), new LoginFailed());

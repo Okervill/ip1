@@ -5,6 +5,9 @@
  */
 package Login;
 
+import java.net.URL;
+import java.util.ResourceBundle;
+import javafx.fxml.Initializable;
 import integratedproject1.SwitchWindow;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -18,12 +21,9 @@ import javafx.stage.Stage;
 /**
  * FXML Controller class
  *
+ * @author Andy
  */
-public class LoginFailedController implements Initializable {
-    
-    
-    @FXML
-    private Button button;
+public class MainscreenController implements Initializable {
 
     /**
      * Initializes the controller class.
@@ -33,8 +33,4 @@ public class LoginFailedController implements Initializable {
         // TODO
     }    
     
-    @FXML
-    private void ok(ActionEvent event) {
-        SwitchWindow.switchWindow((Stage)button.getScene().getWindow(), new Login());
-    }
 }
