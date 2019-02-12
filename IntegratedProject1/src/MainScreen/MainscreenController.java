@@ -5,6 +5,7 @@
  */
 package MainScreen;
 
+import Login.Login;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.Initializable;
@@ -25,6 +26,9 @@ import javafx.stage.Stage;
  */
 public class MainscreenController implements Initializable {
 
+    @FXML
+    private Button logout;
+
     /**
      * Initializes the controller class.
      */
@@ -32,5 +36,11 @@ public class MainscreenController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
     }    
+
+    @FXML
+    private void logout(ActionEvent event) {
+        System.out.println("Log out Sucessful");
+        SwitchWindow.switchWindow((Stage)logout.getScene().getWindow(), new Login());
+    }
     
 }
