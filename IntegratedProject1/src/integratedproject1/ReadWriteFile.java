@@ -11,83 +11,55 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 
-
 public class ReadWriteFile {
-    
+
     static String location = "LoginData.txt";
 
-    public static void main(String[] args) throws IOException {
-        createFile();
-        demoUpdateFile();
+    public static void createFile() throws IOException, FileNotFoundException, UnsupportedEncodingException {
+
+        FileWriter fw = new FileWriter(location, false);
+        fw.write("<!-- METADATA");
+        newLine(fw);
+        fw.write("    SectionLength: 5");
+        newLine(fw);
+        fw.write("--!>");
+        newLine(fw);
+        fw.write("");
+        newLine(fw);
+        fw.write("--");
+        newLine(fw);
+        fw.close();
     }
 
-    public static void createFile() throws FileNotFoundException, UnsupportedEncodingException {
-        try (PrintWriter writer = new PrintWriter(location, "UTF-8")) {
-            writer.println("<!-- METADATA");
-            writer.println("    SectionLength: 5");
-            writer.println("--!>");
-            writer.println("");
-        }
-    }
-
-    public static void demoUpdateFile() throws IOException {
-        File file = new File(location);
-        FileWriter fr = new FileWriter(file, true);
-        fr.write("Username: test01");
-        newLine(fr);
-        fr.write("Password: abcdef");
-        newLine(fr);
-        fr.write("Firstname: John");
-        newLine(fr);
-        fr.write("Surname: Doe");
-        newLine(fr);
-        fr.write("Manager: False");
-        newLine(fr);
-        fr.write("--");
-        newLine(fr);
-        fr.write("Username: test02");
-        newLine(fr);
-        fr.write("Password: ghijkl");
-        newLine(fr);
-        fr.write("Firstname: Jane");
-        newLine(fr);
-        fr.write("Surname: Doe");
-        newLine(fr);
-        fr.write("Manager: True");
-        newLine(fr);
-        fr.close();
-    }
-    
     public static void updateFile(String f, String s, String u, String p, Boolean m) throws IOException {
         File file = new File(location);
-        FileWriter fr = new FileWriter(file, true);
-        fr.write("Username: " + u);
-        newLine(fr);
-        fr.write("Password: " + p);
-        newLine(fr);
-        fr.write("Firstname: " + f);
-        newLine(fr);
-        fr.write("Surname: " + s);
-        newLine(fr);
-        fr.write("Manager: " + m);
-        newLine(fr);
-        fr.write("--");
-        newLine(fr);
-        fr.close();
+        FileWriter fw = new FileWriter(file, true);
+        fw.write("Username: " + u);
+        newLine(fw);
+        fw.write("Password: " + p);
+        newLine(fw);
+        fw.write("Firstname: " + f);
+        newLine(fw);
+        fw.write("Surname: " + s);
+        newLine(fw);
+        fw.write("Manager: " + m);
+        newLine(fw);
+        fw.write("--");
+        newLine(fw);
+        fw.close();
     }
-    
-    public static void newLine(FileWriter fr) throws IOException{
-        fr.write(System.getProperty("line.separator"));
+
+    public static void newLine(FileWriter fw) throws IOException {
+        fw.write(System.getProperty("line.separator"));
     }
 
     public static ArrayList getUsernames() throws IOException {
-        
+
         ArrayList<String> usernames = new ArrayList<>();
-        
+
         BufferedReader in = new BufferedReader(new FileReader(location));
         String str;
 
@@ -103,11 +75,11 @@ public class ReadWriteFile {
         }
         return usernames;
     }
-    
+
     public static ArrayList getPasswords() throws IOException {
-        
+
         ArrayList<String> passwords = new ArrayList<>();
-        
+
         BufferedReader in = new BufferedReader(new FileReader(location));
         String str;
 
