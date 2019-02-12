@@ -150,19 +150,15 @@ public class ReadWriteFile {
         FileWriter writer = null;
 
         try {
-            reader = new BufferedReader(new FileReader(file));
-
+            reader = new BufferedReader(new FileReader(file));  //from https://javaconceptoftheday.com/modify-replace-specific-string-in-text-file-in-java/
             //Reading all the lines of input text file into oldContent
             String line = reader.readLine();
-
             while (line != null) {
                 oldContent = oldContent + line + System.lineSeparator();
                 line = reader.readLine();
             }
-
             //Replacing oldString with newString in the oldContent
             String newContent = oldContent.replaceAll(oldString, newString);
-
             //Rewriting the input text file with newContent
             writer = new FileWriter(file);
 
