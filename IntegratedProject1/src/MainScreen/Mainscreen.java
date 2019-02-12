@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Login;
+package MainScreen;
 
 import integratedproject1.ReadWriteFile;
 import integratedproject1.ReadWriteFile;
@@ -15,9 +15,10 @@ import javafx.stage.Stage;
 
 public class Mainscreen extends Application {
     
+    @Override
     public void start(Stage stage) throws Exception {    
     
-        Parent root = FXMLLoader.load(getClass().getResource("Mainscreen.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/MainScreen/Mainscreen.fxml"));
         
         Scene scene = new Scene(root);
         
