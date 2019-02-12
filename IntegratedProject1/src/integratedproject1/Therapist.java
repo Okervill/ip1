@@ -33,6 +33,19 @@ public class Therapist {
         }
     }
     
+    public Therapist(String f, String s, String p, String u){
+        this.firstname = f;
+        this.surname = s;
+        this.password = p;
+        this.username = u;
+        this.manager = true;
+        try {
+            ReadWriteFile.updateFile(firstname, surname, username, password, manager);
+        } catch (IOException ex) {
+            Logger.getLogger(Therapist.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
     public String getFirstname(){ return firstname; }
     public String getSurname(){ return surname; }
     public String getFullname(){ return firstname + " " + surname; }

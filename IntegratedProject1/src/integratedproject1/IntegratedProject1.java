@@ -31,12 +31,11 @@ public class IntegratedProject1 extends Application {
 
     public static void main(String[] args) throws FileNotFoundException, IOException {
         
-        //File loginData = new File("LoginData.txt");
-        //if (!loginData.exists()) {
+        File loginData = new File("src/Login/LoginData.txt");
+        if (!loginData.exists()) {
             ReadWriteFile.createFile();
-        //}
-
-        Therapist t0 = new Therapist("Firstname", "Surname", "Password");
+            Therapist manager = new Therapist("admin", "admin", "admin", "admin");
+        }
 
         launch(args);
     }

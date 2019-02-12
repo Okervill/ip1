@@ -1,0 +1,11 @@
+<!-- METADATA
+    SectionLength: 5
+--!>
+
+--
+Username: admin
+Password: admin
+Firstname: admin
+Surname: admin
+Manager: true
+--

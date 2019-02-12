@@ -16,7 +16,7 @@ import java.util.ArrayList;
 
 public class ReadWriteFile {
 
-    static String location = "LoginData.txt";
+    static String location = "src/Login/LoginData.txt";
 
     public static void createFile() throws IOException, FileNotFoundException, UnsupportedEncodingException {
 
