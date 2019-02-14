@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane id="AnchorPane" prefHeight="694.0" prefWidth="850.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="ViewPatient.ViewPatientController">
+   <children>
+      <Label layoutX="82.0" layoutY="351.0" text="First name" />
+      <Label layoutX="86.0" layoutY="385.0" text="Surname" />
+      <Label layoutX="284.0" layoutY="351.0" text="Date of Birth" />
+      <Label layoutX="90.0" layoutY="415.0" text="Gender" />
+      <Label layoutX="268.0" layoutY="385.0" text="Mobile Number" />
+      <Label layoutX="281.0" layoutY="415.0" text="Email Address" />
+      <TextField fx:id="firstname" layoutX="143.0" layoutY="347.0" prefHeight="0.0" prefWidth="110.0" />
+      <TextField fx:id="gender" layoutX="143.0" layoutY="411.0" prefHeight="0.0" prefWidth="110.0" />
+      <TextField fx:id="dob" layoutX="368.0" layoutY="347.0" prefHeight="11.0" prefWidth="110.0" />
+      <TextField fx:id="mobno" layoutX="368.0" layoutY="381.0" prefHeight="0.0" prefWidth="110.0" />
+      <TextField fx:id="email" layoutX="368.0" layoutY="411.0" prefHeight="0.0" prefWidth="110.0" />
+      <TextField fx:id="surname" layoutX="143.0" layoutY="381.0" prefHeight="25.0" prefWidth="110.0" />
+      <TextField fx:id="searchFirst" layoutX="137.0" layoutY="39.0" prefHeight="25.0" prefWidth="101.0" />
+      <TextField fx:id="searchLast" layoutX="137.0" layoutY="71.0" prefHeight="25.0" prefWidth="101.0" />
+      <TextField fx:id="searchPost" layoutX="137.0" layoutY="104.0" prefHeight="25.0" prefWidth="101.0" />
+      <Label layoutX="63.0" layoutY="43.0" text="First name" />
+      <Label layoutX="67.0" layoutY="75.0" text="Surname" />
+      <TextField fx:id="postcode" layoutX="143.0" layoutY="444.0" prefHeight="0.0" prefWidth="110.0" />
+      <Label layoutX="85.0" layoutY="448.0" text="Postcode" />
+      <Label layoutX="303.0" layoutY="448.0" text="Patient No" />
+      <TextField fx:id="patientNo" layoutX="370.0" layoutY="444.0" prefHeight="0.0" prefWidth="110.0" />
+      <Label layoutX="66.0" layoutY="108.0" text="Postcode" />
+      <Button fx:id="search" layoutX="258.0" layoutY="104.0" mnemonicParsing="false" onAction="#search" text="Search" />
+      <ChoiceBox fx:id="multiplePatients" layoutX="319.0" layoutY="104.0" onMouseClicked="#loadPatient" prefWidth="150.0" />
+      <Label fx:id="multifind" layoutX="319.0" layoutY="60.0" prefHeight="47.0" prefWidth="150.0" text="Multiple patients found Select from drop down box" textAlignment="CENTER" textOverrun="WORD_ELLIPSIS" wrapText="true" />
+   </children>
+</AnchorPane>

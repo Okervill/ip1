@@ -19,8 +19,9 @@ public class Patient {
     private String dob;
     private String gender;
     private String postcode;
+    private int patientNo;
     
-    public Patient(String f, String s, String e, String m, String d, String g, String p){
+    public Patient(String f, String s, String e, String m, String d, String g, String p) throws IOException{
         this.forename = f;
         this.surname = s;
         this.email = e;
@@ -28,8 +29,11 @@ public class Patient {
         this.dob = d;
         this.gender = g;
         this.postcode = p;
+        
+        patientNo = ReadWriteFile.countPatients() + 1;
+        
         try {
-            ReadWriteFile.updatePatientFile(forename, surname, email, mobile, dob, gender, postcode);
+            ReadWriteFile.updatePatientFile(forename, surname, email, mobile, dob, gender, postcode, patientNo);
         } catch (IOException ex) {
             Logger.getLogger(Patient.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -42,6 +46,7 @@ public class Patient {
     public String getDOB(){ return dob; }
     public String getGender(){ return gender; }
     public String getPostcode() { return postcode; }
+    public int getPatientNo() { return patientNo; }
     
     public ArrayList getData(){
         ArrayList<String> info = new ArrayList<>();

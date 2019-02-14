@@ -110,7 +110,7 @@ public class ReadWriteFile {
         FileWriter fw = new FileWriter(patientFile, false);
         fw.write("<!-- METADATA");
         newLine(fw);
-        fw.write("    SectionLength: 7");
+        fw.write("    SectionLength: 8");
         newLine(fw);
         fw.write("--!>");
         newLine(fw);
@@ -121,7 +121,7 @@ public class ReadWriteFile {
         fw.close();
     }
 
-    public static void updatePatientFile(String f, String s, String e, String m, String d, String g, String p) throws IOException { //(firstname, surname, email, mobile, dob, gender, postcode);
+    public static void updatePatientFile(String f, String s, String e, String m, String d, String g, String p, int n) throws IOException { //(firstname, surname, email, mobile, dob, gender, postcode);
         File file = new File(patientFile);
         FileWriter fw = new FileWriter(file, true);
         fw.write("Forename: " + f);
@@ -138,9 +138,58 @@ public class ReadWriteFile {
         newLine(fw);
         fw.write("Postcode: " + p);
         newLine(fw);
+        fw.write("Patient Number: " + n);
+        newLine(fw);
         fw.write("--");
         newLine(fw);
         fw.close();
+    }
+
+    public static ArrayList getPatientData(String f, String s, String p) throws IOException {
+
+        ArrayList<String> data = new ArrayList<>();
+
+        BufferedReader in = new BufferedReader(new FileReader(patientFile));
+        String str;
+
+        ArrayList<String> allData = new ArrayList<>();
+        while ((str = in.readLine()) != null) {
+            allData.add(str);
+        }
+
+        for (int i = 0; i < allData.size(); i++) {
+            if (allData.get(i).contains("Forename: " + f) && allData.get(i + 1).contains("Surname: " + s) && allData.get(i + 6).contains("Postcode: " + p)) {
+                data.add(allData.get(i).substring(10));//Forename
+                data.add(allData.get(i + 1).substring(9));//Surname
+                data.add(allData.get(i + 2).substring(7));//Email
+                data.add(allData.get(i + 3).substring(8));//mobile
+                data.add(allData.get(i + 4).substring(5));//DoB
+                data.add(allData.get(i + 5).substring(8));//Gender
+                data.add(allData.get(i + 6).substring(10));//Postcode
+                data.add(allData.get(i + 7).substring(16));//PatientNo
+            }
+        }
+        int found = data.size() / 8;
+        data.add(Integer.toString(found));
+        return data;
+    }
+
+    public static int countPatients() throws FileNotFoundException, IOException {
+        int count = 0;
+        BufferedReader in = new BufferedReader(new FileReader(patientFile));
+        String str;
+
+        ArrayList<String> allData = new ArrayList<>();
+        while ((str = in.readLine()) != null) {
+            allData.add(str);
+        }
+
+        for (int i = 0; i < allData.size(); i++) {
+            if (allData.get(i).contains("Forename")) {
+                count++;
+            }
+        }
+        return count;
     }
 
     public static void editLoginFile(String oldString, String newString) {
@@ -163,7 +212,7 @@ public class ReadWriteFile {
             writer = new FileWriter(file);
 
             writer.write(newContent);
-            
+
         } catch (IOException e) {
             e.printStackTrace();
         } finally {

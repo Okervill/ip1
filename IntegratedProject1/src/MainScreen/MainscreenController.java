@@ -7,20 +7,16 @@ package MainScreen;
 
 import AddTherapist.AddTherapist;
 import Login.Login;
+import ViewPatient.ViewPatient;
 import ViewTherapist.ViewTherapist;
-import ViewTherapist.ViewTherapistController;
-import integratedproject1.ReadWriteFile;
 import integratedproject1.SwitchWindow;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
@@ -53,9 +49,6 @@ public class MainscreenController implements Initializable {
     private void newPatient(ActionEvent event) {
     }
 
-    @FXML
-    private void newAppointment(ActionEvent event) {
-    }
 
     @FXML
     private void addTherapist(ActionEvent event) {
@@ -69,5 +62,10 @@ public class MainscreenController implements Initializable {
     @FXML
     private void findTherapist(ActionEvent event) throws IOException {
         SwitchWindow.switchWindow((Stage) searchTherapist.getScene().getWindow(), new ViewTherapist());
+    }
+
+    @FXML
+    private void viewPatient(ActionEvent event) {
+        SwitchWindow.switchWindow((Stage) searchTherapist.getScene().getWindow(), new ViewPatient());
     }
 }

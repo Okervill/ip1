@@ -10,7 +10,7 @@
       <Button fx:id="logout" layoutX="951.0" layoutY="14.0" mnemonicParsing="false" onAction="#logout" text="Log out" />
       <Button fx:id="addTherapist" layoutX="522.0" layoutY="14.0" mnemonicParsing="false" onAction="#addTherapist" text="Add Therapist" />
       <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#newPatient" text="New Patient" />
-      <Button layoutX="107.0" layoutY="14.0" mnemonicParsing="false" onAction="#newAppointment" text="New Appointment" />
+      <Button layoutX="107.0" layoutY="14.0" mnemonicParsing="false" onAction="#viewPatient" text="Existing Patient" />
       <Button layoutX="881.0" layoutY="14.0" mnemonicParsing="false" onAction="#findPatient" text="Search" />
       <TextField fx:id="findPatient" layoutX="623.0" layoutY="14.0" prefHeight="25.0" prefWidth="250.0" promptText="Find Patient" />
       <Button fx:id="searchTherapist" layoutX="523.0" layoutY="47.0" mnemonicParsing="false" onAction="#findTherapist" text="Edit Therapist" />

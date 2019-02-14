@@ -1,5 +1,5 @@
 <!-- METADATA
-    SectionLength: 7
+    SectionLength: 8
 --!>
 
 --
@@ -10,6 +10,7 @@ Mobile: 07987654321
 DoB: 01/01/1971
 Gender: Male
 Postcode: G1 0AA
+Patient Number: 1
 --
 Forename: Jane
 Surname: Doe
@@ -18,4 +19,14 @@ Mobile: 07123456789
 DoB: 02/02/1972
 Gender: Female
 Postcode: G1 0AA
+Patient Number: 2
+--
+Forename: John
+Surname: Doe
+Email: johndoe123@gmail.com
+Mobile: 07000000000
+DoB: 01/01/1971
+Gender: Male
+Postcode: G1 0AA
+Patient Number: 3
 --
