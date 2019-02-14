@@ -36,9 +36,9 @@ public class IntegratedProject1 extends Application {
         
         if (!loginData.exists()) { //Creates a file with test input
             ReadWriteFile.createLoginFile();
-            Therapist manager = new Therapist("admin", "admin", "admin", "admin", true);
-            Therapist t1 = new Therapist("Tony", "Stark", "StarkT", "ironman", false);
-            Therapist t2 = new Therapist("Bruce", "Wayne", "WayneB", "batman", false);
+            Therapist manager = new Therapist("admin", "admin", "admin", "true");
+            Therapist t1 = new Therapist("Tony", "Stark", "ironman", "false");
+            Therapist t2 = new Therapist("Bruce", "Wayne", "batman", "false");
         }
         if (!patientData.exists()){ //Creates a file with test input
             ReadWriteFile.createPatientFile();

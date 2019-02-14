@@ -39,7 +39,7 @@ public class ReadWriteFile {
         fw.close();
     }
 
-    public static void updateLoginFile(String f, String s, String u, String p, Boolean m) throws IOException {
+    public static void updateLoginFile(String f, String s, String u, String p, String m) throws IOException {
         File file = new File(loginFile);
         FileWriter fw = new FileWriter(file, true);
         fw.write("Username: " + u);

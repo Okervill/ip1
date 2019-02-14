@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane id="AnchorPane" prefHeight="247.0" prefWidth="409.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="integratedproject1.AddTherapist.AddTherapistController">
+   <children>
+      <ChoiceBox fx:id="manager" layoutX="247.0" layoutY="100.0" prefHeight="25.0" prefWidth="105.0" />
+      <Label layoutX="18.0" layoutY="104.0" text="Password" />
+      <Label layoutX="18.0" layoutY="69.0" text="Forename" />
+      <Button fx:id="discard" layoutX="243.0" layoutY="138.0" mnemonicParsing="false" onAction="#discard" text="Discard" />
+      <Button fx:id="save" layoutX="103.0" layoutY="135.0" mnemonicParsing="false" onAction="#save" text="Save" />
+      <TextField fx:id="surname" layoutX="247.0" layoutY="65.0" prefHeight="25.0" prefWidth="105.0" />
+      <TextField fx:id="password" layoutX="77.0" layoutY="100.0" prefHeight="25.0" prefWidth="105.0" />
+      <TextField fx:id="firstname" layoutX="77.0" layoutY="65.0" prefHeight="25.0" prefWidth="105.0" />
+      <Label layoutX="190.0" layoutY="69.0" text="Surname" />
+      <Label layoutX="189.0" layoutY="104.0" text="Manager" />
+   </children>
+</AnchorPane>

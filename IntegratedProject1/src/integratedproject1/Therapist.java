@@ -9,17 +9,14 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
- *
- * @author choco
- */
+
 public class Therapist {
     
     private String firstname;
     private String surname;
     private String username;
     private String password;
-    private boolean manager = false;
+    private String manager;
     
     public Therapist(String f, String s, String p){
         this.firstname = f;
@@ -33,17 +30,26 @@ public class Therapist {
         }
     }
     
-    public Therapist(String f, String s, String u, String p, boolean m){
+    public Therapist(String f, String s, String p, String m) throws IOException{
         this.firstname = f;
         this.surname = s;
         this.password = p;
-        this.username = u;
         this.manager = m;
-        try {
-            ReadWriteFile.updateLoginFile(firstname, surname, username, password, manager);
-        } catch (IOException ex) {
-            Logger.getLogger(Therapist.class.getName()).log(Level.SEVERE, null, ex);
+        
+        this.username = s + f.charAt(0);
+        
+        int count = 0;
+        
+        for(int i = 0; i < ReadWriteFile.getUsernames().size(); i++){
+            String str = (String) ReadWriteFile.getUsernames().get(i);
+            if (str.contains(username)) count++;
         }
+        
+        if (ReadWriteFile.getUsernames().contains(username)){
+            username = username + count;
+        }
+        
+        newTherapist(firstname, surname, username, password, manager);
     }
     
     public String getFirstname(){ return firstname; }
@@ -57,6 +63,10 @@ public class Therapist {
             Logger.getLogger(Therapist.class.getName()).log(Level.SEVERE, null, ex);
         }
                 
+    }
+    
+    public void newTherapist(String f, String s, String u, String p, String m) throws IOException{
+        ReadWriteFile.updateLoginFile(f, s, u, p, m);
     }
     
     

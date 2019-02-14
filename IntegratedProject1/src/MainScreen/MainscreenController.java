@@ -5,6 +5,7 @@
  */
 package MainScreen;
 
+import AddTherapist.AddTherapist;
 import Login.Login;
 import ViewTherapist.ViewTherapist;
 import ViewTherapist.ViewTherapistController;
@@ -31,6 +32,8 @@ public class MainscreenController implements Initializable {
     private TextField findPatient;
     @FXML
     private Button searchTherapist;
+    @FXML
+    private Button addTherapist;
 
     /**
      * Initializes the controller class.
@@ -56,6 +59,7 @@ public class MainscreenController implements Initializable {
 
     @FXML
     private void addTherapist(ActionEvent event) {
+        SwitchWindow.switchWindow((Stage) addTherapist.getScene().getWindow(), new AddTherapist());
     }
 
     @FXML
