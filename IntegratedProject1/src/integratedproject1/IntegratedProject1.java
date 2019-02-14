@@ -37,10 +37,13 @@ public class IntegratedProject1 extends Application {
         if (!loginData.exists()) { //Creates a file with test input
             ReadWriteFile.createLoginFile();
             Therapist manager = new Therapist("admin", "admin", "admin", "admin", true);
+            Therapist t1 = new Therapist("Tony", "Stark", "StarkT", "ironman", false);
+            Therapist t2 = new Therapist("Bruce", "Wayne", "WayneB", "batman", false);
         }
         if (!patientData.exists()){ //Creates a file with test input
             ReadWriteFile.createPatientFile();
-            Patient test1 = new Patient("John", "Doe", "johndoe@gmail.com", "07000000000", "01/01/1970", "Male", "G1 0AA");
+            Patient p1 = new Patient("John", "Doe", "johndoe@gmail.com", "07987654321", "01/01/1971", "Male", "G1 0AA");
+            Patient p2 = new Patient("Jane", "Doe", "janedoe@gmail.com", "07123456789", "02/02/1972", "Female", "G1 0AA");
         }
         launch(args);
     }

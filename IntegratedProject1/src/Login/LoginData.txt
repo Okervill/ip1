@@ -7,5 +7,17 @@ Username: admin
 Password: admin
 Firstname: admin
 Surname: admin
-Manager: admin
+Manager: true
+--
+Username: StarkT
+Password: ironman
+Firstname: Tony
+Surname: Stark
+Manager: false
+--
+Username: WayneB
+Password: batman
+Firstname: Bruce
+Surname: Wayne
+Manager: false
 --

@@ -13,5 +13,6 @@
       <Button layoutX="107.0" layoutY="14.0" mnemonicParsing="false" onAction="#newAppointment" text="New Appointment" />
       <Button layoutX="881.0" layoutY="14.0" mnemonicParsing="false" onAction="#findPatient" text="Search" />
       <TextField fx:id="findPatient" layoutX="623.0" layoutY="14.0" prefHeight="25.0" prefWidth="250.0" promptText="Find Patient" />
+      <Button fx:id="searchTherapist" layoutX="523.0" layoutY="47.0" mnemonicParsing="false" onAction="#findTherapist" text="Edit Therapist" />
    </children>
 </AnchorPane>

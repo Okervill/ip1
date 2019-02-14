@@ -33,7 +33,7 @@ public class Therapist {
         }
     }
     
-    public Therapist(String f, String s, String p, String u, boolean m){
+    public Therapist(String f, String s, String u, String p, boolean m){
         this.firstname = f;
         this.surname = s;
         this.password = p;

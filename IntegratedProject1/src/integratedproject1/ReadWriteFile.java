@@ -143,7 +143,7 @@ public class ReadWriteFile {
         fw.close();
     }
 
-    static void editLoginFile(String oldString, String newString) {
+    public static void editLoginFile(String oldString, String newString) {
         File file = new File(loginFile);
         String oldContent = "";
         BufferedReader reader = null;
