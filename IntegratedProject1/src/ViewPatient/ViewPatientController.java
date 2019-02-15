@@ -8,8 +8,10 @@ package ViewPatient;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -37,6 +39,8 @@ public class ViewPatientController implements Initializable {
     private TextField postcode;
     @FXML
     private TextField patientNo;
+    @FXML
+    private Button newAppointmentButton;
 
     /**
      * Initializes the controller class.
@@ -55,5 +59,9 @@ public class ViewPatientController implements Initializable {
         gender.setText(data.get(5));
         postcode.setText(data.get(6));
         patientNo.setText(data.get(7));
+    }
+
+    @FXML
+    private void newAppointment(ActionEvent event) {
     }
 }
