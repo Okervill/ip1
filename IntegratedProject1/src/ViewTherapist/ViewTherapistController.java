@@ -109,31 +109,6 @@ public class ViewTherapistController implements Initializable {
             SwitchWindow.switchWindow((Stage)discard.getScene().getWindow(), new Mainscreen());
     }
 
-    @FXML
-    private void search(ActionEvent event){
-        
-        String currentUsername = currentUser.getText();
-        
-        try {
-            if (!ReadWriteFile.getUsernames().contains(currentUsername)){
-                return;
-            }
-        } catch (IOException ex) {
-            Logger.getLogger(ViewTherapistController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        ArrayList<String> current = null;
-        try {
-            current = ReadWriteFile.getLoginData(currentUsername);
-        } catch (IOException ex) {
-            Logger.getLogger(ViewTherapistController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        firstname.setText(current.get(2));
-        surname.setText(current.get(3));
-        if (current.get(4).equalsIgnoreCase("true")) manager.getSelectionModel().select("true");
-        if (current.get(4).equalsIgnoreCase("false")) manager.getSelectionModel().select("false");
-        
-    }
+    
     
 }

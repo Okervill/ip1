@@ -145,7 +145,7 @@ public class ReadWriteFile {
         fw.close();
     }
 
-    public static ArrayList getPatientData(String f, String s, String p) throws IOException {
+    public static ArrayList getPatientData(String u) throws IOException {
 
         ArrayList<String> data = new ArrayList<>();
 
@@ -158,15 +158,15 @@ public class ReadWriteFile {
         }
 
         for (int i = 0; i < allData.size(); i++) {
-            if (allData.get(i).contains("Forename: " + f) && allData.get(i + 1).contains("Surname: " + s) && allData.get(i + 6).contains("Postcode: " + p)) {
-                data.add(allData.get(i).substring(10));//Forename
-                data.add(allData.get(i + 1).substring(9));//Surname
-                data.add(allData.get(i + 2).substring(7));//Email
-                data.add(allData.get(i + 3).substring(8));//mobile
-                data.add(allData.get(i + 4).substring(5));//DoB
-                data.add(allData.get(i + 5).substring(8));//Gender
-                data.add(allData.get(i + 6).substring(10));//Postcode
-                data.add(allData.get(i + 7).substring(16));//PatientNo
+            if (allData.get(i).contains("Patient Number: " + u)) {
+                data.add(allData.get(i - 7).substring(10));//Forename
+                data.add(allData.get(i - 6).substring(9));//Surname
+                data.add(allData.get(i - 5).substring(7));//Email
+                data.add(allData.get(i - 4).substring(8));//mobile
+                data.add(allData.get(i - 3).substring(5));//DoB
+                data.add(allData.get(i - 2).substring(8));//Gender
+                data.add(allData.get(i - 1).substring(10));//Postcode
+                data.add(allData.get(i).substring(16));//PatientNo
             }
         }
         int found = data.size() / 8;

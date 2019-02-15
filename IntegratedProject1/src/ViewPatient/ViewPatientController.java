@@ -68,7 +68,7 @@ public class ViewPatientController implements Initializable {
         multifind.setVisible(false);
     }
 
-    @FXML
+    /**@FXML
     private void search(ActionEvent event) throws IOException {
 
         firstname.setText("");
@@ -117,11 +117,21 @@ public class ViewPatientController implements Initializable {
             patientNo.setText((String) patientData.get(7));
         }
 
-    }
+    }**/
 
     @FXML
     private void loadPatient(MouseEvent event) {
 
     }
 
+    public void setData(ArrayList<String> data) {
+        firstname.setText(data.get(0));
+        surname.setText(data.get(1));
+        email.setText(data.get(2));
+        mobno.setText(data.get(3));
+        dob.setText(data.get(4));
+        gender.setText(data.get(5));
+        postcode.setText(data.get(6));
+        patientNo.setText(data.get(7));
+    }
 }
