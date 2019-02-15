@@ -68,7 +68,7 @@ public class MainscreenController implements Initializable {
 
     @FXML
     private void findTherapist(ActionEvent event) throws IOException {
-        SwitchWindow.switchWindow((Stage) searchTherapist.getScene().getWindow(), new ViewTherapist("Test"));
+        SwitchWindow.switchWindow((Stage) searchTherapist.getScene().getWindow(), new ViewTherapist());
     }
 
     @FXML

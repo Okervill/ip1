@@ -28,7 +28,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-
 public class ViewTherapistController implements Initializable {
 
     @FXML
@@ -51,6 +50,7 @@ public class ViewTherapistController implements Initializable {
 
     /**
      * Initializes the controller class.
+     *
      * @param url
      * @param rb
      */
@@ -61,54 +61,88 @@ public class ViewTherapistController implements Initializable {
 
     @FXML
     private void save(ActionEvent event) throws IOException {
-        
+
         String currentUsername = currentUser.getText();
-        
-        
-        
+
         ArrayList<String> current = null;
         try {
             current = ReadWriteFile.getLoginData(currentUsername);
         } catch (IOException ex) {
             Logger.getLogger(ViewTherapistController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         String currentFirst = current.get(2);
         String currentLast = current.get(3);
         String currentUser = current.get(0);
         String currentPass = current.get(1);
         String currentManager = current.get(4);
-        
+
         String newFirst = firstname.getText();
         String newLast = surname.getText();
         String newPass = password.getText();
         String newManager = manager.getSelectionModel().getSelectedItem();
-        
-        if(password.getText().length() < 1){
+
+        if (password.getText().length() < 1) {
             newPass = currentPass;
         }
-        
+
         ReadWriteFile.editLoginFile(
-                "Username: " + currentUser + System.getProperty("line.separator") + //current info
-                "Password: " + currentPass  + System.getProperty("line.separator") + //current info
-                "Firstname: " + currentFirst + System.getProperty("line.separator") + //current info
-                "Surname: " + currentLast + System.getProperty("line.separator") + //current info
+                "Username: " + currentUser + System.getProperty("line.separator")
+                + //current info
+                "Password: " + currentPass + System.getProperty("line.separator")
+                + //current info
+                "Firstname: " + currentFirst + System.getProperty("line.separator")
+                + //current info
+                "Surname: " + currentLast + System.getProperty("line.separator")
+                + //current info
                 "Manager: " + currentManager,
-                        
-                "Username: " + currentUser + System.getProperty("line.separator") + //new info
-                "Password: " + newPass + System.getProperty("line.separator") + //new info
-                "Firstname: " + newFirst + System.getProperty("line.separator") + //new info
-                "Surname: " + newLast + System.getProperty("line.separator") + //new info
+                "Username: " + currentUser + System.getProperty("line.separator")
+                + //new info
+                "Password: " + newPass + System.getProperty("line.separator")
+                + //new info
+                "Firstname: " + newFirst + System.getProperty("line.separator")
+                + //new info
+                "Surname: " + newLast + System.getProperty("line.separator")
+                + //new info
                 "Manager: " + newManager); //new info
-        
-        SwitchWindow.switchWindow((Stage)save.getScene().getWindow(), new Mainscreen());
+
+        SwitchWindow.switchWindow((Stage) save.getScene().getWindow(), new Mainscreen());
     }
 
     @FXML
     private void discard(ActionEvent event) {
-            SwitchWindow.switchWindow((Stage)discard.getScene().getWindow(), new Mainscreen());
+        SwitchWindow.switchWindow((Stage) discard.getScene().getWindow(), new Mainscreen());
     }
 
-    
-    
+    @FXML
+    private void search(ActionEvent event) {
+
+        String currentUsername = currentUser.getText();
+
+        try {
+            if (!ReadWriteFile.getUsernames().contains(currentUsername)) {
+                return;
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(ViewTherapistController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        ArrayList<String> current = null;
+        try {
+            current = ReadWriteFile.getLoginData(currentUsername);
+        } catch (IOException ex) {
+            Logger.getLogger(ViewTherapistController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        firstname.setText(current.get(2));
+        surname.setText(current.get(3));
+        if (current.get(4).equalsIgnoreCase("true")) {
+            manager.getSelectionModel().select("true");
+        }
+        if (current.get(4).equalsIgnoreCase("false")) {
+            manager.getSelectionModel().select("false");
+        }
+
+    }
+
 }

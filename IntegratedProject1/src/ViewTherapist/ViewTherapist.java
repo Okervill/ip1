@@ -13,9 +13,6 @@ import javafx.stage.Stage;
 
 public class ViewTherapist extends Application {
 
-    public ViewTherapist(String test) {
-        System.out.println(test);
-    }
     
     @Override
     public void start(Stage stage) throws Exception {    
