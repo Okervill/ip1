@@ -31,7 +31,7 @@
       <Label layoutX="303.0" layoutY="448.0" text="Patient No" />
       <TextField fx:id="patientNo" layoutX="370.0" layoutY="444.0" prefHeight="0.0" prefWidth="110.0" />
       <Label layoutX="66.0" layoutY="108.0" text="Postcode" />
-      <Button fx:id="search" layoutX="258.0" layoutY="104.0" mnemonicParsing="false" onAction="#search" text="Search" />
+      <Button fx:id="search" layoutX="258.0" layoutY="104.0" mnemonicParsing="false" text="Search" />
       <ChoiceBox fx:id="multiplePatients" layoutX="319.0" layoutY="104.0" onMouseClicked="#loadPatient" prefWidth="150.0" />
       <Label fx:id="multifind" layoutX="319.0" layoutY="60.0" prefHeight="47.0" prefWidth="150.0" text="Multiple patients found Select from drop down box" textAlignment="CENTER" textOverrun="WORD_ELLIPSIS" wrapText="true" />
    </children>

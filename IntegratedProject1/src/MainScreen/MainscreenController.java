@@ -9,10 +9,14 @@ import AddTherapist.AddTherapist;
 import Login.Login;
 import ViewPatient.ViewPatient;
 import ViewTherapist.ViewTherapist;
+import integratedproject1.ReadWriteFile;
 import integratedproject1.SwitchWindow;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -57,15 +61,31 @@ public class MainscreenController implements Initializable {
 
     @FXML
     private void findPatient(ActionEvent event) {
+        ArrayList<String> patientData = search();
+        SwitchWindow.switchWindow((Stage) searchTherapist.getScene().getWindow(), new ViewPatient(patientData));
     }
 
     @FXML
     private void findTherapist(ActionEvent event) throws IOException {
-        SwitchWindow.switchWindow((Stage) searchTherapist.getScene().getWindow(), new ViewTherapist());
+        SwitchWindow.switchWindow((Stage) searchTherapist.getScene().getWindow(), new ViewTherapist("Test"));
     }
 
     @FXML
     private void viewPatient(ActionEvent event) {
-        SwitchWindow.switchWindow((Stage) searchTherapist.getScene().getWindow(), new ViewPatient());
+        SwitchWindow.switchWindow((Stage) searchTherapist.getScene().getWindow(), new ViewPatient(new ArrayList<String>()));
+    }
+    
+    @FXML
+    private ArrayList<String> search(){
+        
+        String currentUsername = findPatient.getText();
+        
+        ArrayList<String> patient = null;
+        try {
+            patient = ReadWriteFile.getPatientData(currentUsername);
+        } catch (IOException ex) {
+            Logger.getLogger(MainscreenController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return patient;
     }
 }

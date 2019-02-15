@@ -5,6 +5,7 @@
  */
 package ViewPatient;
 
+import java.util.ArrayList;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -13,15 +14,26 @@ import javafx.stage.Stage;
 
 public class ViewPatient extends Application {
     
+    private ArrayList<String> patientData;
+    
+    public ViewPatient(ArrayList<String> patientData) {
+        this.patientData = patientData;
+    }
+    
     @Override
     public void start(Stage stage) throws Exception {    
     
-        Parent root = FXMLLoader.load(getClass().getResource("/ViewPatient/ViewPatient.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/ViewPatient/ViewPatient.fxml"));
+        Parent root = (Parent)loader.load();
         
         Scene scene = new Scene(root);
         
         stage.setScene(scene);
         stage.setTitle("View Patient");
+        
+        ViewPatientController controller = loader.getController();
+        controller.setData(patientData);
+        
         stage.show();
         
     }
