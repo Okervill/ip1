@@ -18,13 +18,14 @@ public class ReadWriteFile {
 
     static String loginFile = "src/Login/LoginData.txt";
     static String patientFile = "src/integratedproject1/PatientFile.txt";
+    static String appointmentFile = "src/integratedproject1/appointments.txt";
 
-    public static void createLoginFile() throws IOException, FileNotFoundException, UnsupportedEncodingException {
+    public static void createFile(File file, int m) throws IOException, FileNotFoundException, UnsupportedEncodingException {
 
-        FileWriter fw = new FileWriter(loginFile, false);
+        FileWriter fw = new FileWriter(file, false);
         fw.write("<!-- METADATA");
         newLine(fw);
-        fw.write("    SectionLength: 5");
+        fw.write("    SectionLength: " + m);
         newLine(fw);
         fw.write("--!>");
         newLine(fw);
@@ -101,22 +102,6 @@ public class ReadWriteFile {
         return usernames;
     }
 
-    public static void createPatientFile() throws IOException, FileNotFoundException, UnsupportedEncodingException {
-
-        FileWriter fw = new FileWriter(patientFile, false);
-        fw.write("<!-- METADATA");
-        newLine(fw);
-        fw.write("    SectionLength: 8");
-        newLine(fw);
-        fw.write("--!>");
-        newLine(fw);
-        fw.write("");
-        newLine(fw);
-        fw.write("--");
-        newLine(fw);
-        fw.close();
-    }
-
     public static void updatePatientFile(String f, String s, String e, String m, String d, String g, String p, int n) throws IOException { //(firstname, surname, email, mobile, dob, gender, postcode);
         File file = new File(patientFile);
         FileWriter fw = new FileWriter(file, true);
@@ -168,6 +153,44 @@ public class ReadWriteFile {
         int found = data.size() / 8;
         data.add(Integer.toString(found));
         return data;
+    }
+    
+    public static int countAppointments() throws IOException {
+
+        int count = 0;
+
+        BufferedReader in = new BufferedReader(new FileReader(appointmentFile));
+        String str;
+
+        while ((str = in.readLine()) != null) {
+            if (str.contains("Appointment Number:")) count++;
+        }
+        return count;
+    }
+    
+
+    public static void newAppointment(int a, int p, String t, String d, String time, String serv, int c, String stat) throws IOException { //(firstname, surname, email, mobile, dob, gender, postcode);
+        File file = new File(appointmentFile);
+        FileWriter fw = new FileWriter(file, true);
+        fw.write("Appointment Number: " + a);
+        newLine(fw);
+        fw.write("Patient: " + p);
+        newLine(fw);
+        fw.write("Therapist: " + t);
+        newLine(fw);
+        fw.write("Date: " + d);
+        newLine(fw);
+        fw.write("Time: " + time);
+        newLine(fw);
+        fw.write("Service: " + serv);
+        newLine(fw);
+        fw.write("Cost: " + c);
+        newLine(fw);
+        fw.write("Status: " + stat);
+        newLine(fw);
+        fw.write("--");
+        newLine(fw);
+        fw.close();
     }
 
     public static int countPatients() throws FileNotFoundException, IOException {

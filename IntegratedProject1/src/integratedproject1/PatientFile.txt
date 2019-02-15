@@ -21,12 +21,3 @@ Gender: Female
 Postcode: G1 0AA
 Patient Number: 2
 --
-Forename: John
-Surname: Doe
-Email: johndoe123@gmail.com
-Mobile: 07000000000
-DoB: 01/01/1971
-Gender: Male
-Postcode: G1 0AA
-Patient Number: 3
---

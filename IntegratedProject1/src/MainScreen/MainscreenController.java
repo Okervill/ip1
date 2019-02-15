@@ -53,7 +53,6 @@ public class MainscreenController implements Initializable {
     private void newPatient(ActionEvent event) {
     }
 
-
     @FXML
     private void addTherapist(ActionEvent event) {
         SwitchWindow.switchWindow((Stage) addTherapist.getScene().getWindow(), new AddTherapist());
@@ -62,7 +61,9 @@ public class MainscreenController implements Initializable {
     @FXML
     private void findPatient(ActionEvent event) {
         ArrayList<String> patientData = search();
-        SwitchWindow.switchWindow((Stage) searchTherapist.getScene().getWindow(), new ViewPatient(patientData));
+        if (patientData != null) {
+            SwitchWindow.switchWindow((Stage) searchTherapist.getScene().getWindow(), new ViewPatient(patientData));
+        }
     }
 
     @FXML
@@ -74,15 +75,18 @@ public class MainscreenController implements Initializable {
     private void viewPatient(ActionEvent event) {
         SwitchWindow.switchWindow((Stage) searchTherapist.getScene().getWindow(), new ViewPatient(new ArrayList<String>()));
     }
-    
+
     @FXML
-    private ArrayList<String> search(){
-        
+    private ArrayList<String> search() {
+
         String currentUsername = findPatient.getText();
-        
+
         ArrayList<String> patient = null;
         try {
             patient = ReadWriteFile.getPatientData(currentUsername);
+            if (patient.size() < 8) {
+                return null;
+            }
         } catch (IOException ex) {
             Logger.getLogger(MainscreenController.class.getName()).log(Level.SEVERE, null, ex);
         }
