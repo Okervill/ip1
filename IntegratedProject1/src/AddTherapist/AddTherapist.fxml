@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.*?>
 
 
-<AnchorPane id="AnchorPane" prefHeight="247.0" prefWidth="409.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="integratedproject1.AddTherapist.AddTherapistController">
+<AnchorPane id="AnchorPane" prefHeight="247.0" prefWidth="409.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="AddTherapist.AddTherapistController">
    <children>
       <ChoiceBox fx:id="manager" layoutX="247.0" layoutY="100.0" prefHeight="25.0" prefWidth="105.0" />
       <Label layoutX="18.0" layoutY="104.0" text="Password" />

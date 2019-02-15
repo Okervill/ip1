@@ -23,5 +23,12 @@ public class AddTherapistController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
     }    
+
+    public void discard() {
+        
+    }
     
+    public void save() {
+        
+    }
 }
