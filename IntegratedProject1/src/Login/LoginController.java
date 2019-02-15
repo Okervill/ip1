@@ -8,7 +8,7 @@ package Login;
 import MainScreen.Mainscreen;
 import integratedproject1.ReadWriteFile;
 import integratedproject1.SwitchWindow;
-import Login.Shaker;
+import Animation.Shaker;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
