@@ -36,19 +36,19 @@ public class IntegratedProject1 extends Application {
         File appointments = new File("src/integratedproject1/appointments.txt");
         
         if (!loginData.exists()){
-            ReadWriteFile.createFile(loginData);
+            ReadWriteFile.createFile(loginData, 5);
             Therapist manager = new Therapist("admin", "admin", "admin", "true");
             Therapist t1 = new Therapist("Tony", "Stark", "ironman", "false");
             Therapist t2 = new Therapist("Bruce", "Wayne", "batman", "false");
         }
         if (!patientData.exists()){
-            ReadWriteFile.createFile(patientData);
+            ReadWriteFile.createFile(patientData, 8);
             Patient p1 = new Patient("John", "Doe", "johndoe@gmail.com", "07987654321", "01/01/1971", "Male", "G1 0AA");
             Patient p2 = new Patient("Jane", "Doe", "janedoe@gmail.com", "07123456789", "02/02/1972", "Female", "G1 0AA");
             
         }
         if (!appointments.exists()){
-            ReadWriteFile.createFile(appointments);
+            ReadWriteFile.createFile(appointments, 8);
             Appointment a1 = new Appointment(1, "therapist 1", "15th Feb 2019", "Service");
         }
         
