@@ -8,6 +8,7 @@ package Login;
 import MainScreen.Mainscreen;
 import integratedproject1.ReadWriteFile;
 import integratedproject1.SwitchWindow;
+import Login.Shaker;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -40,6 +41,8 @@ public class LoginController implements Initializable {
         String pass = inputpass.getText();
         
         if(user.length() < 1 || pass.length() < 1){
+            Shaker shaker = new Shaker(button);
+            shaker.shake();
             return;
         }
 
@@ -63,9 +66,8 @@ public class LoginController implements Initializable {
             System.out.println("Login Sucessful");
             SwitchWindow.switchWindow((Stage)button.getScene().getWindow(), new Mainscreen());
         } else {
-            //Pop up error?
-            SwitchWindow.switchWindow((Stage)button.getScene().getWindow(), new LoginFailed());
-            System.out.println("Login Failed");
+            Shaker shaker = new Shaker(button);
+            shaker.shake();
         }
     }
 /**
