@@ -6,6 +6,7 @@
 package MainScreen;
 
 import AddTherapist.AddTherapist;
+import Animation.Shaker;
 import Login.Login;
 import ViewPatient.ViewPatient;
 import ViewTherapist.ViewTherapist;
@@ -35,12 +36,13 @@ public class MainscreenController implements Initializable {
     @FXML
     private Button addTherapist;
 
+    boolean manager = false;
+    
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO if user isn't a manager hide the add therapist button
     }
 
     @FXML
@@ -85,11 +87,23 @@ public class MainscreenController implements Initializable {
         try {
             patient = ReadWriteFile.getPatientData(currentUsername);
             if (patient.size() < 8) {
+
+                Shaker shaker = new Shaker(findPatient);
+                shaker.shake();
                 return null;
             }
         } catch (IOException ex) {
             Logger.getLogger(MainscreenController.class.getName()).log(Level.SEVERE, null, ex);
         }
         return patient;
+    }
+
+    public void setData(boolean m) {
+        searchTherapist.setVisible(false);
+        addTherapist.setVisible(false);
+        if(m) {
+            searchTherapist.setVisible(true);
+            addTherapist.setVisible(true);
+        }
     }
 }

@@ -22,7 +22,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-
 public class LoginController implements Initializable {
 
     @FXML
@@ -36,17 +35,18 @@ public class LoginController implements Initializable {
 
     @FXML
     private void login(ActionEvent event) throws IOException {
-        
+
         String user = inputuser.getText();
         String pass = inputpass.getText();
-        
-        if(user.length() < 1 || pass.length() < 1){
+
+        if (user.length() < 1 || pass.length() < 1) {
             Shaker shaker = new Shaker(button);
             shaker.shake();
             return;
         }
 
         boolean login = false;
+        boolean manager = false;
 
         try {
 
@@ -61,69 +61,49 @@ public class LoginController implements Initializable {
             Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
+        manager = Boolean.parseBoolean((String) ReadWriteFile.getLoginData(user).get(4));
+
         if (login) {
             //Swap Scene
-            System.out.println("Login Sucessful");
-            SwitchWindow.switchWindow((Stage)button.getScene().getWindow(), new Mainscreen());
+            SwitchWindow.switchWindow((Stage) button.getScene().getWindow(), new Mainscreen(manager));
         } else {
             Shaker shaker = new Shaker(button);
             shaker.shake();
         }
     }
-/**
-        System.out.println("Login attempted.");
 
-        try (Scanner s = new Scanner(new File("src/integratedproject1/LoginData.txt"))) {
-            ArrayList<String> loginData = new ArrayList<>();
-            while (s.hasNextLine()) {
-                loginData.add(s.nextLine());
-            }
-            s.close();
-
-            int sectionLength = 1;
-            boolean foundMetadata = false;
-            int currentIndex
-                    = 0;
-
-            while (!foundMetadata) {
-                String line = loginData.get(currentIndex);
-                if (line.contains("--!>")) { //Metadata end 
-                    foundMetadata = true; 
-                } else if (line.contains("SectionLength:")) {
-                        sectionLength = Integer.parseInt(line.split(": ")[1]);
-                    }
-                    currentIndex++;
-                }
-            boolean foundUsername = false;
-
-            while (!foundUsername && currentIndex < loginData.size()) {
-                String line
-                        = loginData.get(currentIndex);
-                if (line.contains("Username:")) { //Usernameline found 
-                    //If username matches check password 
-                    String input = inputuser.getText();
-                    String split = line.split(": ")[1];
-                    if (inputuser.getText().equals(line.split(": ")[1])) { //username match,check password 
-                        if (inputpass.getText().equals(loginData.get(currentIndex
-                                + 1).split(": ")[1])) { //login details correct switch scene
-                            System.out.println("Logged in.");
-                            label.setText("Logged in.");
-                        }
-                    } else {
-                        //Found a username but no match, skip to next 
-                        currentIndex += sectionLength;
-                    }
-                } else {
-                    currentIndex++;
-                }
-            }
-        } catch (IOException ex) {
-            Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex
-            );
-            System.out.println("Exception");
-        }
-    }
-**/
+    /**
+     * System.out.println("Login attempted.");
+     *
+     * try (Scanner s = new Scanner(new
+     * File("src/integratedproject1/LoginData.txt"))) { ArrayList<String>
+     * loginData = new ArrayList<>(); while (s.hasNextLine()) {
+     * loginData.add(s.nextLine()); } s.close();
+     *
+     * int sectionLength = 1; boolean foundMetadata = false; int currentIndex =
+     * 0;
+     *
+     * while (!foundMetadata) { String line = loginData.get(currentIndex); if
+     * (line.contains("--!>")) { //Metadata end foundMetadata = true; } else if
+     * (line.contains("SectionLength:")) { sectionLength =
+     * Integer.parseInt(line.split(": ")[1]); } currentIndex++; } boolean
+     * foundUsername = false;
+     *
+     * while (!foundUsername && currentIndex < loginData.size()) { String line =
+     * loginData.get(currentIndex); if (line.contains("Username:")) {
+     * //Usernameline found //If username matches check password String input =
+     * inputuser.getText(); String split = line.split(": ")[1]; if
+     * (inputuser.getText().equals(line.split(": ")[1])) { //username
+     * match,check password if
+     * (inputpass.getText().equals(loginData.get(currentIndex + 1).split(":
+     * ")[1])) { //login details correct switch scene System.out.println("Logged
+     * in."); label.setText("Logged in."); } } else { //Found a username but no
+     * match, skip to next currentIndex += sectionLength; } } else {
+     * currentIndex++; } } } catch (IOException ex) {
+     * Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null,
+     * ex ); System.out.println("Exception"); } }
+     *
+     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO

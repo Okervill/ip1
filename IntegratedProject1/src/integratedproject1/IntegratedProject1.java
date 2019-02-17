@@ -49,9 +49,10 @@ public class IntegratedProject1 extends Application {
         }
         if (!appointments.exists()){
             ReadWriteFile.createFile(appointments, 8);
-            Appointment a1 = new Appointment(1, "therapist 1", "15th Feb 2019", "Service");
+            Appointment a1 = new Appointment(1, "StarkT", "15th Feb 2019", "Sports Massage");
+            Appointment a2 = new Appointment(1, "WayneB", "16th Feb 2019", "Acupuncture");
+            Appointment a3 = new Appointment(2, "WayneB", "16th Feb 2019", "Physiotherapy");
         }
-        
         launch(args);
     }
 

@@ -21,15 +21,3 @@ Firstname: Bruce
 Surname: Wayne
 Manager: false
 --
-Username: testt
-Password: test
-Firstname: test
-Surname: test
-Manager: false
---
-Username: testt1
-Password: test
-Firstname: test
-Surname: test
-Manager: false
---

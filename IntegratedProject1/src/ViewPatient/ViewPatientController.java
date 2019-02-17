@@ -5,22 +5,24 @@
  */
 package ViewPatient;
 
+import MainScreen.Mainscreen;
+import integratedproject1.SwitchWindow;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.HBox;
+import javafx.stage.Stage;
 
-/**
- * FXML Controller class
- *
- * @author choco
- */
+
 public class ViewPatientController implements Initializable {
 
     @FXML
@@ -41,6 +43,8 @@ public class ViewPatientController implements Initializable {
     private TextField patientNo;
     @FXML
     private Button newAppointmentButton;
+    @FXML
+    private Button back;
 
     /**
      * Initializes the controller class.
@@ -48,7 +52,6 @@ public class ViewPatientController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
     }
-
 
     public void setData(ArrayList<String> data) {
         firstname.setText(data.get(0));
@@ -62,6 +65,18 @@ public class ViewPatientController implements Initializable {
     }
 
     @FXML
-    private void newAppointment(ActionEvent event) {
+    private void newAppointment(ActionEvent event) throws IOException {
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/NewAppointment/NewAppointment.fxml"));
+        Parent root = (Parent) loader.load();
+        Stage secondStage = new Stage();
+        secondStage.setScene(new Scene(new HBox(root)));
+        secondStage.show();
+    }
+
+    @FXML
+    private void back(ActionEvent event) {
+
+        SwitchWindow.switchWindow((Stage) back.getScene().getWindow(), new Mainscreen());
     }
 }
