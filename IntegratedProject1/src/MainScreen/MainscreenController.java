@@ -62,6 +62,11 @@ public class MainscreenController implements Initializable {
 
     @FXML
     private void findPatient(ActionEvent event) {
+        
+        if (findPatient.getText().length() < 1){
+            return;
+        }
+        
         ArrayList<String> patientData = search();
         if (patientData != null) {
             SwitchWindow.switchWindow((Stage) searchTherapist.getScene().getWindow(), new ViewPatient(patientData));

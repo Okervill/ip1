@@ -21,3 +21,9 @@ Firstname: Bruce
 Surname: Wayne
 Manager: false
 --
+Username: abca
+Password: password
+Firstname: abc
+Surname: abc
+Manager: false
+--
