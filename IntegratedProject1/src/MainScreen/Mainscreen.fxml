@@ -8,10 +8,13 @@
 <AnchorPane id="AnchorPane" prefHeight="768.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MainScreen.MainscreenController">
    <children>
       <Button fx:id="logout" layoutX="951.0" layoutY="14.0" mnemonicParsing="false" onAction="#logout" text="Log out" />
-      <Button fx:id="addTherapist" layoutX="522.0" layoutY="14.0" mnemonicParsing="false" onAction="#addTherapist" text="Add Therapist" />
+      <Button fx:id="addTherapist" layoutX="366.0" layoutY="14.0" mnemonicParsing="false" onAction="#addTherapist" text="Add Therapist" />
       <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#newPatient" text="New Patient" />
-      <Button layoutX="881.0" layoutY="14.0" mnemonicParsing="false" onAction="#findPatient" text="Search" />
-      <TextField fx:id="findPatient" onAction="#findPatient" layoutX="623.0" layoutY="14.0" prefHeight="25.0" prefWidth="250.0" promptText="Find Patient" />
-      <Button fx:id="searchTherapist" layoutX="523.0" layoutY="47.0" mnemonicParsing="false" onAction="#findTherapist" text="Edit Therapist" />
+      <Button layoutX="866.0" layoutY="14.0" mnemonicParsing="false" onAction="#findPatient" text="Search" />
+      <TextField fx:id="findPatient" layoutX="616.0" layoutY="14.0" onAction="#findPatient" prefHeight="25.0" prefWidth="250.0" promptText="Find Patient" />
+      <Button fx:id="searchTherapist" layoutX="477.0" layoutY="14.0" mnemonicParsing="false" onAction="#findTherapist" text="Edit Therapist" />
+      <DatePicker fx:id="datePicker" layoutX="14.0" layoutY="65.0" onAction="#pickDate" />
+      <ListView fx:id="displayAllAppointments" layoutX="14.0" layoutY="116.0" prefHeight="109.0" prefWidth="376.0" />
+      <ListView fx:id="displaySpecificAppointments" layoutX="14.0" layoutY="234.0" prefHeight="217.0" prefWidth="376.0" />
    </children>
 </AnchorPane>

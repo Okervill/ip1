@@ -12,6 +12,8 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 
 public class ReadWriteFile {
@@ -191,7 +193,7 @@ public class ReadWriteFile {
         return Therapists;
     }
 
-    public static void newAppointment(int a, int p, String t, String d, String time, String serv, int c, String stat) throws IOException {
+    public static void newAppointment(int a, int p, String t, LocalDate d, LocalTime time, String serv, int c, String stat) throws IOException {
         File file = new File(appointmentFile);
         FileWriter fw = new FileWriter(file, true);
         fw.write("Appointment Number: " + a);
@@ -239,6 +241,72 @@ public class ReadWriteFile {
         }
         int found = appointments.size() / 8;
         appointments.add(Integer.toString(found));
+        return appointments;
+    }
+
+    public static ArrayList getDateAppointments(LocalDate date) throws FileNotFoundException, IOException {
+        ArrayList<String> appointments = new ArrayList<>();
+
+        BufferedReader in = new BufferedReader(new FileReader(appointmentFile));
+        String str;
+
+        ArrayList<String> allData = new ArrayList<>();
+        while ((str = in.readLine()) != null) {
+            allData.add(str);
+        }
+        for (int i = 0; i < allData.size(); i++) {
+            if (allData.get(i).contains("Date: " + date)) {
+                appointments.add("Appointment Number: " + allData.get(i - 3).substring(20));//Appointment Number
+                appointments.add("Patient: " + getPatientData(allData.get(i - 2).substring(9)).get(0) + " " + getPatientData(allData.get(i - 2).substring(9)).get(1));//Patient
+                appointments.add("Therapist: " + getLoginData(allData.get(i - 1).substring(11)).get(2) + " " + getLoginData(allData.get(i - 1).substring(11)).get(3));//Therapist
+                appointments.add("Time: " + allData.get(i + 1).substring(6));//Time
+                appointments.add("Service: " + allData.get(i + 2).substring(8));//Service
+                appointments.add("Cost: " + allData.get(i + 3).substring(6));//Cost
+                appointments.add("Status: " + allData.get(i + 4).substring(8));//Status
+            }
+        }
+        return appointments;
+    }
+
+    public static ArrayList getAppointmentNumberInfo(String n) throws FileNotFoundException, IOException {
+        ArrayList<String> appointments = new ArrayList<>();
+
+        BufferedReader in = new BufferedReader(new FileReader(appointmentFile));
+        String str;
+
+        ArrayList<String> allData = new ArrayList<>();
+        while ((str = in.readLine()) != null) {
+            allData.add(str);
+        }
+        for (int i = 0; i < allData.size(); i++) {
+            if (allData.get(i).contains("Appointment Number: " + n)) {
+                appointments.add("Appointment Number: " + allData.get(i).substring(20));//Appointment Number
+                appointments.add("Patient: " + getPatientData(allData.get(i + 1).substring(9)).get(0) + " " + getPatientData(allData.get(i + 1).substring(9)).get(1));//Patient
+                appointments.add("Therapist: " + getLoginData(allData.get(i + 2).substring(11)).get(2) + " " + getLoginData(allData.get(i + 2).substring(11)).get(3));//Therapist
+                appointments.add("Time: " + allData.get(i + 4).substring(6));//Time
+                appointments.add("Service: " + allData.get(i + 5).substring(8));//Service
+                appointments.add("Cost: " + allData.get(i + 6).substring(6));//Cost
+                appointments.add("Status: " + allData.get(i + 7).substring(8));//Status
+            }
+        }
+        return appointments;
+    }
+
+    public static ArrayList getShortAppointments(LocalDate date) throws FileNotFoundException, IOException {
+        ArrayList<String> appointments = new ArrayList<>();
+
+        BufferedReader in = new BufferedReader(new FileReader(appointmentFile));
+        String str;
+
+        ArrayList<String> allData = new ArrayList<>();
+        while ((str = in.readLine()) != null) {
+            allData.add(str);
+        }
+        for (int i = 0; i < allData.size(); i++) {
+            if (allData.get(i).contains("Date: " + date)) {
+                appointments.add("Appointment: " + allData.get(i - 3).substring(20) + " Patient: " + getPatientData(allData.get(i - 2).substring(9)).get(0) + " " + getPatientData(allData.get(i - 2).substring(9)).get(1) + " Time: " + allData.get(i + 1).substring(6));//Patient + Time
+            }
+        }
         return appointments;
     }
 
