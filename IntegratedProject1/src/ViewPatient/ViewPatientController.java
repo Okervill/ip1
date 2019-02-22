@@ -20,8 +20,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
-
 
 public class ViewPatientController implements Initializable {
 
@@ -71,7 +71,9 @@ public class ViewPatientController implements Initializable {
         Parent root = (Parent) loader.load();
         Stage secondStage = new Stage();
         secondStage.setScene(new Scene(new HBox(root)));
-        secondStage.show();
+
+        secondStage.initModality(Modality.APPLICATION_MODAL);
+        secondStage.showAndWait();
     }
 
     @FXML

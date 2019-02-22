@@ -46,7 +46,7 @@ public class LoginController implements Initializable {
         }
 
         boolean login = false;
-        boolean manager = false;
+        boolean manager;
 
         try {
 

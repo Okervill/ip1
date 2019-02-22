@@ -11,22 +11,19 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-
 public class NewAppointment extends Application {
-    
+
     @Override
-    public void start(Stage stage) throws Exception {    
-    
+    public void start(Stage stage) throws Exception {
+
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/NewAppointment/NewAppointment.fxml"));
-        Parent root = (Parent)loader.load();
-        
+        Parent root = (Parent) loader.load();
+
         Scene scene = new Scene(root);
-        
+
         stage.setScene(scene);
         stage.setTitle("View Patient");
-        
+
         stage.show();
-        
     }
-    
 }

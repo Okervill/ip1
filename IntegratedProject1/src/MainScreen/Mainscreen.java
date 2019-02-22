@@ -5,6 +5,8 @@
  */
 package MainScreen;
 
+import integratedproject1.ReadWriteFile;
+import java.io.IOException;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -13,7 +15,7 @@ import javafx.stage.Stage;
 
 public class Mainscreen extends Application {
 
-    boolean manager = false;
+    boolean manager;
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -39,5 +41,11 @@ public class Mainscreen extends Application {
 
     public Mainscreen() {
 
+    }
+
+    public String getUserType(String user) throws IOException {
+        //Get user type of logged in user
+        String type = (String) ReadWriteFile.getLoginData(user).get(4);
+        return type;
     }
 }
