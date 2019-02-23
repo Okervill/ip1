@@ -46,13 +46,13 @@ public class LoginController implements Initializable {
         }
 
         boolean login = false;
-        boolean manager;
+        String userType;
 
         try {
 
-            for (int i = 0; i < ReadWriteFile.getUsernames().size(); i++) {
+            for (int i = 0; i < ReadWriteFile.getUsernames("all").size(); i++) {
                 //Check username and password are correct
-                if (user.equals(ReadWriteFile.getUsernames().get(i)) && pass.equals(ReadWriteFile.getLoginData(user).get(1))) {
+                if (user.equals(ReadWriteFile.getUsernames("all").get(i)) && pass.equals(ReadWriteFile.getLoginData(user).get(1))) {
                     login = true;
                     break;
                 }
@@ -60,12 +60,12 @@ public class LoginController implements Initializable {
         } catch (IOException ex) {
             Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-        manager = Boolean.parseBoolean((String) ReadWriteFile.getLoginData(user).get(4));
+        
+        userType = (String) ReadWriteFile.getLoginData(user).get(4);
 
         if (login) {
             //Swap Scene
-            SwitchWindow.switchWindow((Stage) button.getScene().getWindow(), new Mainscreen(manager));
+            SwitchWindow.switchWindow((Stage) button.getScene().getWindow(), new Mainscreen(user, userType));
         } else {
             Shaker shaker = new Shaker(button);
             shaker.shake();

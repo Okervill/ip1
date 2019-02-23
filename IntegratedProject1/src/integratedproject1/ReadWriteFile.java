@@ -49,7 +49,7 @@ public class ReadWriteFile {
         newLine(fw);
         fw.write("Surname: " + s);
         newLine(fw);
-        fw.write("Manager: " + m);
+        fw.write("Type: " + m);
         newLine(fw);
         fw.write("--");
         newLine(fw);
@@ -78,13 +78,13 @@ public class ReadWriteFile {
                 data.add(allData.get(i + 1).substring(10));//password
                 data.add(allData.get(i + 2).substring(11));//firstname
                 data.add(allData.get(i + 3).substring(9));//surname
-                data.add(allData.get(i + 4).substring(9));//manager
+                data.add(allData.get(i + 4).substring(6));//type
             }
         }
         return data;
     }
 
-    public static ArrayList getUsernames() throws IOException {
+    public static ArrayList getUsernames(String type) throws IOException {
 
         ArrayList<String> usernames = new ArrayList<>();
 
@@ -95,10 +95,29 @@ public class ReadWriteFile {
         while ((str = in.readLine()) != null) {
             list.add(str);
         }
-
-        for (int i = 0; i < list.size(); i++) {
-            if (list.get(i).contains("Username:")) {
-                usernames.add(list.get(i).substring(10));
+        if (type.equals("therapist")) {
+            for (int i = 4; i < list.size(); i++) {
+                if (list.get(i).contains("Type: therapist")) {
+                    usernames.add(list.get(i - 4).substring(10));
+                }
+            }
+        } else if (type.equals("receptionist")){
+            for (int i = 4; i < list.size(); i++) {
+                if (list.get(i - 4).contains("Type: receptionist")) {
+                    usernames.add(list.get(i).substring(10));
+                }
+            }
+        } else if (type.equals("all")){
+            for (int i = 0; i < list.size(); i++) {
+                if (list.get(i).contains("Username")) {
+                    usernames.add(list.get(i).substring(10));
+                }
+            }            
+        } else if (type.equals("manager")) {
+            for (int i = 4; i < list.size(); i++) {
+                if (list.get(i).contains("Type: manager")) {
+                    usernames.add(list.get(i - 4).substring(10));
+                }
             }
         }
         return usernames;
@@ -184,12 +203,11 @@ public class ReadWriteFile {
             allData.add(str);
         }
 
-        for (int i = 0; i < allData.size(); i++) {
-            if (allData.get(i).contains("Firstname: ")) {
-                Therapists.add(allData.get(i).substring(11) + " " + allData.get(i + 1).substring(9));//Firstname + Surname
+        for (int i = 2; i < allData.size(); i++) {
+            if (allData.get(i).contains("Type: therapist")) {
+                Therapists.add(allData.get(i - 2).substring(11) + " " + allData.get(i - 1).substring(9));//Firstname + Surname
             }
         }
-
         return Therapists;
     }
 
@@ -292,9 +310,9 @@ public class ReadWriteFile {
         return appointments;
     }
 
-    public static ArrayList getShortAppointments(LocalDate date) throws FileNotFoundException, IOException {
-        ArrayList<String> appointments = new ArrayList<>();
+    public static ArrayList getShortAppointments(LocalDate date, String user) throws FileNotFoundException, IOException {
 
+        ArrayList<String> appointments = new ArrayList<>();
         BufferedReader in = new BufferedReader(new FileReader(appointmentFile));
         String str;
 
@@ -303,7 +321,7 @@ public class ReadWriteFile {
             allData.add(str);
         }
         for (int i = 0; i < allData.size(); i++) {
-            if (allData.get(i).contains("Date: " + date)) {
+            if (allData.get(i).contains("Date: " + date) && allData.get(i - 1).contains("Therapist: " + user)) {
                 appointments.add("Appointment: " + allData.get(i - 3).substring(20) + " Patient: " + getPatientData(allData.get(i - 2).substring(9)).get(0) + " " + getPatientData(allData.get(i - 2).substring(9)).get(1) + " Time: " + allData.get(i + 1).substring(6));//Patient + Time
             }
         }

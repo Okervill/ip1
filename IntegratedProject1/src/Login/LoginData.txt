@@ -7,23 +7,23 @@ Username: admin
 Password: admin
 Firstname: admin
 Surname: admin
-Manager: true
+Type: manager
 --
 Username: StarkT
 Password: ironman
 Firstname: Tony
 Surname: Stark
-Manager: false
+Type: therapist
 --
 Username: WayneB
 Password: batman
 Firstname: Bruce
 Surname: Wayne
-Manager: false
+Type: therapist
 --
-Username: abca
-Password: password
-Firstname: abc
-Surname: abc
-Manager: false
+Username: LeeS
+Password: marvel
+Firstname: Stan
+Surname: Lee
+Type: receptionist
 --

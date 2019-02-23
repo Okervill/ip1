@@ -15,7 +15,8 @@ import javafx.stage.Stage;
 
 public class Mainscreen extends Application {
 
-    boolean manager;
+    String userType;
+    String username;
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -29,23 +30,17 @@ public class Mainscreen extends Application {
         stage.setTitle("Home");
 
         MainscreenController controller = loader.getController();
-        controller.setData(manager);
+        controller.setData(username, userType);
 
         stage.show();
 
     }
 
-    public Mainscreen(boolean m) {
-        manager = m;
-    }
-
     public Mainscreen() {
-
     }
-
-    public String getUserType(String user) throws IOException {
-        //Get user type of logged in user
-        String type = (String) ReadWriteFile.getLoginData(user).get(4);
-        return type;
+    
+    public Mainscreen(String u, String t){
+        username = u;
+        userType = t;
     }
 }

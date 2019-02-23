@@ -115,7 +115,7 @@ public class ViewTherapistController implements Initializable {
         String currentUsername = currentUser.getText();
 
         try {
-            if (!ReadWriteFile.getUsernames().contains(currentUsername)) {
+            if (!ReadWriteFile.getUsernames("all").contains(currentUsername)) {
                 return;
             }
         } catch (IOException ex) {

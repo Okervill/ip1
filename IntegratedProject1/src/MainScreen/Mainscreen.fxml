@@ -16,5 +16,6 @@
       <DatePicker fx:id="datePicker" layoutX="14.0" layoutY="65.0" onAction="#pickDate" />
       <ListView fx:id="displayAllAppointments" layoutX="14.0" layoutY="116.0" prefHeight="109.0" prefWidth="376.0" />
       <ListView fx:id="displaySpecificAppointments" layoutX="14.0" layoutY="234.0" prefHeight="217.0" prefWidth="376.0" />
+      <ChoiceBox fx:id="therapists" layoutX="216.0" layoutY="65.0" prefWidth="150.0" />
    </children>
 </AnchorPane>
