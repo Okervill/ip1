@@ -23,6 +23,7 @@ public class ViewTherapist extends Application {
         
         stage.setScene(scene);
         stage.setTitle("View Therapist");
-        stage.show();        
+        stage.show();           
+        stage.centerOnScreen();     
     }
 }

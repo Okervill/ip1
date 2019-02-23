@@ -34,7 +34,8 @@ public class ViewPatient extends Application {
         ViewPatientController controller = loader.getController();
         controller.setData(patientData);
         
-        stage.show();
+        stage.show();        
+        stage.centerOnScreen();
         
     }
     

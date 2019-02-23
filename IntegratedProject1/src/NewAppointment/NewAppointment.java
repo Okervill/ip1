@@ -24,6 +24,7 @@ public class NewAppointment extends Application {
         stage.setScene(scene);
         stage.setTitle("View Patient");
 
-        stage.show();
+        stage.show();        
+        stage.centerOnScreen();
     }
 }

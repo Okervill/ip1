@@ -23,5 +23,6 @@ public class AddTherapist extends Application {
         stage.setScene(scene);
         stage.setTitle("Add Therapist");
         stage.show();        
+        stage.centerOnScreen();
     }
 }
