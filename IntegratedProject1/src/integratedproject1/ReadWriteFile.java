@@ -101,22 +101,22 @@ public class ReadWriteFile {
                     usernames.add(list.get(i - 4).substring(10));
                 }
             }
-        } else if (type.equals("receptionist")){
+        } else if (type.equals("receptionist")) {
             for (int i = 4; i < list.size(); i++) {
                 if (list.get(i - 4).contains("Type: receptionist")) {
                     usernames.add(list.get(i).substring(10));
                 }
             }
-        } else if (type.equals("all")){
-            for (int i = 0; i < list.size(); i++) {
-                if (list.get(i).contains("Username")) {
-                    usernames.add(list.get(i).substring(10));
-                }
-            }            
         } else if (type.equals("manager")) {
             for (int i = 4; i < list.size(); i++) {
                 if (list.get(i).contains("Type: manager")) {
                     usernames.add(list.get(i - 4).substring(10));
+                }
+            }
+        } else if (type.equals("all")) {
+            for (int i = 0; i < list.size(); i++) {
+                if (list.get(i).contains("Username")) {
+                    usernames.add(list.get(i).substring(10));
                 }
             }
         }

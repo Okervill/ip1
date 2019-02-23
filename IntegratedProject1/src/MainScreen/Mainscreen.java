@@ -33,6 +33,7 @@ public class Mainscreen extends Application {
         controller.setData(username, userType);
 
         stage.show();
+        stage.centerOnScreen();
 
     }
 

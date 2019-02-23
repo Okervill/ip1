@@ -60,11 +60,9 @@ public class LoginController implements Initializable {
         } catch (IOException ex) {
             Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        userType = (String) ReadWriteFile.getLoginData(user).get(4);
-
         if (login) {
             //Swap Scene
+            userType = (String) ReadWriteFile.getLoginData(user).get(4);
             SwitchWindow.switchWindow((Stage) button.getScene().getWindow(), new Mainscreen(user, userType));
         } else {
             Shaker shaker = new Shaker(button);
