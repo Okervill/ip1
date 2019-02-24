@@ -22,15 +22,16 @@ public class Mainscreen extends Application {
     public void start(Stage stage) throws Exception {
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/MainScreen/Mainscreen.fxml"));
+        
         Parent root = (Parent) loader.load();
-
+        
+        MainscreenController controller = loader.getController();
+        controller.setData(username, userType);
+        
         Scene scene = new Scene(root);
 
         stage.setScene(scene);
         stage.setTitle("Home");
-
-        MainscreenController controller = loader.getController();
-        controller.setData(username, userType);
 
         stage.show();
         stage.centerOnScreen();

@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Platform;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -53,37 +54,45 @@ public class MainscreenController implements Initializable {
 
     String userType;
     String username;
+    String selectedTherapist;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        //------------------------------------------------//
-        //Set date as today and get appointments for today//
-        //------------------------------------------------//
-        LocalDate today = LocalDate.now();
-        datePicker.setValue(today);
-
-        displayAppointments(username);
-
-        try {
-            displayTherapists();
-        } catch (IOException ex) {
-            Logger.getLogger(MainscreenController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        //-------------------------------------------------------------------------//
-        //add listener to the list view selection to get extra info on appointments//
-        //-------------------------------------------------------------------------//
-        displayAllAppointments.getSelectionModel().selectedItemProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
+        //This allows setdata to be ran before this section of code
+        Platform.runLater(() -> {
+            //------------------------------------------------//
+            //Set date as today and get appointments for today//
+            //------------------------------------------------//
+            LocalDate today = LocalDate.now();
+            datePicker.setValue(today);
+            //------------------------------------//
+            //Add all therapists to the choice box//
+            //------------------------------------//
             try {
-                displayAppointmentDetails(newValue);
+                displayTherapists();
             } catch (IOException ex) {
                 Logger.getLogger(MainscreenController.class.getName()).log(Level.SEVERE, null, ex);
             }
+            if (!userType.equals("therapist")) {
+                selectedTherapist = therapists.getSelectionModel().getSelectedItem();
+            } else {
+                selectedTherapist = username;
+            }
+            displayAppointments(selectedTherapist);
+            //-------------------------------------------------------------------------//
+            //add listener to the list view selection to get extra info on appointments//
+            //-------------------------------------------------------------------------//
+            displayAllAppointments.getSelectionModel().selectedItemProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
+                try {
+                    displayAppointmentDetails(newValue);
+                } catch (IOException ex) {
+                    Logger.getLogger(MainscreenController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            });
         });
-
     }
 
     @FXML
@@ -161,17 +170,27 @@ public class MainscreenController implements Initializable {
     private void pickDate(ActionEvent event) throws IOException {
         //get appointments for date
         LocalDate date = datePicker.getValue();
-        ArrayList<String> allAppointments = ReadWriteFile.getShortAppointments(date, username);
+        if (selectedTherapist == "All") {
+            selectedTherapist = "";
+        }
+        ArrayList<String> allAppointments = ReadWriteFile.getShortAppointments(date, selectedTherapist);
         ObservableList<String> appointments = FXCollections.observableArrayList();
 
         for (int i = 0; i < allAppointments.size(); i++) {
             appointments.add(allAppointments.get(i));
         }
+        displaySpecificAppointments.getItems().clear();
         displayAllAppointments.setItems(appointments);
+        displayAllAppointments.getSelectionModel().selectFirst();
     }
 
     //Get full appointment details for selected appointment
     private void displayAppointmentDetails(String appointment) throws IOException {
+        
+        //Check for null/empty
+        if (appointment == null || appointment.isEmpty()) {return; }
+        
+        //Get Appointment Number
         int start = appointment.indexOf(" ") + 1;
         int stop = appointment.indexOf(" ", start + 1);
         String appointmentNumber = appointment.substring(start, stop);
@@ -190,29 +209,40 @@ public class MainscreenController implements Initializable {
         //-----------------------------------------------------------//
         ArrayList<String> allTherapists = ReadWriteFile.getUsernames("therapist");
         ObservableList<String> t = FXCollections.observableArrayList();
+        //option for viewing all appointments
+        t.add("All");
         for (int i = 0; i < allTherapists.size(); i++) {
             t.add(allTherapists.get(i));
         }
         therapists.setItems(t);
+        therapists.getSelectionModel().select(0);
         therapists.getSelectionModel().selectedItemProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
-            username = newValue;
-            displayAppointments(username);
+            selectedTherapist = newValue;
+            if (selectedTherapist == "All") {
+                selectedTherapist = "";
+            }
+            displayAppointments(selectedTherapist);
         });
     }
 
     public void displayAppointments(String user) {
+
+        if (user == "All") {
+            user = "";
+        }
 
         LocalDate date = datePicker.getValue();
         ArrayList<String> allAppointments = null;
         try {
             allAppointments = ReadWriteFile.getShortAppointments(date, user);
             //If there are no appointments return
-            if (allAppointments.size() < 1) return;
+            if (allAppointments.size() < 1) {
+                return;
+            }
         } catch (IOException ex) {
             Logger.getLogger(MainscreenController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        
+
         ObservableList<String> appointments = FXCollections.observableArrayList();
 
         for (int i = 0; i < allAppointments.size(); i++) {
