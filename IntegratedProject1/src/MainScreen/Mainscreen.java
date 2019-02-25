@@ -26,7 +26,9 @@ public class Mainscreen extends Application {
         Parent root = (Parent) loader.load();
         
         MainscreenController controller = loader.getController();
-        controller.setData(username, userType);
+        if (username != null && userType != null) {
+            controller.setData(username, userType);
+        }
         
         Scene scene = new Scene(root);
 

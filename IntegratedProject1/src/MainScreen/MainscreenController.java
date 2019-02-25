@@ -12,6 +12,7 @@ import ViewPatient.ViewPatient;
 import ViewTherapist.ViewTherapist;
 import integratedproject1.ReadWriteFile;
 import integratedproject1.SwitchWindow;
+import integratedproject1.User;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
@@ -75,6 +76,11 @@ public class MainscreenController implements Initializable {
                 displayTherapists();
             } catch (IOException ex) {
                 Logger.getLogger(MainscreenController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            if (username == null && userType == null) {
+                User currentUser = new User();
+                username = currentUser.getUsername();
+                userType = currentUser.getUserType();
             }
             if (!userType.equals("therapist")) {
                 selectedTherapist = therapists.getSelectionModel().getSelectedItem();

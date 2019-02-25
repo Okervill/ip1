@@ -10,6 +10,7 @@ import integratedproject1.ReadWriteFile;
 import integratedproject1.SwitchWindow;
 import Animation.Shaker;
 import integratedproject1.Hash;
+import integratedproject1.User;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -65,6 +66,9 @@ public class LoginController implements Initializable {
         if (login) {
             //Swap Scene
             userType = (String) ReadWriteFile.getLoginData(user).get(4);
+            User currentUser = new User();
+            currentUser.setUsername(user);
+            currentUser.setUserType(userType);
             SwitchWindow.switchWindow((Stage) button.getScene().getWindow(), new Mainscreen(user, userType));
         } else {
             Shaker shaker = new Shaker(button);
