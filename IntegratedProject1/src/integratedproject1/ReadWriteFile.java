@@ -41,6 +41,8 @@ public class ReadWriteFile {
     public static void updateLoginFile(String f, String s, String u, String p, String m) throws IOException {
         File file = new File(loginFile);
         FileWriter fw = new FileWriter(file, true);
+        Hash h1 = new Hash();
+        p = h1.hash(p);
         fw.write("Username: " + u);
         newLine(fw);
         fw.write("Password: " + p);

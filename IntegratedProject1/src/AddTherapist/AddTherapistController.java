@@ -5,7 +5,6 @@
  */
 package AddTherapist;
 
-import AddTherapist.AddTherapist;
 import MainScreen.Mainscreen;
 import integratedproject1.SwitchWindow;
 import integratedproject1.Therapist;
@@ -25,8 +24,6 @@ import javafx.stage.Stage;
 public class AddTherapistController implements Initializable {
 
     @FXML
-    private ChoiceBox<String> manager;
-    @FXML
     private Button discard;
     @FXML
     private Button save;
@@ -36,14 +33,15 @@ public class AddTherapistController implements Initializable {
     private TextField password;
     @FXML
     private TextField firstname;
+    @FXML
+    private ChoiceBox<String> type;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        manager.setItems(FXCollections.observableArrayList("true", "false"));
-        manager.getSelectionModel().select("false");
+        type.setItems(FXCollections.observableArrayList("manager", "therapist", "receptionist"));
     }    
 
     @FXML
@@ -56,7 +54,7 @@ public class AddTherapistController implements Initializable {
         String f = firstname.getText();
         String s = surname.getText();
         String p = password.getText();
-        String m = manager.getSelectionModel().getSelectedItem();
+        String m = type.getSelectionModel().getSelectedItem();
         
         Therapist t = new Therapist(f, s, p, m);
         
