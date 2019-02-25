@@ -9,6 +9,7 @@ import MainScreen.Mainscreen;
 import integratedproject1.ReadWriteFile;
 import integratedproject1.SwitchWindow;
 import Animation.Shaker;
+import integratedproject1.Hash;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -38,6 +39,7 @@ public class LoginController implements Initializable {
 
         String user = inputuser.getText();
         String pass = inputpass.getText();
+        Hash h1 = new Hash();
 
         if (user.length() < 1 || pass.length() < 1) {
             Shaker shaker = new Shaker(button);
@@ -52,7 +54,7 @@ public class LoginController implements Initializable {
 
             for (int i = 0; i < ReadWriteFile.getUsernames("all").size(); i++) {
                 //Check username and password are correct
-                if (user.equals(ReadWriteFile.getUsernames("all").get(i)) && pass.equals(ReadWriteFile.getLoginData(user).get(1))) {
+                if (user.equals(ReadWriteFile.getUsernames("all").get(i)) && h1.verifyHash(pass, (String) ReadWriteFile.getLoginData(user).get(1))) {
                     login = true;
                     break;
                 }

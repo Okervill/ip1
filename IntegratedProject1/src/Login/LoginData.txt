@@ -4,25 +4,25 @@
 
 --
 Username: admin
-Password: admin
+Password: $2a$11$84A9oF3eIS1DomytBbmzPuxDMmrwZeVRTQ9fgA1JW9qT16Eo9Z5Pq
 Firstname: admin
 Surname: admin
 Type: manager
 --
 Username: StarkT
-Password: ironman
+Password: $2a$11$lXnfg02Eg6gS9BX5QBU5kuXECSRcUqSkJgWlx/1g4W1c0AaU3.zXa
 Firstname: Tony
 Surname: Stark
 Type: therapist
 --
 Username: WayneB
-Password: batman
+Password: $2a$11$YMjGu6ZjvLci2v.l6LYTO.pmgJt6mGEEjtVCYVazs450DG2qs/qpq
 Firstname: Bruce
 Surname: Wayne
 Type: therapist
 --
 Username: LeeS
-Password: marvel
+Password: $2a$11$7Pj4PKScLwz5y/YWwDiW4eLENyCwQhRWKPxElTDgZG5bBaNXs.alm
 Firstname: Stan
 Surname: Lee
 Type: receptionist

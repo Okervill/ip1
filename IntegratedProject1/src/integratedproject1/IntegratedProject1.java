@@ -40,10 +40,13 @@ public class IntegratedProject1 extends Application {
         //if login file doesnt exist create it with some test data
         if (!loginData.exists()) {
             ReadWriteFile.createFile(loginData, 5);
-            Therapist t1 = new Therapist("admin", "admin", "admin", "manager");
-            Therapist t2 = new Therapist("Tony", "Stark", "ironman", "therapist");
-            Therapist t3 = new Therapist("Bruce", "Wayne", "batman", "therapist");
-            Therapist t4 = new Therapist("Stan", "Lee", "marvel", "receptionist");
+            
+            Hash h1 = new Hash();
+            
+            Therapist t1 = new Therapist("admin", "admin", h1.hash("admin"), "manager");
+            Therapist t2 = new Therapist("Tony", "Stark", h1.hash("ironman"), "therapist");
+            Therapist t3 = new Therapist("Bruce", "Wayne", h1.hash("batman"), "therapist");
+            Therapist t4 = new Therapist("Stan", "Lee", h1.hash("marvel"), "receptionist");
         }
         //if patient file doesnt exist create it with some test data
         if (!patientData.exists()) {
