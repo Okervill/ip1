@@ -22,8 +22,10 @@ public class ReadWriteFile {
     static String patientFile = "src/integratedproject1/PatientFile.txt";
     static String appointmentFile = "src/integratedproject1/appointments.txt";
 
+    //----------------------------//
+    //      Login File stuff      //
+    //----------------------------//
     public static void createFile(File file, int m) throws IOException, FileNotFoundException, UnsupportedEncodingException {
-
         FileWriter fw = new FileWriter(file, false);
         fw.write("<!-- METADATA");
         newLine(fw);
@@ -56,10 +58,6 @@ public class ReadWriteFile {
         fw.write("--");
         newLine(fw);
         fw.close();
-    }
-
-    public static void newLine(FileWriter fw) throws IOException {
-        fw.write(System.getProperty("line.separator"));
     }
 
     public static ArrayList getLoginData(String username) throws IOException {
@@ -125,6 +123,29 @@ public class ReadWriteFile {
         return usernames;
     }
 
+    public static ArrayList<String> getAllTherapists() throws FileNotFoundException, IOException {
+
+        ArrayList<String> Therapists = new ArrayList<>();
+
+        BufferedReader in = new BufferedReader(new FileReader(loginFile));
+        String str;
+
+        ArrayList<String> allData = new ArrayList<>();
+        while ((str = in.readLine()) != null) {
+            allData.add(str);
+        }
+
+        for (int i = 2; i < allData.size(); i++) {
+            if (allData.get(i).contains("Type: therapist")) {
+                Therapists.add(allData.get(i - 2).substring(11) + " " + allData.get(i - 1).substring(9));//Firstname + Surname
+            }
+        }
+        return Therapists;
+    }
+
+    //---------------------------------//
+    //        Patient File Stuff       //
+    //---------------------------------//
     public static void updatePatientFile(String f, String s, String e, String m, String d, String g, String p, int n) throws IOException { //(firstname, surname, email, mobile, dob, gender, postcode);
         File file = new File(patientFile);
         FileWriter fw = new FileWriter(file, true);
@@ -178,6 +199,28 @@ public class ReadWriteFile {
         return data;
     }
 
+    public static int countPatients() throws FileNotFoundException, IOException {
+        int count = 0;
+        BufferedReader in = new BufferedReader(new FileReader(patientFile));
+        String str;
+
+        ArrayList<String> allData = new ArrayList<>();
+        while ((str = in.readLine()) != null) {
+            allData.add(str);
+        }
+
+        for (int i = 0; i < allData.size(); i++) {
+            if (allData.get(i).contains("Forename")) {
+                count++;
+            }
+        }
+        return count;
+    }
+ 
+    //-------------------------------------//
+    //        Appointment File Stuff       //
+    //-------------------------------------//
+
     public static int countAppointments() throws IOException {
 
         int count = 0;
@@ -192,26 +235,8 @@ public class ReadWriteFile {
         }
         return count;
     }
-
-    public static ArrayList<String> getAllTherapists() throws FileNotFoundException, IOException {
-
-        ArrayList<String> Therapists = new ArrayList<>();
-
-        BufferedReader in = new BufferedReader(new FileReader(loginFile));
-        String str;
-
-        ArrayList<String> allData = new ArrayList<>();
-        while ((str = in.readLine()) != null) {
-            allData.add(str);
-        }
-
-        for (int i = 2; i < allData.size(); i++) {
-            if (allData.get(i).contains("Type: therapist")) {
-                Therapists.add(allData.get(i - 2).substring(11) + " " + allData.get(i - 1).substring(9));//Firstname + Surname
-            }
-        }
-        return Therapists;
-    }
+    
+    
 
     public static void newAppointment(int a, int p, String t, LocalDate d, LocalTime time, String serv, int c, String stat) throws IOException {
         File file = new File(appointmentFile);
@@ -330,26 +355,8 @@ public class ReadWriteFile {
         return appointments;
     }
 
-    public static int countPatients() throws FileNotFoundException, IOException {
-        int count = 0;
-        BufferedReader in = new BufferedReader(new FileReader(patientFile));
-        String str;
-
-        ArrayList<String> allData = new ArrayList<>();
-        while ((str = in.readLine()) != null) {
-            allData.add(str);
-        }
-
-        for (int i = 0; i < allData.size(); i++) {
-            if (allData.get(i).contains("Forename")) {
-                count++;
-            }
-        }
-        return count;
-    }
-
-    public static void editLoginFile(String oldString, String newString) {
-        File file = new File(loginFile);
+    public static void editLoginFile(String fileLocation, String oldString, String newString) {
+        File file = new File(fileLocation);
         String oldContent = "";
         BufferedReader reader = null;
         FileWriter writer = null;
@@ -379,5 +386,9 @@ public class ReadWriteFile {
                 e.printStackTrace();
             }
         }
+    }
+
+    public static void newLine(FileWriter fw) throws IOException {
+        fw.write(System.getProperty("line.separator"));
     }
 }

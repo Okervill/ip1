@@ -82,6 +82,7 @@ public class ViewTherapistController implements Initializable {
         }
 
         ReadWriteFile.editLoginFile(
+                "src/Login/LoginData.txt",
                 "Username: " + currentUser + System.getProperty("line.separator")
                 + //current info
                 "Password: " + currentPass + System.getProperty("line.separator")
