@@ -6,6 +6,7 @@
 package MainScreen;
 
 import integratedproject1.ReadWriteFile;
+import integratedproject1.User;
 import java.io.IOException;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -26,9 +27,12 @@ public class Mainscreen extends Application {
         Parent root = (Parent) loader.load();
         
         MainscreenController controller = loader.getController();
-        if (username != null && userType != null) {
-            controller.setData(username, userType);
+        if (username == null || userType == null) {
+            User currentUser = new User();
+            username = currentUser.getUsername();
+            userType = currentUser.getUserType();
         }
+        controller.setData(username, userType);
         
         Scene scene = new Scene(root);
 

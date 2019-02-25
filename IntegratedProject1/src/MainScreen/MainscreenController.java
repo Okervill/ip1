@@ -99,6 +99,9 @@ public class MainscreenController implements Initializable {
                 }
             });
         });
+        searchTherapist.setVisible(false);
+        addTherapist.setVisible(false);
+        therapists.setVisible(false);
     }
 
     @FXML
@@ -157,10 +160,6 @@ public class MainscreenController implements Initializable {
 
         userType = t;
         username = u;
-
-        searchTherapist.setVisible(false);
-        addTherapist.setVisible(false);
-        therapists.setVisible(false);
 
         if (userType.equals("manager")) {
             searchTherapist.setVisible(true);
