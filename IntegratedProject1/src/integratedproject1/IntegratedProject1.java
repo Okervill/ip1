@@ -37,6 +37,8 @@ public class IntegratedProject1 extends Application {
         File loginData = new File("src/Login/LoginData.txt");
         File patientData = new File("src/integratedproject1/PatientFile.txt");
         File appointments = new File("src/integratedproject1/appointments.txt");
+        File services = new File("src/integratedproject1/services.txt");
+        
         //if login file doesnt exist create it with some test data
         if (!loginData.exists()) {
             ReadWriteFile.createFile(loginData, 5);
