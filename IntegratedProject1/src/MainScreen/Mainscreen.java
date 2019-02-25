@@ -5,9 +5,7 @@
  */
 package MainScreen;
 
-import integratedproject1.ReadWriteFile;
 import integratedproject1.User;
-import java.io.IOException;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;

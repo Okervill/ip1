@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package AddTherapist;
+package AddPatient;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -11,18 +11,27 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-public class AddTherapist extends Application {
-
+/**
+ *
+ * @author patrick
+ */
+public class NewPatient extends Application {
+    
+    public NewPatient() {
+        
+    }
+    
     @Override
     public void start(Stage stage) throws Exception {    
     
-        Parent root = FXMLLoader.load(getClass().getResource("/AddTherapist/AddTherapist.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/AddPatient/NewPatient.fxml"));
         
         Scene scene = new Scene(root);
         
         stage.setScene(scene);
-        stage.setTitle("Add Therapist");
+        stage.setTitle("New Patient");
         stage.show();        
         stage.centerOnScreen();
     }
+    
 }

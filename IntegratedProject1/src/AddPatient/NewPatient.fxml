@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane id="AnchorPane" prefHeight="317.0" prefWidth="686.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="AddPatient.NewPatientController">
+   <children>
+      <TextField fx:id="firstname" layoutX="58.0" layoutY="40.0" promptText="First name" />
+      <TextField fx:id="surname" layoutX="234.0" layoutY="40.0" promptText="Surname" />
+      <DatePicker fx:id="dob" layoutX="413.0" layoutY="40.0" promptText="Date Of Birth" />
+      <ChoiceBox fx:id="gender" layoutX="58.0" layoutY="73.0" prefHeight="27.0" prefWidth="167.0" />
+      <TextField fx:id="postcode" layoutX="234.0" layoutY="73.0" promptText="Postcode" />
+      <TextField fx:id="email" layoutX="52.0" layoutY="203.0" prefHeight="27.0" prefWidth="346.0" promptText="Email Address" />
+      <TextField fx:id="contactno" layoutX="52.0" layoutY="236.0" prefHeight="27.0" prefWidth="143.0" promptText="Contact Number" />
+      <Button fx:id="save" contentDisplay="CENTER" layoutX="520.0" layoutY="276.0" mnemonicParsing="false" onAction="#save" prefHeight="27.0" prefWidth="65.0" text="Save" />
+      <Button fx:id="discard" layoutX="607.0" layoutY="276.0" mnemonicParsing="false" onAction="#close" text="Discard" />
+   </children>
+</AnchorPane>

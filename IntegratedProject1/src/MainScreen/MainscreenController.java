@@ -5,7 +5,7 @@
  */
 package MainScreen;
 
-import AddTherapist.AddTherapist;
+import AddEmployee.AddTherapist;
 import Animation.Shaker;
 import Login.Login;
 import ViewPatient.ViewPatient;
@@ -26,12 +26,17 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.HBox;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class MainscreenController implements Initializable {
@@ -111,7 +116,14 @@ public class MainscreenController implements Initializable {
     }
 
     @FXML
-    private void newPatient(ActionEvent event) {
+    private void newPatient(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/AddPatient/NewPatient.fxml"));
+        Parent root = (Parent) loader.load();
+        Stage secondStage = new Stage();
+        secondStage.setScene(new Scene(new HBox(root)));
+
+        secondStage.initModality(Modality.APPLICATION_MODAL);
+        secondStage.showAndWait();
     }
 
     @FXML
@@ -191,10 +203,12 @@ public class MainscreenController implements Initializable {
 
     //Get full appointment details for selected appointment
     private void displayAppointmentDetails(String appointment) throws IOException {
-        
+
         //Check for null/empty
-        if (appointment == null || appointment.isEmpty()) {return; }
-        
+        if (appointment == null || appointment.isEmpty()) {
+            return;
+        }
+
         //Get Appointment Number
         int start = appointment.indexOf(" ") + 1;
         int stop = appointment.indexOf(" ", start + 1);
