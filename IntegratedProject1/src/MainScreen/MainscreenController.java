@@ -5,12 +5,10 @@
  */
 package MainScreen;
 
-import NewEmployee.AddTherapist;
 import Animation.Shaker;
 import Login.Login;
 import SQL.SQLHandler;
 import ViewPatient.ViewPatient;
-import ViewTherapist.ViewTherapist;
 import integratedproject1.SwitchWindow;
 import integratedproject1.User;
 import java.io.IOException;
@@ -124,7 +122,6 @@ public class MainscreenController implements Initializable {
 
     @FXML
     private void logout(ActionEvent event) {
-        System.out.println("Log out Sucessful");
         SwitchWindow.switchWindow((Stage) logout.getScene().getWindow(), new Login());
     }
 
@@ -141,7 +138,7 @@ public class MainscreenController implements Initializable {
 
     @FXML
     private void addTherapist(ActionEvent event) throws IOException {
-        
+
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/NewEmployee/AddTherapist.fxml"));
         Parent root = (Parent) loader.load();
         Stage secondStage = new Stage();
@@ -167,7 +164,15 @@ public class MainscreenController implements Initializable {
 
     @FXML
     private void findTherapist(ActionEvent event) throws IOException {
-        SwitchWindow.switchWindow((Stage) searchTherapist.getScene().getWindow(), new ViewTherapist());
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/ViewTherapist/ViewTherapist.fxml"));
+        Parent root = (Parent) loader.load();
+        Stage secondStage = new Stage();
+        secondStage.setScene(new Scene(new HBox(root)));
+
+        secondStage.initModality(Modality.APPLICATION_MODAL);
+        secondStage.showAndWait();
+        //SwitchWindow.switchWindow((Stage) searchTherapist.getScene().getWindow(), new ViewTherapist());
     }
 
     private ArrayList<String> search() {

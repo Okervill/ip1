@@ -28,6 +28,8 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 public class LoginController implements Initializable {
+    
+    SQLHandler sql = new SQLHandler();
 
     @FXML
     private Label label;
@@ -51,15 +53,13 @@ public class LoginController implements Initializable {
             return;
         }
         String userType;
-
-        SQLHandler sql = new SQLHandler();
         ArrayList<String> userinfo = sql.search("login", "username", user);
 
         if (userinfo.size() < 5 || !h1.verifyHash(pass, userinfo.get(1))) {
             Shaker shaker = new Shaker(button);
             shaker.shake();
         } else {
-            userType = (String) ReadWriteFile.getLoginData(user).get(4);
+            userType = sql.search("login", "username", user).get(4);//(String) ReadWriteFile.getLoginData(user).get(4);
             User currentUser = new User();
             currentUser.setUsername(user);
             currentUser.setUserType(userType);

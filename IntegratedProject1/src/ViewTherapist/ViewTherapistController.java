@@ -28,9 +28,6 @@ public class ViewTherapistController implements Initializable {
 
     @FXML
     private TextField firstname;
-    private TextField username;
-    @FXML
-    private TextField password;
     @FXML
     private TextField surname;
     @FXML
@@ -44,8 +41,10 @@ public class ViewTherapistController implements Initializable {
     @FXML
     private ChoiceBox<String> manager;
 
-    
     SQLHandler sql = new SQLHandler();
+    @FXML
+    private TextField password;
+
     /**
      * Initializes the controller class.
      *
@@ -61,48 +60,25 @@ public class ViewTherapistController implements Initializable {
     private void save(ActionEvent event) throws IOException, SQLException {
 
         String currentUsername = currentUser.getText();
-
+        if (currentUsername.length() < 1) {
+            return;
+        }
+        if (!password.getText().isEmpty()){
+            sql.updateLoginPassword(currentUsername, password.getText());
+        }
+        
         ArrayList<String> current = null;
         try {
             current = sql.search("login", "username", currentUsername);//ReadWriteFile.getLoginData(currentUsername);
         } catch (SQLException ex) {
             Logger.getLogger(ViewTherapistController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        
-                
 
         String newFirst = firstname.getText();
         String newLast = surname.getText();
-        String newPass = password.getText();
         String newUserType = manager.getSelectionModel().getSelectedItem();
-        
-        if (password.getText().length() < 1){
-            newPass = current.get(1);
-        }
-        
-        sql.updateLogin(currentUsername, newPass, newFirst, newLast, newUserType);
 
-//        ReadWriteFile.editLoginFile(
-//                "src/Login/LoginData.txt",
-//                "Username: " + currentUser + System.getProperty("line.separator")
-//                + //current info
-//                "Password: " + currentPass + System.getProperty("line.separator")
-//                + //current info
-//                "Firstname: " + currentFirst + System.getProperty("line.separator")
-//                + //current info
-//                "Surname: " + currentLast + System.getProperty("line.separator")
-//                + //current info
-//                "Manager: " + currentManager,
-//                "Username: " + currentUser + System.getProperty("line.separator")
-//                + //new info
-//                "Password: " + newPass + System.getProperty("line.separator")
-//                + //new info
-//                "Firstname: " + newFirst + System.getProperty("line.separator")
-//                + //new info
-//                "Surname: " + newLast + System.getProperty("line.separator")
-//                + //new info
-//                "Manager: " + newManager); //new info
+        sql.updateLogin(currentUsername, newFirst, newLast, newUserType);
 
         SwitchWindow.switchWindow((Stage) save.getScene().getWindow(), new Mainscreen());
     }
@@ -116,7 +92,7 @@ public class ViewTherapistController implements Initializable {
     private void search(ActionEvent event) {
 
         String currentUsername = currentUser.getText();
-        
+
         try {
             if (!sql.checkTherapistExists(currentUsername)) {
                 return;

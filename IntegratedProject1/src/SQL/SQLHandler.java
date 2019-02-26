@@ -242,11 +242,11 @@ public class SQLHandler {
         ResultSet rs = query.executeQuery();
 
         while (rs.next()) {
-            output.add("Appointment: " + (rs.getString("appointmentnumber")) 
-                    + " Patient: " 
-                    + search("patient", "patientnumber", (rs.getString("patientnumber"))).get(0) + " " 
-                    + search("patient", "patientnumber", (rs.getString("patientnumber"))).get(1) +
-                    " Time: " + (rs.getString("time")));
+            output.add("Appointment: " + (rs.getString("appointmentnumber"))
+                    + " Patient: "
+                    + search("patient", "patientnumber", (rs.getString("patientnumber"))).get(0) + " "
+                    + search("patient", "patientnumber", (rs.getString("patientnumber"))).get(1)
+                    + " Time: " + (rs.getString("time")));
         }
         if (output.size() < 1) {
             return output;
@@ -267,11 +267,11 @@ public class SQLHandler {
         ResultSet rs = query.executeQuery();
 
         while (rs.next()) {
-            output.add("Appointment: " + (rs.getString("appointmentnumber")) 
-                    + " Patient: " 
-                    + search("patient", "patientnumber", (rs.getString("patientnumber"))).get(0) + " " 
-                    + search("patient", "patientnumber", (rs.getString("patientnumber"))).get(1) +
-                    " Time: " + (rs.getString("time")));
+            output.add("Appointment: " + (rs.getString("appointmentnumber"))
+                    + " Patient: "
+                    + search("patient", "patientnumber", (rs.getString("patientnumber"))).get(0) + " "
+                    + search("patient", "patientnumber", (rs.getString("patientnumber"))).get(1)
+                    + " Time: " + (rs.getString("time")));
         }
         if (output.size() < 1) {
             output.clear();
@@ -284,9 +284,26 @@ public class SQLHandler {
     //----------------------------//
     // EDIT RECORD IN LOGIN TABLE //
     //----------------------------//
-    public void updateLogin(String username, String password, String firstname, String surname, String usertype) throws SQLException {
+    public void updateLogin(String username, String firstname, String surname, String usertype) throws SQLException {
 
-        String sql = "UPDATE login SET password = ? , " + "firstname = ? , " + "surname = ? , " + "usertype = ?" + " WHERE username = ?";
+        String sql = "UPDATE login SET firstname = ? , surname = ? , usertype = ? WHERE username = ?";
+
+        query = conn.prepareStatement(sql);
+        
+        query.setString(1, firstname);
+        query.setString(2, surname);
+        query.setString(3, usertype);
+        query.setString(4, username);
+
+        query.executeUpdate();
+    }
+
+    //----------------------------//
+    // EDIT RECORD IN LOGIN TABLE //
+    //----------------------------//
+    public void updateLoginPassword(String username, String password) throws SQLException {
+
+        String sql = "UPDATE login SET password = ? WHERE username = ?";
 
         Hash h1 = new Hash();
         password = h1.hash(password);
@@ -294,11 +311,45 @@ public class SQLHandler {
         query = conn.prepareStatement(sql);
 
         query.setString(1, password);
-        query.setString(2, firstname);
-        query.setString(3, surname);
-        query.setString(4, usertype);
-        query.setString(5, username);
+        query.setString(2, username);
 
+        query.executeUpdate();
+    }
+
+    //------------------------------//
+    // EDIT RECORD IN PATIENT TABLE //
+    //------------------------------//
+    public void updatePatient(String firstname, String surname, String email, String mobile, String dob, String gender, String postcode, String patientnumer) throws SQLException {
+
+        String sql = "UPDATE patient SET firstname = ? , surname = ? , email = ? , mobile = ? , dob = ? , gender = ? , postcode = ? WHERE patientnumber = ?";
+
+        query = conn.prepareStatement(sql);
+
+        query.setString(1, firstname);
+        query.setString(2, surname);
+        query.setString(3, email);
+        query.setString(4, mobile);
+        query.setString(5, dob);
+        query.setString(6, postcode);
+        query.setString(6, patientnumer);
+
+        query.executeUpdate();
+    }
+
+    //----------------------------------//
+    // EDIT RECORD IN APPOINTMENT TABLE //
+    //----------------------------------//
+    public void updateAppointment(String AppointmentNumber, String PatientNumber, String Therapist, LocalDate Date, LocalTime Time, String Service, String Cost, String Status) throws SQLException {
+
+        String sql = "UPDATE appointment SET therapist = ? , date = ? , time = ? , service = ? , cost = ? , status = ? WHERE appointmentnumber = ?";
+
+        query = conn.prepareStatement(sql);
+        query.setString(1, Therapist);
+        query.setString(2, Date.format(DateTimeFormatter.ofPattern("YYYY-MM-dd")));
+        query.setString(3, Time.format(DateTimeFormatter.ofPattern("HH:mm")));
+        query.setString(4, Service);
+        query.setString(5, Cost);
+        query.setString(6, Status);
         query.executeUpdate();
     }
 }
