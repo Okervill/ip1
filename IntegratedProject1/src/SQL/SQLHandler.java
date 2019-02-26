@@ -35,8 +35,13 @@ public class SQLHandler {
     // CONNECT TO SQLITE DB //
     //----------------------//
     public static Connection getConn() {
-        // SQLite connection string
-        String url = "jdbc:sqlite:src/SQL/HealthClinic.db";
+        
+        //When running from netbeans set to true. When running the jar
+        //set to false and we will adjust path if need be.
+        boolean demo = true;
+        String url;
+        if (demo) url = "jdbc:sqlite:src/SQL/HealthClinic.db";
+        else url = "jdbc:sqlite:../src/SQL/HealthClinic.db";
         Connection conn = null;
         try {
             conn = DriverManager.getConnection(url);
