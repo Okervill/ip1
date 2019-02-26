@@ -5,10 +5,12 @@
  */
 package AddPatient;
 
+import integratedproject1.Patient;
 import integratedproject1.ReadWriteFile;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
@@ -61,7 +63,7 @@ public class NewPatientController implements Initializable {
     }
 
     @FXML
-    private void save(ActionEvent event) throws IOException {
+    private void save(ActionEvent event) throws IOException, SQLException {
 
         String f = firstname.getText();
         String s = surname.getText();
@@ -83,11 +85,7 @@ public class NewPatientController implements Initializable {
             return;
         }
 
-        File file = new File("/src/integratedproject1/PatientFile.txt");
-
-        int patNum = ReadWriteFile.countPatients() + 1;
-
-        ReadWriteFile.updatePatientFile(f, s, e, c, d.toString(), g, pc, patNum);
+        Patient p = new Patient(f, s, e, c, d, g, pc);
 
         Stage stage = (Stage) save.getScene().getWindow();
         stage.close();

@@ -11,4 +11,11 @@ package integratedproject1;
  */
 public class Services {
     
+    String serviceName;
+    String serviceDuration;
+    
+    public Services(){
+        
+    }
+    
 }

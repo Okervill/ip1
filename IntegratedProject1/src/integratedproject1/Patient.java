@@ -5,24 +5,30 @@
  */
 package integratedproject1;
 
+import SQL.SQLHandler;
 import java.io.IOException;
+import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 
 public class Patient {
-    private String forename;
+    private String firstname;
     private String surname;
     private String email;
     private String mobile;
-    private String dob;
+    private LocalDate dob;
     private String gender;
     private String postcode;
-    private int patientNo;
+    private String patientNo;
     
-    public Patient(String f, String s, String e, String m, String d, String g, String p) throws IOException{
-        this.forename = f;
+    SQLHandler sql = new SQLHandler();
+    
+    
+    public Patient(String f, String s, String e, String m, LocalDate d, String g, String p) throws SQLException {
+        this.firstname = f;
         this.surname = s;
         this.email = e;
         this.mobile = m;
@@ -30,36 +36,10 @@ public class Patient {
         this.gender = g;
         this.postcode = p;
         
-        patientNo = ReadWriteFile.countPatients() + 1;
+        patientNo = String.valueOf(Integer.valueOf(sql.countRecords("patient")) + 1);//ReadWriteFile.countPatients() + 1;
+        sql.addToPatient(firstname, surname, email, mobile, dob, gender, postcode, patientNo);
         
-        try {
-            ReadWriteFile.updatePatientFile(forename, surname, email, mobile, dob, gender, postcode, patientNo);
-        } catch (IOException ex) {
-            Logger.getLogger(Patient.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-    
-    public String getFirstname(){ return forename; }
-    public String getSurname(){ return surname; }
-    public String getEmail(){ return email; }
-    public String getMobile(){ return mobile; }
-    public String getDOB(){ return dob; }
-    public String getGender(){ return gender; }
-    public String getPostcode() { return postcode; }
-    public int getPatientNo() { return patientNo; }
-    
-    public ArrayList getData(){
-        ArrayList<String> info = new ArrayList<>();
-        
-        info.add(forename);
-        info.add(surname);
-        info.add(email);
-        info.add(mobile);
-        info.add(dob);
-        info.add(gender);
-        info.add(postcode);
-        
-        return info;
+        //ReadWriteFile.updatePatientFile(firstname, surname, email, mobile, dob, gender, postcode, patientNo);
     }
     
     

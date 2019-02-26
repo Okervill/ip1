@@ -5,9 +5,9 @@
  */
 package NewAppointment;
 
-import integratedproject1.ReadWriteFile;
-import java.io.IOException;
+import SQL.SQLHandler;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -31,6 +31,8 @@ public class NewAppointmentController implements Initializable {
     @FXML
     private Button close;
 
+    
+    SQLHandler sql = new SQLHandler();
     /**
      * Initializes the controller class.
      */
@@ -40,8 +42,8 @@ public class NewAppointmentController implements Initializable {
         ArrayList<String> allTherapists = new ArrayList<>();
         ObservableList<String> therapists = FXCollections.observableArrayList();
         try {
-            allTherapists = ReadWriteFile.getAllTherapists();
-        } catch (IOException ex) {
+            allTherapists = sql.getTherapistNames();//ReadWriteFile.getAllTherapists();
+        } catch (SQLException ex) {
             Logger.getLogger(NewAppointmentController.class.getName()).log(Level.SEVERE, null, ex);
         }
         for (int i = 0; i < allTherapists.size(); i++) {

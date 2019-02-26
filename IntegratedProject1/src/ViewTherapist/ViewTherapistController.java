@@ -6,10 +6,11 @@
 package ViewTherapist;
 
 import MainScreen.Mainscreen;
-import integratedproject1.ReadWriteFile;
+import SQL.SQLHandler;
 import integratedproject1.SwitchWindow;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -43,6 +44,8 @@ public class ViewTherapistController implements Initializable {
     @FXML
     private ChoiceBox<String> manager;
 
+    
+    SQLHandler sql = new SQLHandler();
     /**
      * Initializes the controller class.
      *
@@ -51,56 +54,55 @@ public class ViewTherapistController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        manager.setItems(FXCollections.observableArrayList("true", "false"));
+        manager.setItems(FXCollections.observableArrayList("therapist", "receptionist", "manager"));
     }
 
     @FXML
-    private void save(ActionEvent event) throws IOException {
+    private void save(ActionEvent event) throws IOException, SQLException {
 
         String currentUsername = currentUser.getText();
 
         ArrayList<String> current = null;
         try {
-            current = ReadWriteFile.getLoginData(currentUsername);
-        } catch (IOException ex) {
+            current = sql.search("login", "username", currentUsername);//ReadWriteFile.getLoginData(currentUsername);
+        } catch (SQLException ex) {
             Logger.getLogger(ViewTherapistController.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-        String currentFirst = current.get(2);
-        String currentLast = current.get(3);
-        String currentUser = current.get(0);
-        String currentPass = current.get(1);
-        String currentManager = current.get(4);
+        
+        
+                
 
         String newFirst = firstname.getText();
         String newLast = surname.getText();
         String newPass = password.getText();
-        String newManager = manager.getSelectionModel().getSelectedItem();
-
-        if (password.getText().length() < 1) {
-            newPass = currentPass;
+        String newUserType = manager.getSelectionModel().getSelectedItem();
+        
+        if (password.getText().length() < 1){
+            newPass = current.get(1);
         }
+        
+        sql.updateLogin(currentUsername, newPass, newFirst, newLast, newUserType);
 
-        ReadWriteFile.editLoginFile(
-                "src/Login/LoginData.txt",
-                "Username: " + currentUser + System.getProperty("line.separator")
-                + //current info
-                "Password: " + currentPass + System.getProperty("line.separator")
-                + //current info
-                "Firstname: " + currentFirst + System.getProperty("line.separator")
-                + //current info
-                "Surname: " + currentLast + System.getProperty("line.separator")
-                + //current info
-                "Manager: " + currentManager,
-                "Username: " + currentUser + System.getProperty("line.separator")
-                + //new info
-                "Password: " + newPass + System.getProperty("line.separator")
-                + //new info
-                "Firstname: " + newFirst + System.getProperty("line.separator")
-                + //new info
-                "Surname: " + newLast + System.getProperty("line.separator")
-                + //new info
-                "Manager: " + newManager); //new info
+//        ReadWriteFile.editLoginFile(
+//                "src/Login/LoginData.txt",
+//                "Username: " + currentUser + System.getProperty("line.separator")
+//                + //current info
+//                "Password: " + currentPass + System.getProperty("line.separator")
+//                + //current info
+//                "Firstname: " + currentFirst + System.getProperty("line.separator")
+//                + //current info
+//                "Surname: " + currentLast + System.getProperty("line.separator")
+//                + //current info
+//                "Manager: " + currentManager,
+//                "Username: " + currentUser + System.getProperty("line.separator")
+//                + //new info
+//                "Password: " + newPass + System.getProperty("line.separator")
+//                + //new info
+//                "Firstname: " + newFirst + System.getProperty("line.separator")
+//                + //new info
+//                "Surname: " + newLast + System.getProperty("line.separator")
+//                + //new info
+//                "Manager: " + newManager); //new info
 
         SwitchWindow.switchWindow((Stage) save.getScene().getWindow(), new Mainscreen());
     }
@@ -114,29 +116,32 @@ public class ViewTherapistController implements Initializable {
     private void search(ActionEvent event) {
 
         String currentUsername = currentUser.getText();
-
+        
         try {
-            if (!ReadWriteFile.getUsernames("all").contains(currentUsername)) {
+            if (!sql.checkTherapistExists(currentUsername)) {
                 return;
             }
-        } catch (IOException ex) {
+        } catch (SQLException ex) {
             Logger.getLogger(ViewTherapistController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         ArrayList<String> current = null;
         try {
-            current = ReadWriteFile.getLoginData(currentUsername);
-        } catch (IOException ex) {
+            current = sql.search("login", "username", currentUsername);
+        } catch (SQLException ex) {
             Logger.getLogger(ViewTherapistController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         firstname.setText(current.get(2));
         surname.setText(current.get(3));
-        if (current.get(4).equalsIgnoreCase("true")) {
-            manager.getSelectionModel().select("true");
+        if (current.get(4).equalsIgnoreCase("manager")) {
+            manager.getSelectionModel().select("manager");
         }
-        if (current.get(4).equalsIgnoreCase("false")) {
-            manager.getSelectionModel().select("false");
+        if (current.get(4).equalsIgnoreCase("receptionist")) {
+            manager.getSelectionModel().select("receptionist");
+        }
+        if (current.get(4).equalsIgnoreCase("therapist")) {
+            manager.getSelectionModel().select("therapist");
         }
 
     }

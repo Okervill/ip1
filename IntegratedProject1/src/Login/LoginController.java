@@ -9,10 +9,13 @@ import MainScreen.Mainscreen;
 import integratedproject1.ReadWriteFile;
 import integratedproject1.SwitchWindow;
 import Animation.Shaker;
+import SQL.SQLHandler;
 import integratedproject1.Hash;
 import integratedproject1.User;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -36,7 +39,7 @@ public class LoginController implements Initializable {
     private TextField inputpass;
 
     @FXML
-    private void login(ActionEvent event) throws IOException {
+    private void login(ActionEvent event) throws IOException, SQLException {
 
         String user = inputuser.getText();
         String pass = inputpass.getText();
@@ -47,32 +50,20 @@ public class LoginController implements Initializable {
             shaker.shake();
             return;
         }
-
-        boolean login = false;
         String userType;
 
-        try {
+        SQLHandler sql = new SQLHandler();
+        ArrayList<String> userinfo = sql.search("login", "username", user);
 
-            for (int i = 0; i < ReadWriteFile.getUsernames("all").size(); i++) {
-                //Check username and password are correct
-                if (user.equals(ReadWriteFile.getUsernames("all").get(i)) && h1.verifyHash(pass, (String) ReadWriteFile.getLoginData(user).get(1))) {
-                    login = true;
-                    break;
-                }
-            }
-        } catch (IOException ex) {
-            Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        if (login) {
-            //Swap Scene
+        if (userinfo.size() < 5 || !h1.verifyHash(pass, userinfo.get(1))) {
+            Shaker shaker = new Shaker(button);
+            shaker.shake();
+        } else {
             userType = (String) ReadWriteFile.getLoginData(user).get(4);
             User currentUser = new User();
             currentUser.setUsername(user);
             currentUser.setUserType(userType);
             SwitchWindow.switchWindow((Stage) button.getScene().getWindow(), new Mainscreen(user, userType));
-        } else {
-            Shaker shaker = new Shaker(button);
-            shaker.shake();
         }
     }
 

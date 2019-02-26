@@ -1,0 +1,304 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package SQL;
+
+import integratedproject1.Hash;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+/**
+ *
+ * @author sqlitetutorial.net
+ */
+public class SQLHandler {
+
+    Connection conn = this.getConn();
+    PreparedStatement query;
+
+    public SQLHandler() {
+
+    }
+
+    //----------------------//
+    // CONNECT TO SQLITE DB //
+    //----------------------//
+    public static Connection getConn() {
+        // SQLite connection string
+        String url = "jdbc:sqlite:src/SQL/HealthClinic.db";
+        Connection conn = null;
+        try {
+            conn = DriverManager.getConnection(url);
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return conn;
+    }
+
+    //------------------------//
+    // ADD NEW DATA TO TABLES //
+    //------------------------//
+    public void addToLogin(String username, String password, String firstname, String surname, String usertype) throws SQLException {
+
+        String sql = "INSERT INTO login (username, password, firstname, surname, usertype) VALUES(?,?,?,?,?)";
+
+        Hash h1 = new Hash();
+        password = h1.hash(password);
+
+        Connection connect = this.getConn();
+        PreparedStatement query = connect.prepareStatement(sql);
+        query.setString(1, username);
+        query.setString(2, password);
+        query.setString(3, firstname);
+        query.setString(4, surname);
+        query.setString(5, usertype);
+        query.executeUpdate();
+
+    }
+
+    public void addToPatient(String firstname, String surname, String email, String mobile, LocalDate dob, String gender, String postcode, String patientNumber) throws SQLException {
+
+        String sql = "INSERT INTO patient (firstname, surname, email, mobile, dob, gender, postcode, patientnumber) VALUES(?,?,?,?,?,?,?,?)";
+
+        query = conn.prepareStatement(sql);
+        query.setString(1, firstname);
+        query.setString(2, surname);
+        query.setString(3, email);
+        query.setString(4, mobile);
+        query.setString(5, dob.format(DateTimeFormatter.ofPattern("YYYY-MM-dd")));
+        query.setString(6, gender);
+        query.setString(7, postcode);
+        query.setString(8, patientNumber);
+        query.executeUpdate();
+    }
+
+    public void addToAppointment(String AppointmentNumber, String PatientNumber, String Therapist, LocalDate Date, LocalTime Time, String Service, String Cost, String Status) throws SQLException {
+
+        String sql = "INSERT INTO appointment (appointmentnumber, patientnumber, therapist, date, time, service, cost, status) VALUES(?,?,?,?,?,?,?,?)";
+
+        query = conn.prepareStatement(sql);
+        query.setString(1, AppointmentNumber);
+        query.setString(2, PatientNumber);
+        query.setString(3, Therapist);
+        query.setString(4, Date.format(DateTimeFormatter.ofPattern("YYYY-MM-dd")));
+        query.setString(5, Time.format(DateTimeFormatter.ofPattern("HH:mm")));
+        query.setString(6, Service);
+        query.setString(7, Cost);
+        query.setString(8, Status);
+        query.executeUpdate();
+    }
+
+    //-----------------------------------//
+    // SEARCH FOR ITEM IN FIELD IN TABLE //
+    //-----------------------------------//
+    public ArrayList<String> search(String table, String searchField, String searchQuery) throws SQLException {
+
+        ArrayList<String> output = new ArrayList<>();
+
+        if (table.equals("login")) {
+
+            String sql = "SELECT username, password, firstname, surname, usertype FROM login WHERE " + searchField + " = \"" + searchQuery + "\"";
+
+            query = conn.prepareStatement(sql);
+            ResultSet rs = query.executeQuery();
+
+            while (rs.next()) {
+                output.add((rs.getString("username")));
+                output.add((rs.getString("password")));
+                output.add((rs.getString("firstname")));
+                output.add((rs.getString("surname")));
+                output.add((rs.getString("usertype")));
+            }
+        } else if (table.equals("patient")) {
+
+            String sql = "SELECT firstname, surname, email, mobile, dob, gender, postcode, patientnumber FROM patient WHERE " + searchField + " = \"" + searchQuery + "\"";
+            query = conn.prepareStatement(sql);
+            ResultSet rs = query.executeQuery();
+
+            while (rs.next()) {
+                output.add((rs.getString("firstname")));
+                output.add((rs.getString("surname")));
+                output.add((rs.getString("email")));
+                output.add((rs.getString("mobile")));
+                output.add((rs.getString("dob")));
+                output.add((rs.getString("gender")));
+                output.add((rs.getString("postcode")));
+                output.add((rs.getString("patientnumber")));
+            }
+        } else if (table.equals("appointment")) {
+
+            String sql = "SELECT appointmentnumber, patientnumber, therapist, date, time, service, cost, status FROM appointment WHERE " + searchField + " = \"" + searchQuery + "\"";
+            query = conn.prepareStatement(sql);
+            ResultSet rs = query.executeQuery();
+
+            while (rs.next()) {
+                output.add((rs.getString("appointmentnumber")));
+                output.add((rs.getString("patientnumber")));
+                output.add((rs.getString("therapist")));
+                output.add((rs.getString("date")));
+                output.add((rs.getString("time")));
+                output.add((rs.getString("service")));
+                output.add((rs.getString("cost")));
+                output.add((rs.getString("status")));
+            }
+            //replace patient number with patient name
+            output.set(1, search("patient", "patientnumber", output.get(1)).get(0) + " " + search("patient", "patientnumber", output.get(1)).get(1));
+        } else {
+            System.out.println("Invalid table name");
+        }
+        return output;
+    }
+
+    //------------------------------------------------//
+    // SEARCH FOR USERNAMES TAKING USERTYPE AS STRING //
+    //------------------------------------------------//
+    public ArrayList<String> getAllUsernames(String type) throws SQLException {
+
+        ArrayList<String> output = new ArrayList<>();
+        String sql = null;
+
+        //If type given is "all" return all usernames, else therapist, receptionist or manager
+        if (type.equals("all")) {
+            sql = "SELECT username FROM login";
+        } else if (type.equals("therapist")) {
+            sql = "SELECT username FROM login WHERE usertype = \"therapist\"";
+        } else if (type.equals("receptionist")) {
+            sql = "SELECT username FROM login WHERE usertype = \"receptionist\"";
+        } else if (type.equals("manager")) {
+            sql = "SELECT username FROM login WHERE usertype = \"manager\"";
+        }
+        query = conn.prepareStatement(sql);
+        ResultSet rs = query.executeQuery();
+
+        while (rs.next()) {
+            output.add((rs.getString("username")));
+        }
+        return output;
+    }
+
+    public boolean checkTherapistExists(String username) throws SQLException {
+        boolean exists = false;
+
+        ArrayList<String> checkUser = search("login", "username", username);
+
+        if (checkUser.size() == 5) {
+            exists = true;
+        }
+
+        return exists;
+    }
+
+    //---------------------------------//
+    // SEARCH FOR ALL THERAPISTS NAMES //
+    //---------------------------------//
+    public ArrayList<String> getTherapistNames() throws SQLException {
+
+        ArrayList<String> output = new ArrayList<>();
+        String sql = "SELECT firstname, surname FROM login WHERE usertype = \"therapist\"";
+        query = conn.prepareStatement(sql);
+        ResultSet rs = query.executeQuery();
+
+        while (rs.next()) {
+            output.add((rs.getString("firstname")) + " " + (rs.getString("surname")));
+        }
+        return output;
+    }
+
+    //-----------------------------------//
+    // COUNT RECORDS IN GIVEN TABLE NAME //
+    //-----------------------------------//
+    public int countRecords(String table) throws SQLException {
+        int numRecords = 0;
+
+        String sql = "SELECT COUNT(*) FROM " + table;
+        query = conn.prepareStatement(sql);
+        ResultSet rs = query.executeQuery();
+        while (rs.next()) {
+            numRecords = rs.getInt(1);
+        }
+        return numRecords;
+    }
+
+    //------------------------------------------------------------------------------------//
+    // SEARCH FOR APPOINTMENTS BY DATE AND THERAPIST - RETURN APP NUM, PATIENT NAME, TIME //
+    //------------------------------------------------------------------------------------//
+    public ArrayList<String> getShortAppointments(LocalDate date, String therapistUsername) throws SQLException {
+
+        ArrayList<String> output = new ArrayList<>();
+        String sql = "SELECT appointmentnumber, patientnumber, time FROM appointment WHERE therapist = \"" + therapistUsername + "\" AND date = \"" + date + "\"";
+
+        query = conn.prepareStatement(sql);
+        ResultSet rs = query.executeQuery();
+
+        while (rs.next()) {
+            output.add("Appointment: " + (rs.getString("appointmentnumber")) 
+                    + " Patient: " 
+                    + search("patient", "patientnumber", (rs.getString("patientnumber"))).get(0) + " " 
+                    + search("patient", "patientnumber", (rs.getString("patientnumber"))).get(1) +
+                    " Time: " + (rs.getString("time")));
+        }
+        if (output.size() < 1) {
+            return output;
+        }
+
+        return output;
+    }
+
+    //------------------------------------------------------------------------------------//
+    // SEARCH FOR APPOINTMENTS BY DATE AND THERAPIST - RETURN APP NUM, PATIENT NAME, TIME //
+    //------------------------------------------------------------------------------------//
+    public ArrayList<String> getAllShortAppointments(LocalDate date) throws SQLException {
+
+        ArrayList<String> output = new ArrayList<>();
+        String sql = "SELECT appointmentnumber, patientnumber, time FROM appointment WHERE date = \"" + date + "\"";
+
+        query = conn.prepareStatement(sql);
+        ResultSet rs = query.executeQuery();
+
+        while (rs.next()) {
+            output.add("Appointment: " + (rs.getString("appointmentnumber")) 
+                    + " Patient: " 
+                    + search("patient", "patientnumber", (rs.getString("patientnumber"))).get(0) + " " 
+                    + search("patient", "patientnumber", (rs.getString("patientnumber"))).get(1) +
+                    " Time: " + (rs.getString("time")));
+        }
+        if (output.size() < 1) {
+            output.clear();
+            return output;
+        }
+
+        return output;
+    }
+
+    //----------------------------//
+    // EDIT RECORD IN LOGIN TABLE //
+    //----------------------------//
+    public void updateLogin(String username, String password, String firstname, String surname, String usertype) throws SQLException {
+
+        String sql = "UPDATE login SET password = ? , " + "firstname = ? , " + "surname = ? , " + "usertype = ?" + " WHERE username = ?";
+
+        Hash h1 = new Hash();
+        password = h1.hash(password);
+
+        query = conn.prepareStatement(sql);
+
+        query.setString(1, password);
+        query.setString(2, firstname);
+        query.setString(3, surname);
+        query.setString(4, usertype);
+        query.setString(5, username);
+
+        query.executeUpdate();
+    }
+}

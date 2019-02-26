@@ -5,7 +5,9 @@
  */
 package integratedproject1;
 
+import SQL.SQLHandler;
 import java.io.IOException;
+import java.sql.SQLException;
 
 public class Therapist {
 
@@ -14,8 +16,10 @@ public class Therapist {
     private String username;
     private String password;
     private String userType;
+    
+    SQLHandler sql = new SQLHandler();
 
-    public Therapist(String f, String s, String p, String t) throws IOException {
+    public Therapist(String f, String s, String p, String t) throws SQLException {
         this.firstname = f;
         this.surname = s;
         this.password = p;
@@ -25,21 +29,21 @@ public class Therapist {
 
         int count = 0;
 
-        for (int i = 0; i < ReadWriteFile.getUsernames("all").size(); i++) {
-            String str = (String) ReadWriteFile.getUsernames("all").get(i);
+        for (int i = 0; i < sql.getAllUsernames("all").size(); i++) {
+            String str = (String) sql.getAllUsernames("all").get(i);
             if (str.contains(username)) {
                 count++;
             }
         }
-
-        if (ReadWriteFile.getUsernames("all").contains(username)) {
+        if (sql.getAllUsernames("all").contains(username)) {
             username = username + count;
         }
 
         newTherapist(firstname, surname, username, password, userType);
     }
 
-    public void newTherapist(String f, String s, String u, String p, String t) throws IOException {
-        ReadWriteFile.updateLoginFile(f, s, u, p, t);
+    public void newTherapist(String f, String s, String u, String p, String t) throws SQLException {
+        sql.addToLogin(u, p, f, s, t);
+        //ReadWriteFile.updateLoginFile(f, s, u, p, t);
     }
 }

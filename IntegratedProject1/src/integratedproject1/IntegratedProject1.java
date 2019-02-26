@@ -5,9 +5,11 @@
  */
 package integratedproject1;
 
+import SQL.SQLHandler;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.Month;
@@ -32,46 +34,42 @@ public class IntegratedProject1 extends Application {
 
     }
 
-    public static void main(String[] args) throws FileNotFoundException, IOException {
-
-        File loginData = new File("src/Login/LoginData.txt");
-        File patientData = new File("src/integratedproject1/PatientFile.txt");
-        File appointments = new File("src/integratedproject1/appointments.txt");
-        File services = new File("src/integratedproject1/services.txt");
+    public static void main(String[] args) throws FileNotFoundException, IOException, SQLException {
+        /*
         
-        //if login file doesnt exist create it with some test data
-        if (!loginData.exists()) {
-            ReadWriteFile.createFile(loginData, 5);
-            
-            Hash h1 = new Hash();
-            
-            Therapist t1 = new Therapist("admin", "admin", h1.hash("admin"), "manager");
-            Therapist t2 = new Therapist("Tony", "Stark", h1.hash("ironman"), "therapist");
-            Therapist t3 = new Therapist("Bruce", "Wayne", h1.hash("batman"), "therapist");
-            Therapist t4 = new Therapist("Stan", "Lee", h1.hash("marvel"), "receptionist");
-        }
-        //if patient file doesnt exist create it with some test data
-        if (!patientData.exists()) {
-            ReadWriteFile.createFile(patientData, 8);
-            Patient p1 = new Patient("John", "Doe", "johndoe@gmail.com", "07987654321", "01/01/1971", "Male", "G1 0AA");
-            Patient p2 = new Patient("Jane", "Doe", "janedoe@gmail.com", "07123456789", "02/02/1972", "Female", "G1 0AA");
+        TEST DATA
+        
+        //Appointment dates
+        LocalDate d1 = LocalDate.of(2019, Month.FEBRUARY, 2);
+        LocalDate d2 = LocalDate.of(2019, Month.MARCH, 3);
+        
+        //Appointment times
+        LocalTime time1 = LocalTime.of(13, 5);
+        LocalTime time2 = LocalTime.of(12, 5);
 
-        }
-        //if appointment file doesn exist create it with some test data
-        if (!appointments.exists()) {
-            ReadWriteFile.createFile(appointments, 8);
-            //dates
-            LocalDate d1 = LocalDate.of(2019, Month.FEBRUARY, 2);
-            LocalDate d2 = LocalDate.of(2019, Month.MARCH, 3);
-            //times
-            LocalTime t1 = LocalTime.of(13, 5);
-            LocalTime t2 = LocalTime.of(12, 5);
-            
-            Appointment a1 = new Appointment(1, "StarkT", d1, "Sports Massage", t1);
-            Appointment a2 = new Appointment(1, "WayneB", d1, "Acupuncture", t2);
-            Appointment a3 = new Appointment(2, "WayneB", d2, "Physiotherapy", t1);
-            Appointment a4 = new Appointment(2, "StarkT", d2, "Sports Massage", t2);
-        }
+        //Patient DoBs
+        LocalDate dob1 = LocalDate.of(1995, Month.DECEMBER, 29);
+        LocalDate dob2 = LocalDate.of(1995, Month.JULY, 24);
+
+        //Patient test data
+        Patient p1 = new Patient("John", "Doe", "johndoe@gmail.com", "07987654321", dob1, "Male", "G1 0AA");
+        Patient p2 = new Patient("Jane", "Doe", "janedoe@gmail.com", "07123456789", dob2, "Female", "G1 0AA");
+
+        //Appointment test data
+        Appointment a1 = new Appointment("1", "StarkT", d1, "Sports Massage", time1);
+        Appointment a2 = new Appointment("1", "WayneB", d1, "Acupuncture", time2);
+        Appointment a3 = new Appointment("2", "WayneB", d2, "Physiotherapy", time1);
+        Appointment a4 = new Appointment("2", "StarkT", d2, "Sports Massage", time2);
+        
+        //Therapist test data
+        Therapist t1 = new Therapist("admin", "admin", "admin", "manager");
+        Therapist t2 = new Therapist("Tony", "Stark", "ironman", "therapist");
+        Therapist t3 = new Therapist("Bruce", "Wayne", "batman", "therapist");
+        Therapist t4 = new Therapist("Stan", "Lee", "marvel", "receptionist");
+
+        SQLHandler sql = new SQLHandler();
+        sql.updateLogin("admin", "admin", "firstname", "surname", "manager");
+        */
         launch(args);
     }
 

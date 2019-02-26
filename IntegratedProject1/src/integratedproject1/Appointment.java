@@ -5,7 +5,9 @@
  */
 package integratedproject1;
 
+import SQL.SQLHandler;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
@@ -15,26 +17,29 @@ import java.time.LocalTime;
  */
 public class Appointment {
     
-    private int appointmentNumber;
-    private int patientNumber;
+    private String appointmentNumber;
+    private String patientNumber;
     private String therapist;
     private LocalDate date;//Date date;
     private String service;
-    private int cost = 4;
+    private String cost = "4";
     private String status;
     private LocalTime time;
     
-    public Appointment(int p, String t, LocalDate d, String s, LocalTime time) throws IOException{
+    SQLHandler sql = new SQLHandler();
+    
+    public Appointment(String patientNumber, String therapist, LocalDate date, String service, LocalTime time) throws IOException, SQLException{
         
-        this.patientNumber = p;
-        this.service = s;
-        this.therapist = t;
-        this.date = d;
+        this.patientNumber = patientNumber;
+        this.service = service;
+        this.therapist = therapist;
+        this.date = date;
         this.time = time;
         status = "pending";
-        this.appointmentNumber = ReadWriteFile.countAppointments() + 1;
+        this.appointmentNumber = String.valueOf(Integer.valueOf(sql.countRecords("appointment")) + 1);//ReadWriteFile.countAppointments() + 1;
         
-        ReadWriteFile.newAppointment(appointmentNumber, p, t, d, time, service, cost, status);
+        sql.addToAppointment(appointmentNumber, patientNumber, therapist, date, time, service, cost, status);
+        //ReadWriteFile.newAppointment(appointmentNumber, p, t, d, time, service, cost, status);
     }
     
 }
