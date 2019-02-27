@@ -9,11 +9,13 @@ import Animation.Shaker;
 import Login.Login;
 import SQL.SQLHandler;
 import ViewPatient.ViewPatient;
+import integratedproject1.ReadWriteFile;
 import integratedproject1.SwitchWindow;
 import integratedproject1.User;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -32,12 +34,19 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.text.Text;
 import javafx.scene.layout.HBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+/**
+ * FXML Controller class
+ *
+ * @author Chris Lowton
+ */
 public class MainscreenController implements Initializable {
 
     @FXML
@@ -51,15 +60,46 @@ public class MainscreenController implements Initializable {
     @FXML
     private DatePicker datePicker;
     @FXML
-    private ListView<String> displayAllAppointments;
+    private ListView<String> mondayAppointments;
     @FXML
-    private ListView<String> displaySpecificAppointments;
+    private ListView<String> tuesdayAppointments;
+    @FXML
+    private ListView<String> wednesdayAppointments;
+    @FXML
+    private ListView<String> thursdayAppointments;
+    @FXML
+    private ListView<String> fridayAppointments;
+    @FXML
+    private ListView<String> saturdayAppointments;
+    @FXML
+    private ListView<String> sundayAppointments;
+    @FXML
+    private ListView<String> appointmentDetails;
     @FXML
     private ChoiceBox<String> therapists;
 
     String userType;
     String username;
-    String selectedTherapist;
+    String selectedTherapist = "";
+    
+    @FXML
+    private Text mondayTitle;
+    @FXML
+    private Text tuesdayTitle;
+    @FXML
+    private Text wednesdayTitle;
+    @FXML
+    private Text thursdayTitle;
+    @FXML
+    private Text fridayTitle;
+    @FXML
+    private Text saturdayTitle;
+    @FXML
+    private Text sundayTitle;
+    @FXML
+    private Button previousWeek;
+    @FXML
+    private Button nextWeek;
 
     /**
      * Initializes the controller class.
@@ -70,6 +110,7 @@ public class MainscreenController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         //This allows setdata to be ran before this section of code
+        setListViewCellWrap();
         Platform.runLater(() -> {
             if (username == null && userType == null) {
                 User currentUser = new User();
@@ -97,27 +138,10 @@ public class MainscreenController implements Initializable {
             } else {
                 selectedTherapist = username;
             }
-            displayAppointments(selectedTherapist);
             //-------------------------------------------------------------------------//
             //add listener to the list view selection to get extra info on appointments//
             //-------------------------------------------------------------------------//
-            displayAllAppointments.getSelectionModel().selectedItemProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
-                try {
-                    displayAppointmentDetails(newValue);
-                } catch (SQLException ex) {
-                    Logger.getLogger(MainscreenController.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            });
-
-            therapists.getSelectionModel().selectedItemProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
-                displayAppointments(newValue);
-            });
-
         });
-
-        searchTherapist.setVisible(false);
-        addTherapist.setVisible(false);
-        therapists.setVisible(false);
     }
 
     @FXML
@@ -174,7 +198,7 @@ public class MainscreenController implements Initializable {
         secondStage.showAndWait();
         //SwitchWindow.switchWindow((Stage) searchTherapist.getScene().getWindow(), new ViewTherapist());
     }
-
+    
     private ArrayList<String> search() {
 
         String patientNumber = findPatient.getText();
@@ -199,6 +223,10 @@ public class MainscreenController implements Initializable {
         userType = t;
         username = u;
 
+        searchTherapist.setVisible(false);
+        addTherapist.setVisible(false);
+        therapists.setVisible(false);
+
         if (userType.equals("manager")) {
             searchTherapist.setVisible(true);
             addTherapist.setVisible(true);
@@ -210,13 +238,8 @@ public class MainscreenController implements Initializable {
     }
 
     @FXML //Get appointments for selected dates
-    private void pickDate(ActionEvent event) throws SQLException {
-        if (!userType.equals("therapist")) {
-            selectedTherapist = therapists.getSelectionModel().getSelectedItem();
-        } else {
-            selectedTherapist = username;
-        }
-        displayAppointments(selectedTherapist);
+    private void pickDate(ActionEvent event) throws IOException, SQLException {
+        displayAppointments();
     }
 
     //Get full appointment details for selected appointment
@@ -237,7 +260,7 @@ public class MainscreenController implements Initializable {
         for (int i = 0; i < details.size(); i++) {
             info.add((String) details.get(i));
         }
-        displaySpecificAppointments.setItems(info);
+        appointmentDetails.setItems(info);
     }
 
     public void displayTherapists() throws SQLException {
@@ -247,7 +270,7 @@ public class MainscreenController implements Initializable {
         ArrayList<String> allTherapists = sql.getAllUsernames("therapist");//ReadWriteFile.getUsernames("therapist");
         ObservableList<String> t = FXCollections.observableArrayList();
         //option for viewing all appointments
-        t.add("all");
+        t.add("All");
         for (int i = 0; i < allTherapists.size(); i++) {
             t.add(allTherapists.get(i));
         }
@@ -255,33 +278,307 @@ public class MainscreenController implements Initializable {
         therapists.getSelectionModel().select(0);
         therapists.getSelectionModel().selectedItemProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
             selectedTherapist = newValue;
-            displayAppointments(selectedTherapist);
+            if (selectedTherapist.toUpperCase().equals("ALL")) {
+                selectedTherapist = "";
+            }
+            try {
+                displayAppointments();
+            } catch (SQLException ex) {
+                Logger.getLogger(MainscreenController.class.getName()).log(Level.SEVERE, null, ex);
+            }
         });
     }
 
-    public void displayAppointments(String user) {
-
+    public void displayAppointments() throws SQLException {
         LocalDate date = datePicker.getValue();
-        ArrayList<String> allAppointments = null;
-        try {
-            if (user.equals("all")) {
-                allAppointments = sql.getAllShortAppointments(date);//ReadWriteFile.getShortAppointments(date, user);
+        if (selectedTherapist.toUpperCase().equals("ALL")) {
+            selectedTherapist = "";
+        }
+        DayOfWeek dayOfWeek = date.getDayOfWeek();
+        LocalDate startDate = date.minusDays(dayOfWeek.getValue() - 1);
+        LocalDate endDate = date.plusDays(7 - dayOfWeek.getValue());
+        
+        mondayTitle.setText("Monday " + startDate.getDayOfMonth() + "/" + startDate.getMonthValue());
+        tuesdayTitle.setText("Tuesday " + startDate.plusDays(1).getDayOfMonth() + "/" + startDate.plusDays(1).getMonthValue());
+        wednesdayTitle.setText("Wednesday " + startDate.plusDays(2).getDayOfMonth() + "/" + startDate.plusDays(2).getMonthValue());
+        thursdayTitle.setText("Thursday " + startDate.plusDays(3).getDayOfMonth() + "/" + startDate.plusDays(3).getMonthValue());
+        fridayTitle.setText("Friday " + startDate.plusDays(4).getDayOfMonth() + "/" + startDate.plusDays(4).getMonthValue());
+        saturdayTitle.setText("Saturday " + startDate.plusDays(5).getDayOfMonth() + "/" + startDate.plusDays(5).getMonthValue());
+        sundayTitle.setText("Sunday " + startDate.plusDays(6).getDayOfMonth() + "/" + startDate.plusDays(6).getMonthValue());
+        
+        appointmentDetails.getItems().clear();
+        
+        for (LocalDate i = startDate; i.getDayOfMonth() != endDate.plusDays(1).getDayOfMonth() || i.getMonth() != endDate.plusDays(1).getMonth(); i = i.plusDays(1)) {
+            ArrayList<String> allAppointments;
+            ObservableList<String> appointments = FXCollections.observableArrayList();
+            if (selectedTherapist.isEmpty()) {
+                allAppointments = allAppointments = sql.getAllShortAppointments(i);
             } else {
-                allAppointments = sql.getShortAppointments(date, selectedTherapist);//ReadWriteFile.getShortAppointments(date, user);
+                allAppointments = allAppointments = sql.getShortAppointments(i, selectedTherapist);
             }
-            //If there are no appointments return
-            if (allAppointments.size() < 1) {
-                return;
+            for (int x = 0; x < allAppointments.size(); x++) {
+                appointments.add(allAppointments.get(x));
             }
-        } catch (SQLException ex) {
-            Logger.getLogger(MainscreenController.class.getName()).log(Level.SEVERE, null, ex);
+            
+            DayOfWeek loopDayOfWeek = i.getDayOfWeek();
+            
+            switch (loopDayOfWeek) {
+                case MONDAY:
+                    mondayAppointments.setItems(appointments);
+                    mondayAppointments.getSelectionModel().selectFirst();
+                    break;
+                case TUESDAY:
+                    tuesdayAppointments.setItems(appointments);
+                    tuesdayAppointments.getSelectionModel().selectFirst();
+                    break;
+                case WEDNESDAY:
+                    wednesdayAppointments.setItems(appointments);
+                    wednesdayAppointments.getSelectionModel().selectFirst();
+                    break;
+                case THURSDAY:
+                    thursdayAppointments.setItems(appointments);
+                    thursdayAppointments.getSelectionModel().selectFirst();
+                    break;
+                case FRIDAY:
+                    fridayAppointments.setItems(appointments);
+                    fridayAppointments.getSelectionModel().selectFirst();
+                    break;
+                case SATURDAY:
+                    saturdayAppointments.setItems(appointments);
+                    saturdayAppointments.getSelectionModel().selectFirst();
+                    break;
+                case SUNDAY:
+                    sundayAppointments.setItems(appointments);
+                    sundayAppointments.getSelectionModel().selectFirst();
+                    break;
+            }
         }
+    }
+    
+    
+    
+    
+    
+    private void setListViewCellWrap() {
+        mondayAppointments.setCellFactory(param -> new ListCell<String>(){
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item==null) {
+                    setGraphic(null);
+                    setText(null); 
+                    // other stuff to do...
 
-        ObservableList<String> appointments = FXCollections.observableArrayList();
+                }else{
 
-        for (int i = 0; i < allAppointments.size(); i++) {
-            appointments.add(allAppointments.get(i));
-        }
-        displayAllAppointments.setItems(appointments);
+                    // set the width's
+                    setMinWidth(param.getWidth());
+                    setMaxWidth(param.getWidth());
+                    setPrefWidth(param.getWidth());
+
+                    // allow wrapping
+                    setWrapText(true);
+
+                    setText(item.toString());
+
+
+                }
+            }
+        });
+        tuesdayAppointments.setCellFactory(param -> new ListCell<String>(){
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item==null) {
+                    setGraphic(null);
+                    setText(null); 
+                    // other stuff to do...
+
+                }else{
+
+                    // set the width's
+                    setMinWidth(param.getWidth());
+                    setMaxWidth(param.getWidth());
+                    setPrefWidth(param.getWidth());
+
+                    // allow wrapping
+                    setWrapText(true);
+
+                    setText(item.toString());
+
+
+                }
+            }
+        });
+        wednesdayAppointments.setCellFactory(param -> new ListCell<String>(){
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item==null) {
+                    setGraphic(null);
+                    setText(null); 
+                    // other stuff to do...
+
+                }else{
+
+                    // set the width's
+                    setMinWidth(param.getWidth());
+                    setMaxWidth(param.getWidth());
+                    setPrefWidth(param.getWidth());
+
+                    // allow wrapping
+                    setWrapText(true);
+
+                    setText(item.toString());
+
+
+                }
+            }
+        });
+        thursdayAppointments.setCellFactory(param -> new ListCell<String>(){
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item==null) {
+                    setGraphic(null);
+                    setText(null); 
+                    // other stuff to do...
+
+                }else{
+
+                    // set the width's
+                    setMinWidth(param.getWidth());
+                    setMaxWidth(param.getWidth());
+                    setPrefWidth(param.getWidth());
+
+                    // allow wrapping
+                    setWrapText(true);
+
+                    setText(item.toString());
+
+
+                }
+            }
+        });
+        fridayAppointments.setCellFactory(param -> new ListCell<String>(){
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item==null) {
+                    setGraphic(null);
+                    setText(null); 
+                    // other stuff to do...
+
+                }else{
+
+                    // set the width's
+                    setMinWidth(param.getWidth());
+                    setMaxWidth(param.getWidth());
+                    setPrefWidth(param.getWidth());
+
+                    // allow wrapping
+                    setWrapText(true);
+
+                    setText(item.toString());
+
+
+                }
+            }
+        });
+        saturdayAppointments.setCellFactory(param -> new ListCell<String>(){
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item==null) {
+                    setGraphic(null);
+                    setText(null); 
+                    // other stuff to do...
+
+                }else{
+
+                    // set the width's
+                    setMinWidth(param.getWidth());
+                    setMaxWidth(param.getWidth());
+                    setPrefWidth(param.getWidth());
+
+                    // allow wrapping
+                    setWrapText(true);
+
+                    setText(item.toString());
+
+
+                }
+            }
+        });
+        sundayAppointments.setCellFactory(param -> new ListCell<String>(){
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item==null) {
+                    setGraphic(null);
+                    setText(null); 
+                    // other stuff to do...
+
+                }else{
+
+                    // set the width's
+                    setMinWidth(param.getWidth());
+                    setMaxWidth(param.getWidth());
+                    setPrefWidth(param.getWidth());
+
+                    // allow wrapping
+                    setWrapText(true);
+
+                    setText(item.toString());
+
+
+                }
+            }
+        });
+    }
+
+    @FXML
+    private void mondayMouseClick(javafx.scene.input.MouseEvent event) throws SQLException {
+        displayAppointmentDetails(mondayAppointments.getSelectionModel().getSelectedItem());
+    }
+
+    @FXML
+    private void tuesdayMouseClick(javafx.scene.input.MouseEvent event) throws SQLException {
+        displayAppointmentDetails(tuesdayAppointments.getSelectionModel().getSelectedItem());
+    }
+
+    @FXML
+    private void wednesdayMouseClick(javafx.scene.input.MouseEvent event) throws SQLException {
+        displayAppointmentDetails(wednesdayAppointments.getSelectionModel().getSelectedItem());
+    }
+    
+    @FXML
+    private void thursdayMouseClick(javafx.scene.input.MouseEvent event) throws SQLException {
+        displayAppointmentDetails(thursdayAppointments.getSelectionModel().getSelectedItem());
+    }
+    
+    @FXML
+    private void fridayMouseClick(javafx.scene.input.MouseEvent event) throws SQLException {
+        displayAppointmentDetails(fridayAppointments.getSelectionModel().getSelectedItem());
+    }
+    
+    @FXML
+    private void saturdayMouseClick(javafx.scene.input.MouseEvent event) throws SQLException {
+        displayAppointmentDetails(saturdayAppointments.getSelectionModel().getSelectedItem());
+    }
+    
+    @FXML
+    private void sundayMouseClick(javafx.scene.input.MouseEvent event) throws SQLException {
+        displayAppointmentDetails(sundayAppointments.getSelectionModel().getSelectedItem());
+    }
+
+    @FXML
+    private void goToPreviousWeek(ActionEvent event) {
+        datePicker.setValue(datePicker.getValue().minusDays(7));
+    }
+
+    @FXML
+    private void goToNextWeek(ActionEvent event) {
+        datePicker.setValue(datePicker.getValue().plusDays(7));
     }
 }
