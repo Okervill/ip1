@@ -65,8 +65,6 @@ public class IntegratedProject1 extends Application {
 
 
          */
-        SQLHandler sql = new SQLHandler();
-        sql.updateLoginPassword("admin", "admin");
         launch(args);
     }
 

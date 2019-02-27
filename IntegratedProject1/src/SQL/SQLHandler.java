@@ -15,8 +15,6 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -24,7 +22,7 @@ import java.util.logging.Logger;
  */
 public class SQLHandler {
 
-    Connection conn = this.getConn();
+    Connection conn = SQLHandler.getConn();
     PreparedStatement query;
 
     public SQLHandler() {
@@ -63,14 +61,15 @@ public class SQLHandler {
 
         Hash h1 = new Hash();
         password = h1.hash(password);
-
-        Connection connect = this.getConn();
-        PreparedStatement query = connect.prepareStatement(sql);
+        
+        query = conn.prepareStatement(sql);
+        
         query.setString(1, username);
         query.setString(2, password);
         query.setString(3, firstname);
         query.setString(4, surname);
         query.setString(5, usertype);
+        
         query.executeUpdate();
 
     }
@@ -83,6 +82,7 @@ public class SQLHandler {
         String sql = "INSERT INTO patient (firstname, surname, email, mobile, dob, gender, postcode, patientnumber) VALUES(?,?,?,?,?,?,?,?)";
 
         query = conn.prepareStatement(sql);
+        
         query.setString(1, firstname);
         query.setString(2, surname);
         query.setString(3, email);
@@ -91,6 +91,7 @@ public class SQLHandler {
         query.setString(6, gender);
         query.setString(7, postcode);
         query.setString(8, patientNumber);
+        
         query.executeUpdate();
     }
 
@@ -102,6 +103,7 @@ public class SQLHandler {
         String sql = "INSERT INTO appointment (appointmentnumber, patientnumber, therapist, date, time, service, cost, status) VALUES(?,?,?,?,?,?,?,?)";
 
         query = conn.prepareStatement(sql);
+        
         query.setString(1, AppointmentNumber);
         query.setString(2, PatientNumber);
         query.setString(3, Therapist);
@@ -110,6 +112,7 @@ public class SQLHandler {
         query.setString(6, Service);
         query.setString(7, Cost);
         query.setString(8, Status);
+        
         query.executeUpdate();
     }
 
@@ -120,56 +123,57 @@ public class SQLHandler {
 
         ArrayList<String> output = new ArrayList<>();
 
-        if (table.equals("login")) {
-
-            String sql = "SELECT username, password, firstname, surname, usertype FROM login WHERE " + searchField + " = \"" + searchQuery + "\"";
-
-            query = conn.prepareStatement(sql);
-            ResultSet rs = query.executeQuery();
-
-            while (rs.next()) {
-                output.add((rs.getString("username")));
-                output.add((rs.getString("password")));
-                output.add((rs.getString("firstname")));
-                output.add((rs.getString("surname")));
-                output.add((rs.getString("usertype")));
-            }
-        } else if (table.equals("patient")) {
-
-            String sql = "SELECT firstname, surname, email, mobile, dob, gender, postcode, patientnumber FROM patient WHERE " + searchField + " = \"" + searchQuery + "\"";
-            query = conn.prepareStatement(sql);
-            ResultSet rs = query.executeQuery();
-
-            while (rs.next()) {
-                output.add((rs.getString("firstname")));
-                output.add((rs.getString("surname")));
-                output.add((rs.getString("email")));
-                output.add((rs.getString("mobile")));
-                output.add((rs.getString("dob")));
-                output.add((rs.getString("gender")));
-                output.add((rs.getString("postcode")));
-                output.add((rs.getString("patientnumber")));
-            }
-        } else if (table.equals("appointment")) {
-
-            String sql = "SELECT appointmentnumber, patientnumber, therapist, date, time, service, cost, status FROM appointment WHERE " + searchField + " = \"" + searchQuery + "\"";
-            query = conn.prepareStatement(sql);
-            ResultSet rs = query.executeQuery();
-
-            while (rs.next()) {
-                output.add((rs.getString("appointmentnumber")));
-                output.add((rs.getString("patientnumber")));
-                output.add((rs.getString("therapist")));
-                output.add((rs.getString("date")));
-                output.add((rs.getString("time")));
-                output.add((rs.getString("service")));
-                output.add((rs.getString("cost")));
-                output.add((rs.getString("status")));
-            }
-            //replace patient number with patient name
-            output.set(1, search("patient", "patientnumber", output.get(1)).get(0) + " " + search("patient", "patientnumber", output.get(1)).get(1));
-        } else {
-            System.out.println("Invalid table name");
+        switch (table) {
+            case "login":
+                {
+                    String sql = "SELECT username, password, firstname, surname, usertype FROM login WHERE " + searchField + " = \"" + searchQuery + "\"";
+                    query = conn.prepareStatement(sql);
+                    ResultSet rs = query.executeQuery();
+                    while (rs.next()) {
+                        output.add((rs.getString("username")));
+                        output.add((rs.getString("password")));
+                        output.add((rs.getString("firstname")));
+                        output.add((rs.getString("surname")));
+                        output.add((rs.getString("usertype")));
+                    }       break;
+                }
+            case "patient":
+                {
+                    String sql = "SELECT firstname, surname, email, mobile, dob, gender, postcode, patientnumber FROM patient WHERE " + searchField + " = \"" + searchQuery + "\"";
+                    query = conn.prepareStatement(sql);
+                    ResultSet rs = query.executeQuery();
+                    while (rs.next()) {
+                        output.add((rs.getString("firstname")));
+                        output.add((rs.getString("surname")));
+                        output.add((rs.getString("email")));
+                        output.add((rs.getString("mobile")));
+                        output.add((rs.getString("dob")));
+                        output.add((rs.getString("gender")));
+                        output.add((rs.getString("postcode")));
+                        output.add((rs.getString("patientnumber")));
+                    }       break;
+                }
+            case "appointment":
+                {
+                    String sql = "SELECT appointmentnumber, patientnumber, therapist, date, time, service, cost, status FROM appointment WHERE " + searchField + " = \"" + searchQuery + "\"";
+                    query = conn.prepareStatement(sql);
+                    ResultSet rs = query.executeQuery();
+                    while (rs.next()) {
+                        output.add((rs.getString("appointmentnumber")));
+                        output.add((rs.getString("patientnumber")));
+                        output.add((rs.getString("therapist")));
+                        output.add((rs.getString("date")));
+                        output.add((rs.getString("time")));
+                        output.add((rs.getString("service")));
+                        output.add((rs.getString("cost")));
+                        output.add((rs.getString("status")));
+                    }       //replace patient number with patient name
+                    output.set(1, search("patient", "patientnumber", output.get(1)).get(0) + " " + search("patient", "patientnumber", output.get(1)).get(1));
+                    break;
+                }
+            default:
+                System.out.println("Invalid table name");
+                break;
         }
         return output;
     }
@@ -183,14 +187,21 @@ public class SQLHandler {
         String sql = null;
 
         //If type given is "all" return all usernames, else therapist, receptionist or manager
-        if (type.equals("all")) {
-            sql = "SELECT username FROM login";
-        } else if (type.equals("therapist")) {
-            sql = "SELECT username FROM login WHERE usertype = \"therapist\"";
-        } else if (type.equals("receptionist")) {
-            sql = "SELECT username FROM login WHERE usertype = \"receptionist\"";
-        } else if (type.equals("manager")) {
-            sql = "SELECT username FROM login WHERE usertype = \"manager\"";
+        switch (type) {
+            case "all":
+                sql = "SELECT username FROM login";
+                break;
+            case "therapist":
+                sql = "SELECT username FROM login WHERE usertype = \"therapist\"";
+                break;
+            case "receptionist":
+                sql = "SELECT username FROM login WHERE usertype = \"receptionist\"";
+                break;
+            case "manager":
+                sql = "SELECT username FROM login WHERE usertype = \"manager\"";
+                break;
+            default:
+                break;
         }
         query = conn.prepareStatement(sql);
         ResultSet rs = query.executeQuery();
@@ -370,14 +381,15 @@ public class SQLHandler {
     //--------------------------------//
     // DELETE RECORD FROM GIVEN TABLE //
     //--------------------------------//
-    public void deleteFromRecord(String table, String searchField, String searchQuery) throws SQLException{
+    public void deleteRecord(String table, String searchField, String searchQuery) throws SQLException{
 
-            String sql = "DELETE FROM ? WHERE ? = ?";
+            String sql = "DELETE FROM " + table + " WHERE " + searchField + " = ?";
 
             query = conn.prepareStatement(sql);
-            query.setString(1, table);
-            query.setString(2, searchField);
-            query.setString(3, searchQuery);
+            
+            //query.setString(1, table);
+            //query.setString(2, searchField);
+            query.setString(1, searchQuery);
             
             query.executeUpdate();
     }

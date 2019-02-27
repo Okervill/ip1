@@ -25,7 +25,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 public class LoginController implements Initializable {
-    
+
     SQLHandler sql = new SQLHandler();
 
     @FXML
@@ -43,17 +43,15 @@ public class LoginController implements Initializable {
         String user = inputuser.getText();
         String pass = inputpass.getText();
         Hash h1 = new Hash();
-        if (user.length() < 1 || pass.length() < 1) {
-            Shaker shaker = new Shaker(button);
-            shaker.shake();
+        if (user.length() < 2 || pass.length() < 1) {
+            loginFailed();
             return;
         }
         String userType;
         ArrayList<String> userinfo = sql.search("login", "username", user);
-        
+
         if (userinfo.size() < 5 || !h1.verifyHash(pass, userinfo.get(1))) {
-            Shaker shaker = new Shaker(button);
-            shaker.shake();
+            loginFailed();
         } else {
             userType = sql.search("login", "username", user).get(4);//(String) ReadWriteFile.getLoginData(user).get(4);
             User currentUser = new User();
@@ -66,6 +64,18 @@ public class LoginController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+    }
+
+    @FXML
+    private void swapFocusToPassword(ActionEvent event) {
+        //Pressing enter on the username field will select the password field
+        inputpass.requestFocus();
+    }
+
+    public void loginFailed() {
+        Shaker shaker = new Shaker(button);
+        shaker.shake();
+        inputuser.requestFocus();
     }
 
 }
