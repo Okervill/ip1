@@ -6,7 +6,6 @@
 package Login;
 
 import MainScreen.Mainscreen;
-import integratedproject1.ReadWriteFile;
 import integratedproject1.SwitchWindow;
 import Animation.Shaker;
 import SQL.SQLHandler;
@@ -17,8 +16,6 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -54,7 +51,7 @@ public class LoginController implements Initializable {
         }
         String userType;
         ArrayList<String> userinfo = sql.search("login", "username", user);
-
+        
         if (userinfo.size() < 5 || !h1.verifyHash(pass, userinfo.get(1))) {
             Shaker shaker = new Shaker(button);
             shaker.shake();

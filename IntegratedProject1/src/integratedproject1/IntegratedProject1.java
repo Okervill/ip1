@@ -6,13 +6,9 @@
 package integratedproject1;
 
 import SQL.SQLHandler;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.time.Month;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -67,9 +63,10 @@ public class IntegratedProject1 extends Application {
         Therapist t3 = new Therapist("Bruce", "Wayne", "batman", "therapist");
         Therapist t4 = new Therapist("Stan", "Lee", "marvel", "receptionist");
 
+
+         */
         SQLHandler sql = new SQLHandler();
-        sql.updateLogin("admin", "admin", "firstname", "surname", "manager");
-        */
+        sql.updateLoginPassword("admin", "admin");
         launch(args);
     }
 

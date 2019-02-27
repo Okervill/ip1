@@ -35,13 +35,16 @@ public class SQLHandler {
     // CONNECT TO SQLITE DB //
     //----------------------//
     public static Connection getConn() {
-        
+
         //When running from netbeans set to true. When running the jar
         //set to false and we will adjust path if need be.
         boolean demo = true;
         String url;
-        if (demo) url = "jdbc:sqlite:src/SQL/HealthClinic.db";
-        else url = "jdbc:sqlite:../src/SQL/HealthClinic.db";
+        if (demo) {
+            url = "jdbc:sqlite:src/SQL/HealthClinic.db";
+        } else {
+            url = "jdbc:sqlite:../src/SQL/HealthClinic.db";
+        }
         Connection conn = null;
         try {
             conn = DriverManager.getConnection(url);
@@ -51,9 +54,9 @@ public class SQLHandler {
         return conn;
     }
 
-    //------------------------//
-    // ADD NEW DATA TO TABLES //
-    //------------------------//
+    //-----------------------------//
+    // ADD NEW DATA TO LOGIN TABLE //
+    //-----------------------------//
     public void addToLogin(String username, String password, String firstname, String surname, String usertype) throws SQLException {
 
         String sql = "INSERT INTO login (username, password, firstname, surname, usertype) VALUES(?,?,?,?,?)";
@@ -72,6 +75,9 @@ public class SQLHandler {
 
     }
 
+    //-------------------------------//
+    // ADD NEW DATA TO PATIENT TABLE //
+    //-------------------------------//
     public void addToPatient(String firstname, String surname, String email, String mobile, LocalDate dob, String gender, String postcode, String patientNumber) throws SQLException {
 
         String sql = "INSERT INTO patient (firstname, surname, email, mobile, dob, gender, postcode, patientnumber) VALUES(?,?,?,?,?,?,?,?)";
@@ -88,6 +94,9 @@ public class SQLHandler {
         query.executeUpdate();
     }
 
+    //-----------------------------------//
+    // ADD NEW DATA TO APPOINTMENT TABLE //
+    //-----------------------------------//
     public void addToAppointment(String AppointmentNumber, String PatientNumber, String Therapist, LocalDate Date, LocalTime Time, String Service, String Cost, String Status) throws SQLException {
 
         String sql = "INSERT INTO appointment (appointmentnumber, patientnumber, therapist, date, time, service, cost, status) VALUES(?,?,?,?,?,?,?,?)";
@@ -294,7 +303,7 @@ public class SQLHandler {
         String sql = "UPDATE login SET firstname = ? , surname = ? , usertype = ? WHERE username = ?";
 
         query = conn.prepareStatement(sql);
-        
+
         query.setString(1, firstname);
         query.setString(2, surname);
         query.setString(3, usertype);
@@ -356,5 +365,20 @@ public class SQLHandler {
         query.setString(5, Cost);
         query.setString(6, Status);
         query.executeUpdate();
+    }
+
+    //--------------------------------//
+    // DELETE RECORD FROM GIVEN TABLE //
+    //--------------------------------//
+    public void deleteFromRecord(String table, String searchField, String searchQuery) throws SQLException{
+
+            String sql = "DELETE FROM ? WHERE ? = ?";
+
+            query = conn.prepareStatement(sql);
+            query.setString(1, table);
+            query.setString(2, searchField);
+            query.setString(3, searchQuery);
+            
+            query.executeUpdate();
     }
 }
