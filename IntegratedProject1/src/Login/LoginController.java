@@ -43,7 +43,6 @@ public class LoginController implements Initializable {
         String user = inputuser.getText();
         String pass = inputpass.getText();
         Hash h1 = new Hash();
-
         if (user.length() < 1 || pass.length() < 1) {
             Shaker shaker = new Shaker(button);
             shaker.shake();
