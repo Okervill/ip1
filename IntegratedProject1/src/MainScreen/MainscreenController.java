@@ -117,7 +117,7 @@ public class MainscreenController implements Initializable {
                 username = currentUser.getUsername();
                 userType = currentUser.getUserType();
             }
-
+            
             //------------------------------------//
             //Add all therapists to the choice box//
             //------------------------------------//
@@ -126,18 +126,19 @@ public class MainscreenController implements Initializable {
             } catch (SQLException ex) {
                 Logger.getLogger(MainscreenController.class.getName()).log(Level.SEVERE, null, ex);
             }
-
+            
+            if (!userType.equals("therapist")) {
+                selectedTherapist = therapists.getSelectionModel().getSelectedItem();
+            } else {
+                selectedTherapist = username;
+            }
             //------------------------------------------------//
             //Set date as today and get appointments for today//
             //------------------------------------------------//
             LocalDate today = LocalDate.now();
             datePicker.setValue(today);
 
-            if (!userType.equals("therapist")) {
-                selectedTherapist = therapists.getSelectionModel().getSelectedItem();
-            } else {
-                selectedTherapist = username;
-            }
+            
             //-------------------------------------------------------------------------//
             //add listener to the list view selection to get extra info on appointments//
             //-------------------------------------------------------------------------//
