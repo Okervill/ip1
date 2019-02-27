@@ -312,9 +312,9 @@ public class MainscreenController implements Initializable {
             ArrayList<String> allAppointments;
             ObservableList<String> appointments = FXCollections.observableArrayList();
             if (selectedTherapist.isEmpty()) {
-                allAppointments = allAppointments = sql.getAllShortAppointments(i);
+                allAppointments = sql.getAllShortAppointments(i);
             } else {
-                allAppointments = allAppointments = sql.getShortAppointments(i, selectedTherapist);
+                allAppointments = sql.getShortAppointments(i, selectedTherapist);
             }
             for (int x = 0; x < allAppointments.size(); x++) {
                 appointments.add(allAppointments.get(x));
