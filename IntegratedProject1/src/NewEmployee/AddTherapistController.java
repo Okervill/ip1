@@ -47,7 +47,8 @@ public class AddTherapistController implements Initializable {
 
     @FXML
     private void discard(ActionEvent event) {
-        SwitchWindow.switchWindow((Stage) discard.getScene().getWindow(), new Mainscreen());
+        Stage stage = (Stage) discard.getScene().getWindow();
+        stage.close();
     }
 
     @FXML
@@ -68,7 +69,8 @@ public class AddTherapistController implements Initializable {
 
         Therapist t = new Therapist(f, s, p, m);
 
-        SwitchWindow.switchWindow((Stage) save.getScene().getWindow(), new Mainscreen());
+        Stage stage = (Stage) save.getScene().getWindow();
+        stage.close();
     }
 
 }

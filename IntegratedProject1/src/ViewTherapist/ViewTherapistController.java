@@ -80,12 +80,14 @@ public class ViewTherapistController implements Initializable {
 
         sql.updateLogin(currentUsername, newFirst, newLast, newUserType);
 
-        SwitchWindow.switchWindow((Stage) save.getScene().getWindow(), new Mainscreen());
+        Stage stage = (Stage) discard.getScene().getWindow();
+        stage.close();
     }
 
     @FXML
     private void discard(ActionEvent event) {
-        SwitchWindow.switchWindow((Stage) discard.getScene().getWindow(), new Mainscreen());
+        Stage stage = (Stage) discard.getScene().getWindow();
+        stage.close();
     }
 
     @FXML
