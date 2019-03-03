@@ -116,9 +116,9 @@ public class SQLHandler {
         query.executeUpdate();
     }
 
-    //-----------------------------------//
+    //-------------------------------//
     // ADD NEW DATA TO SERVICE TABLE //
-    //-----------------------------------//
+    //-------------------------------//
     public void addToService(String serviceNumber, String ServiceName, String ServiceCost, String ServiceDuration) throws SQLException {
 
         String sql = "INSERT INTO service (servicenumber, name, cost, duration) VALUES(?,?,?)";
@@ -407,9 +407,9 @@ public class SQLHandler {
         query.executeUpdate();
     }
 
-    //----------------------------------//
+    //------------------------------//
     // EDIT RECORD IN SERVICE TABLE //
-    //----------------------------------//
+    //------------------------------//
     public void updateService(String ServiceNumber, String ServiceName, String ServiceCost, String ServiceDuration) throws SQLException {
 
         String sql = "UPDATE service SET ServiceName = ? , ServiceCost = ? , ServiceDuration = ? WHERE servicenumber = ?";
