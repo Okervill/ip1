@@ -44,6 +44,8 @@ public class ViewTherapistController implements Initializable {
     SQLHandler sql = new SQLHandler();
     @FXML
     private TextField password;
+    @FXML
+    private ChoiceBox<String> active;
 
     /**
      * Initializes the controller class.
@@ -54,6 +56,7 @@ public class ViewTherapistController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         manager.setItems(FXCollections.observableArrayList("therapist", "receptionist", "manager"));
+        active.setItems(FXCollections.observableArrayList("true", "false"));
     }
 
     @FXML
@@ -63,13 +66,13 @@ public class ViewTherapistController implements Initializable {
         if (currentUsername.length() < 1) {
             return;
         }
-        if (!password.getText().isEmpty()){
+        if (!password.getText().isEmpty()) {
             sql.updateLoginPassword(currentUsername, password.getText());
         }
-        
+
         ArrayList<String> current = null;
         try {
-            current = sql.search("login", "username", currentUsername);//ReadWriteFile.getLoginData(currentUsername);
+            current = sql.search("login", "username", currentUsername);
         } catch (SQLException ex) {
             Logger.getLogger(ViewTherapistController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -77,8 +80,9 @@ public class ViewTherapistController implements Initializable {
         String newFirst = firstname.getText();
         String newLast = surname.getText();
         String newUserType = manager.getSelectionModel().getSelectedItem();
+        String newActive = active.getSelectionModel().getSelectedItem();
 
-        sql.updateLogin(currentUsername, newFirst, newLast, newUserType);
+        sql.updateLogin(currentUsername, newFirst, newLast, newUserType, newActive);
 
         Stage stage = (Stage) discard.getScene().getWindow();
         stage.close();
@@ -96,7 +100,7 @@ public class ViewTherapistController implements Initializable {
         String currentUsername = currentUser.getText();
 
         try {
-            if (!sql.checkTherapistExists(currentUsername)) {
+            if (!sql.checkUserExists(currentUsername)) {
                 return;
             }
         } catch (SQLException ex) {
@@ -114,14 +118,17 @@ public class ViewTherapistController implements Initializable {
         surname.setText(current.get(3));
         if (current.get(4).equalsIgnoreCase("manager")) {
             manager.getSelectionModel().select("manager");
-        }
-        if (current.get(4).equalsIgnoreCase("receptionist")) {
+        } else if (current.get(4).equalsIgnoreCase("receptionist")) {
             manager.getSelectionModel().select("receptionist");
-        }
-        if (current.get(4).equalsIgnoreCase("therapist")) {
+        } else if (current.get(4).equalsIgnoreCase("therapist")) {
             manager.getSelectionModel().select("therapist");
         }
 
-    }
+        if (current.get(5).equalsIgnoreCase("false")) {
+            active.getSelectionModel().select("false");
+        } else if (current.get(5).equalsIgnoreCase("true")) {
+            active.getSelectionModel().select("true");
+        }
 
+    }
 }

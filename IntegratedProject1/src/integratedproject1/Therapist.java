@@ -6,7 +6,6 @@
 package integratedproject1;
 
 import SQL.SQLHandler;
-import java.io.IOException;
 import java.sql.SQLException;
 
 public class Therapist {
@@ -16,6 +15,7 @@ public class Therapist {
     private String username;
     private String password;
     private String userType;
+    private String active;
 
     SQLHandler sql = new SQLHandler();
 
@@ -26,6 +26,8 @@ public class Therapist {
         this.userType = t;
 
         this.username = s + f.charAt(0);
+        
+        this.active = "false";
 
         int count = 0;
 
@@ -39,6 +41,6 @@ public class Therapist {
             username = username + count;
         }
 
-        sql.addToLogin(firstname, surname, username, password, userType);
+        sql.addToLogin(username, password, firstname, surname, userType, active);
     }
 }

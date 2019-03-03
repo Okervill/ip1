@@ -10,6 +10,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -55,9 +56,9 @@ public class SQLHandler {
     //-----------------------------//
     // ADD NEW DATA TO LOGIN TABLE //
     //-----------------------------//
-    public void addToLogin(String username, String password, String firstname, String surname, String usertype) throws SQLException {
+    public void addToLogin(String username, String password, String firstname, String surname, String usertype, String active) throws SQLException {
 
-        String sql = "INSERT INTO login (username, password, firstname, surname, usertype) VALUES(?,?,?,?,?)";
+        String sql = "INSERT INTO login (username, password, firstname, surname, usertype, active) VALUES(?,?,?,?,?,?)";
 
         Hash h1 = new Hash();
         password = h1.hash(password);
@@ -69,6 +70,7 @@ public class SQLHandler {
         query.setString(3, firstname);
         query.setString(4, surname);
         query.setString(5, usertype);
+        query.setString(6, active);
 
         query.executeUpdate();
 
@@ -133,6 +135,21 @@ public class SQLHandler {
         query.executeUpdate();
     }
 
+    //-----------------------------//
+    // COUNT FIELDS IN GIVEN TABLE //
+    //-----------------------------//
+    public int countFields(String table) throws SQLException {
+        int numFields = 0;
+
+        String sql = "SELECT * FROM " + table;
+        query = conn.prepareStatement(sql);
+        ResultSet rs = query.executeQuery();
+        ResultSetMetaData rsmd = rs.getMetaData();
+        numFields = rsmd.getColumnCount();
+
+        return numFields;
+    }
+
     //-----------------------------------//
     // SEARCH FOR ITEM IN FIELD IN TABLE //
     //-----------------------------------//
@@ -142,7 +159,7 @@ public class SQLHandler {
 
         switch (table) {
             case "login": {
-                String sql = "SELECT username, password, firstname, surname, usertype FROM login WHERE " + searchField + " = \"" + searchQuery + "\"";
+                String sql = "SELECT username, password, firstname, surname, usertype, active FROM login WHERE " + searchField + " = \"" + searchQuery + "\"";
                 query = conn.prepareStatement(sql);
                 ResultSet rs = query.executeQuery();
                 while (rs.next()) {
@@ -151,6 +168,7 @@ public class SQLHandler {
                     output.add((rs.getString("firstname")));
                     output.add((rs.getString("surname")));
                     output.add((rs.getString("usertype")));
+                    output.add((rs.getString("active")));
                 }
                 break;
             }
@@ -220,13 +238,13 @@ public class SQLHandler {
                 sql = "SELECT username FROM login";
                 break;
             case "therapist":
-                sql = "SELECT username FROM login WHERE usertype = \"therapist\"";
+                sql = "SELECT username FROM login WHERE usertype = \"therapist\" AND active = \"true\"";
                 break;
             case "receptionist":
-                sql = "SELECT username FROM login WHERE usertype = \"receptionist\"";
+                sql = "SELECT username FROM login WHERE usertype = \"receptionist\" AND active = \"true\"";
                 break;
             case "manager":
-                sql = "SELECT username FROM login WHERE usertype = \"manager\"";
+                sql = "SELECT username FROM login WHERE usertype = \"manager\" AND active = \"true\"";
                 break;
             default:
                 break;
@@ -240,16 +258,34 @@ public class SQLHandler {
         return output;
     }
 
-    public boolean checkTherapistExists(String username) throws SQLException {
+    //---------------------------------------//
+    // SEARCH LOGIN TABLE FOR GIVEN USERNAME //
+    //---------------------------------------//
+    public boolean checkUserExists(String username) throws SQLException {
         boolean exists = false;
 
         ArrayList<String> checkUser = search("login", "username", username);
 
-        if (checkUser.size() == 5) {
+        if (checkUser.size() == 6) {
             exists = true;
         }
 
         return exists;
+    }
+    
+    //-----------------------------------------//
+    // SEARCH LOGIN TABLE TO CHECK USER ACTIVE //
+    //-----------------------------------------//
+    public boolean checkUserActive(String username) throws SQLException {
+        boolean active = false;
+
+        ArrayList<String> checkUser = search("login", "username", username);
+
+        if (checkUser.get(5).equals("true")) {
+            active = true;
+        }
+
+        return active;
     }
 
     //---------------------------------//
@@ -337,16 +373,17 @@ public class SQLHandler {
     //----------------------------//
     // EDIT RECORD IN LOGIN TABLE //
     //----------------------------//
-    public void updateLogin(String username, String firstname, String surname, String usertype) throws SQLException {
+    public void updateLogin(String username, String firstname, String surname, String usertype, String active) throws SQLException {
 
-        String sql = "UPDATE login SET firstname = ? , surname = ? , usertype = ? WHERE username = ?";
+        String sql = "UPDATE login SET firstname = ? , surname = ? , usertype = ?, active = ? WHERE username = ?";
 
         query = conn.prepareStatement(sql);
 
         query.setString(1, firstname);
         query.setString(2, surname);
         query.setString(3, usertype);
-        query.setString(4, username);
+        query.setString(4, active);
+        query.setString(5, username);
 
         query.executeUpdate();
     }
