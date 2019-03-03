@@ -16,7 +16,7 @@ public class Therapist {
     private String username;
     private String password;
     private String userType;
-    
+
     SQLHandler sql = new SQLHandler();
 
     public Therapist(String f, String s, String p, String t) throws SQLException {
@@ -39,11 +39,6 @@ public class Therapist {
             username = username + count;
         }
 
-        newTherapist(firstname, surname, username, password, userType);
-    }
-
-    public void newTherapist(String f, String s, String u, String p, String t) throws SQLException {
-        sql.addToLogin(u, p, f, s, t);
-        //ReadWriteFile.updateLoginFile(f, s, u, p, t);
+        sql.addToLogin(firstname, surname, username, password, userType);
     }
 }

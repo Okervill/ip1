@@ -61,15 +61,15 @@ public class SQLHandler {
 
         Hash h1 = new Hash();
         password = h1.hash(password);
-        
+
         query = conn.prepareStatement(sql);
-        
+
         query.setString(1, username);
         query.setString(2, password);
         query.setString(3, firstname);
         query.setString(4, surname);
         query.setString(5, usertype);
-        
+
         query.executeUpdate();
 
     }
@@ -82,7 +82,7 @@ public class SQLHandler {
         String sql = "INSERT INTO patient (firstname, surname, email, mobile, dob, gender, postcode, patientnumber) VALUES(?,?,?,?,?,?,?,?)";
 
         query = conn.prepareStatement(sql);
-        
+
         query.setString(1, firstname);
         query.setString(2, surname);
         query.setString(3, email);
@@ -91,7 +91,7 @@ public class SQLHandler {
         query.setString(6, gender);
         query.setString(7, postcode);
         query.setString(8, patientNumber);
-        
+
         query.executeUpdate();
     }
 
@@ -103,7 +103,7 @@ public class SQLHandler {
         String sql = "INSERT INTO appointment (appointmentnumber, patientnumber, therapist, date, time, service, cost, status) VALUES(?,?,?,?,?,?,?,?)";
 
         query = conn.prepareStatement(sql);
-        
+
         query.setString(1, AppointmentNumber);
         query.setString(2, PatientNumber);
         query.setString(3, Therapist);
@@ -112,7 +112,24 @@ public class SQLHandler {
         query.setString(6, Service);
         query.setString(7, Cost);
         query.setString(8, Status);
-        
+
+        query.executeUpdate();
+    }
+
+    //-----------------------------------//
+    // ADD NEW DATA TO SERVICE TABLE //
+    //-----------------------------------//
+    public void addToService(String serviceNumber, String ServiceName, String ServiceCost, String ServiceDuration) throws SQLException {
+
+        String sql = "INSERT INTO service (servicenumber, name, cost, duration) VALUES(?,?,?)";
+
+        query = conn.prepareStatement(sql);
+
+        query.setString(1, serviceNumber);
+        query.setString(2, ServiceName);
+        query.setString(3, ServiceCost);
+        query.setString(4, ServiceDuration);
+
         query.executeUpdate();
     }
 
@@ -124,53 +141,64 @@ public class SQLHandler {
         ArrayList<String> output = new ArrayList<>();
 
         switch (table) {
-            case "login":
-                {
-                    String sql = "SELECT username, password, firstname, surname, usertype FROM login WHERE " + searchField + " = \"" + searchQuery + "\"";
-                    query = conn.prepareStatement(sql);
-                    ResultSet rs = query.executeQuery();
-                    while (rs.next()) {
-                        output.add((rs.getString("username")));
-                        output.add((rs.getString("password")));
-                        output.add((rs.getString("firstname")));
-                        output.add((rs.getString("surname")));
-                        output.add((rs.getString("usertype")));
-                    }       break;
+            case "login": {
+                String sql = "SELECT username, password, firstname, surname, usertype FROM login WHERE " + searchField + " = \"" + searchQuery + "\"";
+                query = conn.prepareStatement(sql);
+                ResultSet rs = query.executeQuery();
+                while (rs.next()) {
+                    output.add((rs.getString("username")));
+                    output.add((rs.getString("password")));
+                    output.add((rs.getString("firstname")));
+                    output.add((rs.getString("surname")));
+                    output.add((rs.getString("usertype")));
                 }
-            case "patient":
-                {
-                    String sql = "SELECT firstname, surname, email, mobile, dob, gender, postcode, patientnumber FROM patient WHERE " + searchField + " = \"" + searchQuery + "\"";
-                    query = conn.prepareStatement(sql);
-                    ResultSet rs = query.executeQuery();
-                    while (rs.next()) {
-                        output.add((rs.getString("firstname")));
-                        output.add((rs.getString("surname")));
-                        output.add((rs.getString("email")));
-                        output.add((rs.getString("mobile")));
-                        output.add((rs.getString("dob")));
-                        output.add((rs.getString("gender")));
-                        output.add((rs.getString("postcode")));
-                        output.add((rs.getString("patientnumber")));
-                    }       break;
+                break;
+            }
+            case "patient": {
+                String sql = "SELECT firstname, surname, email, mobile, dob, gender, postcode, patientnumber FROM patient WHERE " + searchField + " = \"" + searchQuery + "\"";
+                query = conn.prepareStatement(sql);
+                ResultSet rs = query.executeQuery();
+                while (rs.next()) {
+                    output.add((rs.getString("firstname")));
+                    output.add((rs.getString("surname")));
+                    output.add((rs.getString("email")));
+                    output.add((rs.getString("mobile")));
+                    output.add((rs.getString("dob")));
+                    output.add((rs.getString("gender")));
+                    output.add((rs.getString("postcode")));
+                    output.add((rs.getString("patientnumber")));
                 }
-            case "appointment":
-                {
-                    String sql = "SELECT appointmentnumber, patientnumber, therapist, date, time, service, cost, status FROM appointment WHERE " + searchField + " = \"" + searchQuery + "\"";
-                    query = conn.prepareStatement(sql);
-                    ResultSet rs = query.executeQuery();
-                    while (rs.next()) {
-                        output.add((rs.getString("appointmentnumber")));
-                        output.add((rs.getString("patientnumber")));
-                        output.add((rs.getString("therapist")));
-                        output.add((rs.getString("date")));
-                        output.add((rs.getString("time")));
-                        output.add((rs.getString("service")));
-                        output.add((rs.getString("cost")));
-                        output.add((rs.getString("status")));
-                    }       //replace patient number with patient name
-                    output.set(1, search("patient", "patientnumber", output.get(1)).get(0) + " " + search("patient", "patientnumber", output.get(1)).get(1));
-                    break;
+                break;
+            }
+            case "appointment": {
+                String sql = "SELECT appointmentnumber, patientnumber, therapist, date, time, service, cost, status FROM appointment WHERE " + searchField + " = \"" + searchQuery + "\"";
+                query = conn.prepareStatement(sql);
+                ResultSet rs = query.executeQuery();
+                while (rs.next()) {
+                    output.add((rs.getString("appointmentnumber")));
+                    output.add((rs.getString("patientnumber")));
+                    output.add((rs.getString("therapist")));
+                    output.add((rs.getString("date")));
+                    output.add((rs.getString("time")));
+                    output.add((rs.getString("service")));
+                    output.add((rs.getString("cost")));
+                    output.add((rs.getString("status")));
+                }       //replace patient number with patient name
+                output.set(1, search("patient", "patientnumber", output.get(1)).get(0) + " " + search("patient", "patientnumber", output.get(1)).get(1));
+                break;
+            }
+            case "service": {
+                String sql = "SELECT servicenumber, name, cost, duration FROM service WHERE " + searchField + " = \"" + searchQuery + "\"";
+                query = conn.prepareStatement(sql);
+                ResultSet rs = query.executeQuery();
+                while (rs.next()) {
+                    output.add((rs.getString("servicenumber")));
+                    output.add((rs.getString("name")));
+                    output.add((rs.getString("cost")));
+                    output.add((rs.getString("duration")));
                 }
+                break;
+            }
             default:
                 System.out.println("Invalid table name");
                 break;
@@ -356,7 +384,7 @@ public class SQLHandler {
         query.setString(4, mobile);
         query.setString(5, dob);
         query.setString(6, postcode);
-        query.setString(6, patientnumer);
+        query.setString(7, patientnumer);
 
         query.executeUpdate();
     }
@@ -375,22 +403,38 @@ public class SQLHandler {
         query.setString(4, Service);
         query.setString(5, Cost);
         query.setString(6, Status);
+        query.setString(7, AppointmentNumber);
+        query.executeUpdate();
+    }
+
+    //----------------------------------//
+    // EDIT RECORD IN SERVICE TABLE //
+    //----------------------------------//
+    public void updateService(String ServiceNumber, String ServiceName, String ServiceCost, String ServiceDuration) throws SQLException {
+
+        String sql = "UPDATE service SET ServiceName = ? , ServiceCost = ? , ServiceDuration = ? WHERE servicenumber = ?";
+
+        query = conn.prepareStatement(sql);
+        query.setString(1, ServiceName);
+        query.setString(2, ServiceCost);
+        query.setString(3, ServiceDuration);
+        query.setString(4, ServiceNumber);
         query.executeUpdate();
     }
 
     //--------------------------------//
     // DELETE RECORD FROM GIVEN TABLE //
     //--------------------------------//
-    public void deleteRecord(String table, String searchField, String searchQuery) throws SQLException{
+    public void deleteRecord(String table, String searchField, String searchQuery) throws SQLException {
 
-            String sql = "DELETE FROM " + table + " WHERE " + searchField + " = ?";
+        String sql = "DELETE FROM " + table + " WHERE " + searchField + " = ?";
 
-            query = conn.prepareStatement(sql);
-            
-            //query.setString(1, table);
-            //query.setString(2, searchField);
-            query.setString(1, searchQuery);
-            
-            query.executeUpdate();
+        query = conn.prepareStatement(sql);
+
+        //query.setString(1, table);
+        //query.setString(2, searchField);
+        query.setString(1, searchQuery);
+
+        query.executeUpdate();
     }
 }
