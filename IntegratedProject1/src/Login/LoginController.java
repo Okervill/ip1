@@ -11,7 +11,6 @@ import Animation.Shaker;
 import SQL.SQLHandler;
 import integratedproject1.Hash;
 import integratedproject1.User;
-import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -38,22 +37,19 @@ public class LoginController implements Initializable {
     private TextField inputpass;
 
     @FXML
-    private void login(ActionEvent event) throws IOException, SQLException {
+    private void login(ActionEvent event) throws SQLException {
 
+        String userType;
         String user = inputuser.getText();
         String pass = inputpass.getText();
         Hash h1 = new Hash();
-        if (user.length() < 2 || pass.length() < 1) {
-            loginFailed();
-            return;
-        }
-        String userType;
         ArrayList<String> userinfo = sql.search("login", "username", user);
-
-        if (userinfo.size() < 5 || !h1.verifyHash(pass, userinfo.get(1))) {
+        
+        //Login quick checks, empty user/pass. Then username exists, then user is active. Finally check password is correct.
+        if (user.isEmpty() || pass.isEmpty() || !sql.checkUserExists(user) || !sql.checkUserActive(user) || !h1.verifyHash(pass, userinfo.get(1))) {
             loginFailed();
         } else {
-            userType = sql.search("login", "username", user).get(4);//(String) ReadWriteFile.getLoginData(user).get(4);
+            userType = userinfo.get(4);
             User currentUser = new User();
             currentUser.setUsername(user);
             currentUser.setUserType(userType);
