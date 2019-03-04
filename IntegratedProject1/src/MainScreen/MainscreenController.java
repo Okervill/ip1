@@ -9,7 +9,6 @@ import Animation.Shaker;
 import Login.Login;
 import SQL.SQLHandler;
 import ViewPatient.ViewPatient;
-import integratedproject1.ReadWriteFile;
 import integratedproject1.SwitchWindow;
 import integratedproject1.User;
 import java.io.IOException;
@@ -111,6 +110,7 @@ public class MainscreenController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         //This allows setdata to be ran before this section of code
         setListViewCellWrap();
+        
         Platform.runLater(() -> {
             if (username == null && userType == null) {
                 User currentUser = new User();
@@ -137,11 +137,6 @@ public class MainscreenController implements Initializable {
             //------------------------------------------------//
             LocalDate today = LocalDate.now();
             datePicker.setValue(today);
-
-            
-            //-------------------------------------------------------------------------//
-            //add listener to the list view selection to get extra info on appointments//
-            //-------------------------------------------------------------------------//
         });
     }
 
@@ -581,5 +576,16 @@ public class MainscreenController implements Initializable {
     @FXML
     private void goToNextWeek(ActionEvent event) {
         datePicker.setValue(datePicker.getValue().plusDays(7));
+    }
+    
+    //-----------------------------------------//
+    // Search appointments for given ap number //
+    //-----------------------------------------//
+    public ArrayList<String> searchAppointments(String appointmentNumber) throws SQLException{
+        ArrayList<String> appointment = new ArrayList<>();
+        
+        appointment = sql.search("appointment", "appointmentnumber", appointmentNumber);
+        
+        return appointment;
     }
 }
