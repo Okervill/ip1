@@ -506,6 +506,15 @@ public class MainscreenController implements Initializable {
                     setWrapText(true);
 
                     setText(item.toString());
+                                                if(item.contains("Sports Massage")) {
+                    setStyle("-fx-background-color:#ccffcc");
+                    }
+                    else if(item.contains("Physiotherapy")) {
+                        setStyle("-fx-background-color:#d9b3ff");
+                    }
+                    else if(item.contains("Acupuncture")) {
+                        setStyle("-fx-background-color:#b3e0ff");
+                    }
 
 
                 }
@@ -531,7 +540,15 @@ public class MainscreenController implements Initializable {
                     setWrapText(true);
 
                     setText(item.toString());
-
+                                                if(item.contains("Sports Massage")) {
+                    setStyle("-fx-background-color:#ccffcc");
+                    }
+                    else if(item.contains("Physiotherapy")) {
+                        setStyle("-fx-background-color:#d9b3ff");
+                    }
+                    else if(item.contains("Acupuncture")) {
+                        setStyle("-fx-background-color:#b3e0ff");
+                    }
 
                 }
             }
