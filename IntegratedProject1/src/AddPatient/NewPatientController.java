@@ -63,7 +63,7 @@ public class NewPatientController implements Initializable {
     }
 
     @FXML
-    private void save(ActionEvent event) throws IOException, SQLException {
+    private void save(ActionEvent event) throws SQLException {
 
         String f = firstname.getText();
         String s = surname.getText();

@@ -14,7 +14,7 @@ import javafx.stage.Stage;
 
 public class ViewPatient extends Application {
     
-    private ArrayList<String> patientData;
+    private final ArrayList<String> patientData;
     
     public ViewPatient(ArrayList<String> patientData) {
         this.patientData = patientData;

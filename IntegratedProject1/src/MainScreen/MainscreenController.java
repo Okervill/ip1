@@ -80,7 +80,7 @@ public class MainscreenController implements Initializable {
     String userType;
     String username;
     String selectedTherapist = "";
-    
+
     @FXML
     private Text mondayTitle;
     @FXML
@@ -110,14 +110,14 @@ public class MainscreenController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         //This allows setdata to be ran before this section of code
         setListViewCellWrap();
-        
+
         Platform.runLater(() -> {
             if (username == null && userType == null) {
                 User currentUser = new User();
                 username = currentUser.getUsername();
                 userType = currentUser.getUserType();
             }
-            
+
             //------------------------------------//
             //Add all therapists to the choice box//
             //------------------------------------//
@@ -126,7 +126,7 @@ public class MainscreenController implements Initializable {
             } catch (SQLException ex) {
                 Logger.getLogger(MainscreenController.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
+
             if (!userType.equals("therapist")) {
                 selectedTherapist = therapists.getSelectionModel().getSelectedItem();
             } else {
@@ -194,7 +194,7 @@ public class MainscreenController implements Initializable {
         secondStage.showAndWait();
         //SwitchWindow.switchWindow((Stage) searchTherapist.getScene().getWindow(), new ViewTherapist());
     }
-    
+
     private ArrayList<String> search() {
 
         String patientNumber = findPatient.getText();
@@ -293,7 +293,7 @@ public class MainscreenController implements Initializable {
         DayOfWeek dayOfWeek = date.getDayOfWeek();
         LocalDate startDate = date.minusDays(dayOfWeek.getValue() - 1);
         LocalDate endDate = date.plusDays(7 - dayOfWeek.getValue());
-        
+
         mondayTitle.setText("Monday " + startDate.getDayOfMonth() + "/" + startDate.getMonthValue());
         tuesdayTitle.setText("Tuesday " + startDate.plusDays(1).getDayOfMonth() + "/" + startDate.plusDays(1).getMonthValue());
         wednesdayTitle.setText("Wednesday " + startDate.plusDays(2).getDayOfMonth() + "/" + startDate.plusDays(2).getMonthValue());
@@ -301,9 +301,9 @@ public class MainscreenController implements Initializable {
         fridayTitle.setText("Friday " + startDate.plusDays(4).getDayOfMonth() + "/" + startDate.plusDays(4).getMonthValue());
         saturdayTitle.setText("Saturday " + startDate.plusDays(5).getDayOfMonth() + "/" + startDate.plusDays(5).getMonthValue());
         sundayTitle.setText("Sunday " + startDate.plusDays(6).getDayOfMonth() + "/" + startDate.plusDays(6).getMonthValue());
-        
+
         appointmentDetails.getItems().clear();
-        
+
         for (LocalDate i = startDate; i.getDayOfMonth() != endDate.plusDays(1).getDayOfMonth() || i.getMonth() != endDate.plusDays(1).getMonth(); i = i.plusDays(1)) {
             ArrayList<String> allAppointments;
             ObservableList<String> appointments = FXCollections.observableArrayList();
@@ -315,9 +315,9 @@ public class MainscreenController implements Initializable {
             for (int x = 0; x < allAppointments.size(); x++) {
                 appointments.add(allAppointments.get(x));
             }
-            
+
             DayOfWeek loopDayOfWeek = i.getDayOfWeek();
-            
+
             switch (loopDayOfWeek) {
                 case MONDAY:
                     mondayAppointments.setItems(appointments);
@@ -350,22 +350,18 @@ public class MainscreenController implements Initializable {
             }
         }
     }
-    
-    
-    
-    
-    
+
     private void setListViewCellWrap() {
-        mondayAppointments.setCellFactory(param -> new ListCell<String>(){
+        mondayAppointments.setCellFactory(param -> new ListCell<String>() {
             @Override
             protected void updateItem(String item, boolean empty) {
                 super.updateItem(item, empty);
-                if (empty || item==null) {
+                if (empty || item == null) {
                     setGraphic(null);
-                    setText(null); 
+                    setText(null);
                     // other stuff to do...
 
-                }else{
+                } else {
 
                     // set the width's
                     setMinWidth(param.getWidth());
@@ -375,30 +371,28 @@ public class MainscreenController implements Initializable {
                     // allow wrapping
                     setWrapText(true);
 
-                    setText(item.toString());
-                    if(item.contains("Sports Massage")) {
-                    setStyle("-fx-background-color:#ccffcc");
-                    }
-                    else if(item.contains("Physiotherapy")) {
+                    setText(item);
+                    if (item.contains("Sports Massage")) {
+                        setStyle("-fx-background-color:#ccffcc");
+                    } else if (item.contains("Physiotherapy")) {
                         setStyle("-fx-background-color:#d9b3ff");
-                    }
-                    else if(item.contains("Acupuncture")) {
+                    } else if (item.contains("Acupuncture")) {
                         setStyle("-fx-background-color:#b3e0ff");
                     }
 
                 }
             }
         });
-        tuesdayAppointments.setCellFactory(param -> new ListCell<String>(){
+        tuesdayAppointments.setCellFactory(param -> new ListCell<String>() {
             @Override
             protected void updateItem(String item, boolean empty) {
                 super.updateItem(item, empty);
-                if (empty || item==null) {
+                if (empty || item == null) {
                     setGraphic(null);
-                    setText(null); 
+                    setText(null);
                     // other stuff to do...
 
-                }else{
+                } else {
 
                     // set the width's
                     setMinWidth(param.getWidth());
@@ -408,30 +402,28 @@ public class MainscreenController implements Initializable {
                     // allow wrapping
                     setWrapText(true);
 
-                    setText(item.toString());
-                    if(item.contains("Sports Massage")) {
-                    setStyle("-fx-background-color:#ccffcc");
-                    }
-                    else if(item.contains("Physiotherapy")) {
+                    setText(item);
+                    if (item.contains("Sports Massage")) {
+                        setStyle("-fx-background-color:#ccffcc");
+                    } else if (item.contains("Physiotherapy")) {
                         setStyle("-fx-background-color:#d9b3ff");
-                    }
-                    else if(item.contains("Acupuncture")) {
+                    } else if (item.contains("Acupuncture")) {
                         setStyle("-fx-background-color:#b3e0ff");
                     }
 
                 }
             }
         });
-        wednesdayAppointments.setCellFactory(param -> new ListCell<String>(){
+        wednesdayAppointments.setCellFactory(param -> new ListCell<String>() {
             @Override
             protected void updateItem(String item, boolean empty) {
                 super.updateItem(item, empty);
-                if (empty || item==null) {
+                if (empty || item == null) {
                     setGraphic(null);
-                    setText(null); 
+                    setText(null);
                     // other stuff to do...
 
-                }else{
+                } else {
 
                     // set the width's
                     setMinWidth(param.getWidth());
@@ -441,30 +433,28 @@ public class MainscreenController implements Initializable {
                     // allow wrapping
                     setWrapText(true);
 
-                    setText(item.toString());
-                    if(item.contains("Sports Massage")) {
-                    setStyle("-fx-background-color:#ccffcc");
-                    }
-                    else if(item.contains("Physiotherapy")) {
+                    setText(item);
+                    if (item.contains("Sports Massage")) {
+                        setStyle("-fx-background-color:#ccffcc");
+                    } else if (item.contains("Physiotherapy")) {
                         setStyle("-fx-background-color:#d9b3ff");
-                    }
-                    else if(item.contains("Acupuncture")) {
+                    } else if (item.contains("Acupuncture")) {
                         setStyle("-fx-background-color:#b3e0ff");
                     }
 
                 }
             }
         });
-        thursdayAppointments.setCellFactory(param -> new ListCell<String>(){
+        thursdayAppointments.setCellFactory(param -> new ListCell<String>() {
             @Override
             protected void updateItem(String item, boolean empty) {
                 super.updateItem(item, empty);
-                if (empty || item==null) {
+                if (empty || item == null) {
                     setGraphic(null);
-                    setText(null); 
+                    setText(null);
                     // other stuff to do...
 
-                }else{
+                } else {
 
                     // set the width's
                     setMinWidth(param.getWidth());
@@ -474,30 +464,28 @@ public class MainscreenController implements Initializable {
                     // allow wrapping
                     setWrapText(true);
 
-                    setText(item.toString());
-                    if(item.contains("Sports Massage")) {
-                    setStyle("-fx-background-color:#ccffcc");
-                    }
-                    else if(item.contains("Physiotherapy")) {
+                    setText(item);
+                    if (item.contains("Sports Massage")) {
+                        setStyle("-fx-background-color:#ccffcc");
+                    } else if (item.contains("Physiotherapy")) {
                         setStyle("-fx-background-color:#d9b3ff");
-                    }
-                    else if(item.contains("Acupuncture")) {
+                    } else if (item.contains("Acupuncture")) {
                         setStyle("-fx-background-color:#b3e0ff");
                     }
 
                 }
             }
         });
-        fridayAppointments.setCellFactory(param -> new ListCell<String>(){
+        fridayAppointments.setCellFactory(param -> new ListCell<String>() {
             @Override
             protected void updateItem(String item, boolean empty) {
                 super.updateItem(item, empty);
-                if (empty || item==null) {
+                if (empty || item == null) {
                     setGraphic(null);
-                    setText(null); 
+                    setText(null);
                     // other stuff to do...
 
-                }else{
+                } else {
 
                     // set the width's
                     setMinWidth(param.getWidth());
@@ -507,30 +495,28 @@ public class MainscreenController implements Initializable {
                     // allow wrapping
                     setWrapText(true);
 
-                    setText(item.toString());
-                    if(item.contains("Sports Massage")) {
-                    setStyle("-fx-background-color:#ccffcc");
-                    }
-                    else if(item.contains("Physiotherapy")) {
+                    setText(item);
+                    if (item.contains("Sports Massage")) {
+                        setStyle("-fx-background-color:#ccffcc");
+                    } else if (item.contains("Physiotherapy")) {
                         setStyle("-fx-background-color:#d9b3ff");
-                    }
-                    else if(item.contains("Acupuncture")) {
+                    } else if (item.contains("Acupuncture")) {
                         setStyle("-fx-background-color:#b3e0ff");
                     }
 
                 }
             }
         });
-        saturdayAppointments.setCellFactory(param -> new ListCell<String>(){
+        saturdayAppointments.setCellFactory(param -> new ListCell<String>() {
             @Override
             protected void updateItem(String item, boolean empty) {
                 super.updateItem(item, empty);
-                if (empty || item==null) {
+                if (empty || item == null) {
                     setGraphic(null);
-                    setText(null); 
+                    setText(null);
                     // other stuff to do...
 
-                }else{
+                } else {
 
                     // set the width's
                     setMinWidth(param.getWidth());
@@ -540,31 +526,28 @@ public class MainscreenController implements Initializable {
                     // allow wrapping
                     setWrapText(true);
 
-                    setText(item.toString());
-                    if(item.contains("Sports Massage")) {
-                    setStyle("-fx-background-color:#ccffcc");
-                    }
-                    else if(item.contains("Physiotherapy")) {
+                    setText(item);
+                    if (item.contains("Sports Massage")) {
+                        setStyle("-fx-background-color:#ccffcc");
+                    } else if (item.contains("Physiotherapy")) {
                         setStyle("-fx-background-color:#d9b3ff");
-                    }
-                    else if(item.contains("Acupuncture")) {
+                    } else if (item.contains("Acupuncture")) {
                         setStyle("-fx-background-color:#b3e0ff");
                     }
-
 
                 }
             }
         });
-        sundayAppointments.setCellFactory(param -> new ListCell<String>(){
+        sundayAppointments.setCellFactory(param -> new ListCell<String>() {
             @Override
             protected void updateItem(String item, boolean empty) {
                 super.updateItem(item, empty);
-                if (empty || item==null) {
+                if (empty || item == null) {
                     setGraphic(null);
-                    setText(null); 
+                    setText(null);
                     // other stuff to do...
 
-                }else{
+                } else {
 
                     // set the width's
                     setMinWidth(param.getWidth());
@@ -574,14 +557,12 @@ public class MainscreenController implements Initializable {
                     // allow wrapping
                     setWrapText(true);
 
-                    setText(item.toString());
-                                                if(item.contains("Sports Massage")) {
-                    setStyle("-fx-background-color:#ccffcc");
-                    }
-                    else if(item.contains("Physiotherapy")) {
+                    setText(item);
+                    if (item.contains("Sports Massage")) {
+                        setStyle("-fx-background-color:#ccffcc");
+                    } else if (item.contains("Physiotherapy")) {
                         setStyle("-fx-background-color:#d9b3ff");
-                    }
-                    else if(item.contains("Acupuncture")) {
+                    } else if (item.contains("Acupuncture")) {
                         setStyle("-fx-background-color:#b3e0ff");
                     }
 
@@ -604,22 +585,22 @@ public class MainscreenController implements Initializable {
     private void wednesdayMouseClick(javafx.scene.input.MouseEvent event) throws SQLException {
         displayAppointmentDetails(wednesdayAppointments.getSelectionModel().getSelectedItem());
     }
-    
+
     @FXML
     private void thursdayMouseClick(javafx.scene.input.MouseEvent event) throws SQLException {
         displayAppointmentDetails(thursdayAppointments.getSelectionModel().getSelectedItem());
     }
-    
+
     @FXML
     private void fridayMouseClick(javafx.scene.input.MouseEvent event) throws SQLException {
         displayAppointmentDetails(fridayAppointments.getSelectionModel().getSelectedItem());
     }
-    
+
     @FXML
     private void saturdayMouseClick(javafx.scene.input.MouseEvent event) throws SQLException {
         displayAppointmentDetails(saturdayAppointments.getSelectionModel().getSelectedItem());
     }
-    
+
     @FXML
     private void sundayMouseClick(javafx.scene.input.MouseEvent event) throws SQLException {
         displayAppointmentDetails(sundayAppointments.getSelectionModel().getSelectedItem());
@@ -634,15 +615,14 @@ public class MainscreenController implements Initializable {
     private void goToNextWeek(ActionEvent event) {
         datePicker.setValue(datePicker.getValue().plusDays(7));
     }
-    
+
     //-----------------------------------------//
     // Search appointments for given ap number //
     //-----------------------------------------//
-    public ArrayList<String> searchAppointments(String appointmentNumber) throws SQLException{
-        ArrayList<String> appointment = new ArrayList<>();
-        
-        appointment = sql.search("appointment", "appointmentnumber", appointmentNumber);
-        
+    public ArrayList<String> searchAppointments(String appointmentNumber) throws SQLException {
+
+        ArrayList<String> appointment = sql.search("appointment", "appointmentnumber", appointmentNumber);
+
         return appointment;
     }
 }

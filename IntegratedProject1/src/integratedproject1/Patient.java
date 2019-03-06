@@ -6,23 +6,19 @@
 package integratedproject1;
 
 import SQL.SQLHandler;
-import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 
 public class Patient {
-    private String firstname;
-    private String surname;
-    private String email;
-    private String mobile;
-    private LocalDate dob;
-    private String gender;
-    private String postcode;
-    private String patientNo;
+    private final String firstname;
+    private final String surname;
+    private final String email;
+    private final String mobile;
+    private final LocalDate dob;
+    private final String gender;
+    private final String postcode;
+    private final String patientNo;
     
     SQLHandler sql = new SQLHandler();
     
@@ -36,10 +32,9 @@ public class Patient {
         this.gender = g;
         this.postcode = p;
         
-        patientNo = String.valueOf(Integer.valueOf(sql.countRecords("patient")) + 1);//ReadWriteFile.countPatients() + 1;
+        patientNo = String.valueOf(sql.countRecords("patient") + 1);
         sql.addToPatient(firstname, surname, email, mobile, dob, gender, postcode, patientNo);
         
-        //ReadWriteFile.updatePatientFile(firstname, surname, email, mobile, dob, gender, postcode, patientNo);
     }
     
     

@@ -9,22 +9,30 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.HBox;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class NewAppointment extends Application {
+    
+    String patientNumber;
 
     @Override
     public void start(Stage stage) throws Exception {
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/NewAppointment/NewAppointment.fxml"));
         Parent root = (Parent) loader.load();
+        Stage secondStage = new Stage();
+        secondStage.setScene(new Scene(new HBox(root)));
+        
+        NewAppointmentController controller = loader.getController();
+        controller.setData(patientNumber);
 
-        Scene scene = new Scene(root);
-
-        stage.setScene(scene);
-        stage.setTitle("View Patient");
-
-        stage.show();        
-        stage.centerOnScreen();
+        secondStage.initModality(Modality.APPLICATION_MODAL);
+        secondStage.showAndWait();
+    }
+    
+    public NewAppointment(String patientNo){
+        this.patientNumber = patientNo;
     }
 }

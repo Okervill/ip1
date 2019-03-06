@@ -73,7 +73,8 @@ public class SQLHandler {
         query.setString(6, active);
 
         query.executeUpdate();
-
+        
+        query.close();
     }
 
     //-------------------------------//
@@ -95,6 +96,8 @@ public class SQLHandler {
         query.setString(8, patientNumber);
 
         query.executeUpdate();
+        
+        query.close();
     }
 
     //-----------------------------------//
@@ -116,6 +119,8 @@ public class SQLHandler {
         query.setString(8, Status);
 
         query.executeUpdate();
+        
+        query.close();
     }
 
     //-------------------------------//
@@ -133,6 +138,8 @@ public class SQLHandler {
         query.setString(4, ServiceDuration);
 
         query.executeUpdate();
+        
+        query.close();
     }
 
     //-----------------------------//
@@ -146,6 +153,8 @@ public class SQLHandler {
         ResultSet rs = query.executeQuery();
         ResultSetMetaData rsmd = rs.getMetaData();
         numFields = rsmd.getColumnCount();
+        
+        query.close();
 
         return numFields;
     }
@@ -221,6 +230,8 @@ public class SQLHandler {
                 System.out.println("Invalid table name");
                 break;
         }
+        
+        query.close();
         return output;
     }
 
@@ -255,6 +266,8 @@ public class SQLHandler {
         while (rs.next()) {
             output.add((rs.getString("username")));
         }
+        
+        query.close();
         return output;
     }
 
@@ -270,9 +283,11 @@ public class SQLHandler {
             exists = true;
         }
 
+        
+        query.close();
         return exists;
     }
-    
+
     //-----------------------------------------//
     // SEARCH LOGIN TABLE TO CHECK USER ACTIVE //
     //-----------------------------------------//
@@ -285,6 +300,8 @@ public class SQLHandler {
             active = true;
         }
 
+        
+        query.close();
         return active;
     }
 
@@ -301,6 +318,26 @@ public class SQLHandler {
         while (rs.next()) {
             output.add((rs.getString("firstname")) + " " + (rs.getString("surname")));
         }
+        
+        query.close();
+        return output;
+    }
+
+    //---------------------------------//
+    // SEARCH FOR ALL THERAPISTS NAMES //
+    //---------------------------------//
+    public ArrayList<String> getAllServices() throws SQLException {
+
+        ArrayList<String> output = new ArrayList<>();
+        String sql = "SELECT servicenumber, name, cost, duration FROM service";
+        query = conn.prepareStatement(sql);
+        ResultSet rs = query.executeQuery();
+
+        while (rs.next()) {
+            output.add(rs.getString("name"));
+        }
+        
+        query.close();
         return output;
     }
 
@@ -316,6 +353,8 @@ public class SQLHandler {
         while (rs.next()) {
             numRecords = rs.getInt(1);
         }
+        
+        query.close();
         return numRecords;
     }
 
@@ -340,7 +379,8 @@ public class SQLHandler {
         if (output.size() < 1) {
             return output;
         }
-
+        
+        query.close();
         return output;
     }
 
@@ -367,7 +407,8 @@ public class SQLHandler {
             output.clear();
             return output;
         }
-
+        
+        query.close();
         return output;
     }
 
@@ -385,7 +426,8 @@ public class SQLHandler {
         query.setString(3, usertype);
         query.setString(4, active);
         query.setString(5, username);
-
+        
+        query.close();
         query.executeUpdate();
     }
 
@@ -404,6 +446,7 @@ public class SQLHandler {
         query.setString(1, password);
         query.setString(2, username);
 
+        query.close();
         query.executeUpdate();
     }
 
@@ -423,7 +466,8 @@ public class SQLHandler {
         query.setString(5, dob);
         query.setString(6, postcode);
         query.setString(7, patientnumer);
-
+        
+        query.close();
         query.executeUpdate();
     }
 
@@ -435,6 +479,7 @@ public class SQLHandler {
         String sql = "UPDATE appointment SET therapist = ? , date = ? , time = ? , service = ? , cost = ? , status = ? WHERE appointmentnumber = ?";
 
         query = conn.prepareStatement(sql);
+        
         query.setString(1, Therapist);
         query.setString(2, Date.format(DateTimeFormatter.ofPattern("YYYY-MM-dd")));
         query.setString(3, Time.format(DateTimeFormatter.ofPattern("HH:mm")));
@@ -442,6 +487,8 @@ public class SQLHandler {
         query.setString(5, Cost);
         query.setString(6, Status);
         query.setString(7, AppointmentNumber);
+        
+        query.close();
         query.executeUpdate();
     }
 
@@ -453,10 +500,13 @@ public class SQLHandler {
         String sql = "UPDATE service SET ServiceName = ? , ServiceCost = ? , ServiceDuration = ? WHERE servicenumber = ?";
 
         query = conn.prepareStatement(sql);
+        
         query.setString(1, ServiceName);
         query.setString(2, ServiceCost);
         query.setString(3, ServiceDuration);
         query.setString(4, ServiceNumber);
+        
+        query.close();
         query.executeUpdate();
     }
 
@@ -473,6 +523,8 @@ public class SQLHandler {
         //query.setString(2, searchField);
         query.setString(1, searchQuery);
 
+        
+        query.close();
         query.executeUpdate();
     }
 }

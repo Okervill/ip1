@@ -6,8 +6,10 @@
 package NewAppointment;
 
 import SQL.SQLHandler;
+import integratedproject1.Appointment;
 import java.net.URL;
 import java.sql.SQLException;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -17,32 +19,46 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Label;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 public class NewAppointmentController implements Initializable {
 
     @FXML
-    private Label appointmentNumber;
-    @FXML
     private ChoiceBox<String> chooseTherapist;
     @FXML
     private Button close;
 
-    
     SQLHandler sql = new SQLHandler();
+    @FXML
+    private DatePicker date;
+    @FXML
+    private TextField time;
+    @FXML
+    private ChoiceBox<String> chooseService;
+    @FXML
+    private Button save;
+
+    String patientNumber;
+
     /**
-     * Initializes the controller class.
+     * Initialises the controller class.
+     *
+     * @param url
+     * @param rb
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
+        //Get all therapists
         ArrayList<String> allTherapists = new ArrayList<>();
         ObservableList<String> therapists = FXCollections.observableArrayList();
         try {
-            allTherapists = sql.getTherapistNames();//ReadWriteFile.getAllTherapists();
+            allTherapists = sql.getAllUsernames("therapist");
         } catch (SQLException ex) {
             Logger.getLogger(NewAppointmentController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -51,11 +67,56 @@ public class NewAppointmentController implements Initializable {
         }
         chooseTherapist.setItems(therapists);
 
+        //Get all services
+        ArrayList<String> allServices = new ArrayList<>();
+        ObservableList<String> services = FXCollections.observableArrayList();
+        try {
+            allServices = sql.getAllServices();
+        } catch (SQLException ex) {
+            Logger.getLogger(NewAppointmentController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        for (int i = 0; i < allServices.size(); i++) {
+            services.add(allServices.get(i));
+        }
+        chooseService.setItems(services);
+
+    }
+
+    @FXML
+    private void saveAppointment(ActionEvent event) throws SQLException {
+
+        if (patientNumber.isEmpty() || chooseTherapist.getSelectionModel().getSelectedItem().isEmpty() || date.getValue().toString().isEmpty() || time.getText().isEmpty() || chooseService.getSelectionModel().getSelectedItem().isEmpty()) {
+
+            //Display error is details are not entered correctly
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Error");
+            alert.setHeaderText("Enter details!");
+            alert.setContentText("You must enter details in all boxes");
+            alert.showAndWait();
+
+            return;
+        }
+
+        Appointment a = new Appointment(
+                patientNumber, // Patient Number
+                chooseTherapist.getSelectionModel().getSelectedItem(), // Therapist
+                date.getValue(), // Date
+                LocalTime.of(Integer.valueOf(time.getText().split(":")[0]), Integer.valueOf(time.getText().split(":")[1])), // Time
+                chooseService.getSelectionModel().getSelectedItem(), // Service
+                sql.search("service", "name", chooseService.getSelectionModel().getSelectedItem()).get(2) // Cost
+        );
+
+        Stage stage = (Stage) close.getScene().getWindow();
+        stage.close();
     }
 
     @FXML
     private void close(ActionEvent event) {
         Stage stage = (Stage) close.getScene().getWindow();
         stage.close();
+    }
+
+    public void setData(String patientNo) {
+        patientNumber = patientNo;
     }
 }

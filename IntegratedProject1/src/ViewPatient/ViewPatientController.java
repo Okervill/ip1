@@ -6,21 +6,22 @@
 package ViewPatient;
 
 import MainScreen.Mainscreen;
+import NewAppointment.NewAppointment;
+import SQL.SQLHandler;
 import integratedproject1.SwitchWindow;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.HBox;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class ViewPatientController implements Initializable {
@@ -46,11 +47,21 @@ public class ViewPatientController implements Initializable {
     @FXML
     private Button back;
 
+    SQLHandler sql = new SQLHandler();
+
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+
+        Platform.runLater(() -> {
+            try {
+                getAppointments();
+            } catch (SQLException ex) {
+                Logger.getLogger(ViewPatientController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        });
     }
 
     public void setData(ArrayList<String> data) {
@@ -67,18 +78,18 @@ public class ViewPatientController implements Initializable {
     @FXML
     private void newAppointment(ActionEvent event) throws IOException {
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/NewAppointment/NewAppointment.fxml"));
-        Parent root = (Parent) loader.load();
-        Stage secondStage = new Stage();
-        secondStage.setScene(new Scene(new HBox(root)));
-
-        secondStage.initModality(Modality.APPLICATION_MODAL);
-        secondStage.showAndWait();
+        SwitchWindow.switchWindow((Stage) newAppointmentButton.getScene().getWindow(), new NewAppointment(patientNo.getText()));
+        
     }
 
     @FXML
     private void back(ActionEvent event) {
 
         SwitchWindow.switchWindow((Stage) back.getScene().getWindow(), new Mainscreen());
+    }
+
+    public void getAppointments() throws SQLException {
+        ArrayList<String> appointments = sql.search("appointment", "patientnumber", patientNo.getText());
+        int numberAppointments = appointments.size() / sql.countFields("appointment");
     }
 }
