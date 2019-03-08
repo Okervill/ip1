@@ -1,11 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.shape.*?>
-<?import javafx.scene.text.*?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
@@ -17,15 +11,15 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="700.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Login.LoginController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="700.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Login.LoginController">
     <children>
       <AnchorPane layoutX="328.0" layoutY="22.0" prefHeight="356.0" prefWidth="341.0" style="-fx-background-color: #115d99;">
          <children>
-            <TextField fx:id="inputuser" alignment="TOP_LEFT" layoutX="72.0" layoutY="108.0" onAction="#swapFocusToPassword" prefHeight="35.0" prefWidth="204.0" promptText="Username" style="-fx-background-color: #115d99;">
+            <TextField fx:id="inputuser" alignment="TOP_LEFT" layoutX="65.0" layoutY="108.0" onAction="#swapFocusToPassword" prefHeight="35.0" prefWidth="211.0" promptText="Username" style="-fx-background-color: #115d99; -fx-text-fill: white;">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font></TextField>
-            <PasswordField fx:id="inputpass" alignment="TOP_LEFT" layoutX="72.0" layoutY="174.0" onAction="#login" prefHeight="35.0" prefWidth="204.0" promptText="Password" style="-fx-background-color: #115d99;">
+            <PasswordField fx:id="inputpass" alignment="TOP_LEFT" layoutX="65.0" layoutY="174.0" onAction="#login" prefHeight="35.0" prefWidth="211.0" promptText="Password" style="-fx-background-color: #115d99; -fx-text-fill: white;">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font></PasswordField>
@@ -40,9 +34,9 @@
             <Image url="@images/GCULogoP293.png" />
          </image>
       </ImageView>
-      <Text layoutX="25.0" layoutY="264.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Caledonian Sports and Wellbeing Clinic" textAlignment="CENTER">
+      <Text fill="#2e2e2e" layoutX="7.0" layoutY="263.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Caledonian Sports and Wellbeing Clinic">
          <font>
-            <Font size="16.0" />
+            <Font size="18.0" />
          </font>
       </Text>
     </children>
