@@ -388,6 +388,12 @@ public class MainscreenController implements Initializable {
                     } else if (item.contains("Acupuncture")) {
                         setStyle("-fx-background-color:#b3e0ff");
                     }
+                    
+                    this.itemProperty().addListener((obs, oldItem, newItem) -> {
+                        if (newItem == null) {
+                            setStyle("-fx-background-colour:white");
+                        }
+                    });                    
 
                 }
             }
@@ -420,6 +426,12 @@ public class MainscreenController implements Initializable {
                         setStyle("-fx-background-color:#b3e0ff");
                     }
 
+                    this.itemProperty().addListener((obs, oldItem, newItem) -> {
+                        if (newItem == null) {
+                            setStyle("-fx-background-colour:white");
+                        }
+                    });                    
+
                 }
             }
         });
@@ -450,7 +462,12 @@ public class MainscreenController implements Initializable {
                     } else if (item.contains("Acupuncture")) {
                         setStyle("-fx-background-color:#b3e0ff");
                     }
-
+                    
+                    this.itemProperty().addListener((obs, oldItem, newItem) -> {
+                        if (newItem == null) {
+                            setStyle("-fx-background-colour:white");
+                        }
+                    });
                 }
             }
         });
@@ -481,6 +498,11 @@ public class MainscreenController implements Initializable {
                     } else if (item.contains("Acupuncture")) {
                         setStyle("-fx-background-color:#b3e0ff");
                     }
+                    this.itemProperty().addListener((obs, oldItem, newItem) -> {
+                        if (newItem == null) {
+                            setStyle("-fx-background-colour:white");
+                        }
+                    });                    
 
                 }
             }
@@ -512,6 +534,12 @@ public class MainscreenController implements Initializable {
                     } else if (item.contains("Acupuncture")) {
                         setStyle("-fx-background-color:#b3e0ff");
                     }
+                    
+                    this.itemProperty().addListener((obs, oldItem, newItem) -> {
+                        if (newItem == null) {
+                            setStyle("-fx-background-colour:white");
+                        }
+                    });                    
 
                 }
             }
@@ -543,6 +571,12 @@ public class MainscreenController implements Initializable {
                     } else if (item.contains("Acupuncture")) {
                         setStyle("-fx-background-color:#b3e0ff");
                     }
+                    
+                    this.itemProperty().addListener((obs, oldItem, newItem) -> {
+                        if (newItem == null) {
+                            setStyle("-fx-background-colour:white");
+                        }
+                    });
 
                 }
             }
