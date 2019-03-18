@@ -109,6 +109,15 @@ public class MainscreenController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         //This allows setdata to be ran before this section of code
+        
+        mondayAppointments.getStylesheets().add("/MainScreen/listview.css");
+        tuesdayAppointments.getStylesheets().add("/MainScreen/listview.css");
+        wednesdayAppointments.getStylesheets().add("/MainScreen/listview.css");
+        thursdayAppointments.getStylesheets().add("/MainScreen/listview.css");
+        fridayAppointments.getStylesheets().add("/MainScreen/listview.css");
+        saturdayAppointments.getStylesheets().add("/MainScreen/listview.css");
+        sundayAppointments.getStylesheets().add("/MainScreen/listview.css");
+        
         setListViewCellWrap();
 
         Platform.runLater(() -> {
@@ -558,13 +567,22 @@ public class MainscreenController implements Initializable {
                     setWrapText(true);
 
                     setText(item);
+                    
                     if (item.contains("Sports Massage")) {
                         setStyle("-fx-background-color:#ccffcc");
                     } else if (item.contains("Physiotherapy")) {
                         setStyle("-fx-background-color:#d9b3ff");
                     } else if (item.contains("Acupuncture")) {
                         setStyle("-fx-background-color:#b3e0ff");
+                    } else {
+                        setStyle("-fx-background-colour:white");
                     }
+                    
+                    this.itemProperty().addListener((obs, oldItem, newItem) -> {
+                        if (newItem == null) {
+                            setStyle("-fx-background-colour:white");
+                        }
+                    });
 
                 }
             }

@@ -33,7 +33,8 @@ public class Mainscreen extends Application {
         controller.setData(username, userType);
         
         Scene scene = new Scene(root);
-
+        
+        
         stage.setScene(scene);
         stage.setTitle("Home");
 
