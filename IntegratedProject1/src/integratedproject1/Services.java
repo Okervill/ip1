@@ -16,20 +16,15 @@ public class Services {
 
     String serviceNumber;
     String serviceName;
-    String serviceCost;
-    String serviceDuration;
 
     SQLHandler sql = new SQLHandler();
 
     public Services(String name, String cost, String duration) throws SQLException {
 
         this.serviceName = name;
-        this.serviceCost = cost;
-        this.serviceDuration = duration;
-
         this.serviceNumber = String.valueOf(sql.countRecords("service") + 1);
 
-        sql.addToService(serviceNumber, serviceName, serviceCost, serviceDuration);
+        sql.addToService(serviceNumber, serviceName);
 
     }
 

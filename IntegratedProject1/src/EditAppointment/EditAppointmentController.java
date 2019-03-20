@@ -5,12 +5,10 @@
  */
 package EditAppointment;
 
-import MainScreen.MainscreenController;
 import NewAppointment.NewAppointmentController;
 import SQL.SQLHandler;
 import java.net.URL;
 import java.sql.SQLException;
-import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeParseException;

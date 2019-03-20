@@ -10,6 +10,7 @@ import integratedproject1.Appointment;
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalTime;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -23,6 +24,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
@@ -44,6 +46,10 @@ public class NewAppointmentController implements Initializable {
     private Button save;
 
     String patientNumber;
+    @FXML
+    private Label appointmentNumber;
+    @FXML
+    private TextField selectCost;
 
     /**
      * Initialises the controller class.
@@ -96,14 +102,27 @@ public class NewAppointmentController implements Initializable {
 
             return;
         }
+        
+        String newT = time.getText();
+        try {
+            LocalTime.parse(newT);
+        } catch (DateTimeParseException e) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Error");
+            alert.setHeaderText("Invalid Time");
+            alert.setContentText("Please input a time of the format HH:MM");
+            alert.showAndWait();
+            return;
+        }
+        LocalTime newTime = LocalTime.parse(newT);
 
         Appointment a = new Appointment(
                 patientNumber, // Patient Number
                 chooseTherapist.getSelectionModel().getSelectedItem(), // Therapist
                 date.getValue(), // Date
-                LocalTime.of(Integer.valueOf(time.getText().split(":")[0]), Integer.valueOf(time.getText().split(":")[1])), // Time
+                newTime, // Time
                 chooseService.getSelectionModel().getSelectedItem(), // Service
-                sql.search("service", "name", chooseService.getSelectionModel().getSelectedItem()).get(2) // Cost
+                selectCost.getText()
         );
 
         Stage stage = (Stage) close.getScene().getWindow();

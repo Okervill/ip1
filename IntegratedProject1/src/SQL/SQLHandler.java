@@ -16,7 +16,6 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 
@@ -126,16 +125,14 @@ public class SQLHandler {
     //-------------------------------//
     // ADD NEW DATA TO SERVICE TABLE //
     //-------------------------------//
-    public void addToService(String serviceNumber, String ServiceName, String ServiceCost, String ServiceDuration) throws SQLException {
+    public void addToService(String serviceNumber, String ServiceName) throws SQLException {
 
-        String sql = "INSERT INTO service (servicenumber, name, cost, duration) VALUES(?,?,?)";
+        String sql = "INSERT INTO service (servicenumber, name) VALUES(?,?)";
 
         query = conn.prepareStatement(sql);
 
         query.setString(1, serviceNumber);
         query.setString(2, ServiceName);
-        query.setString(3, ServiceCost);
-        query.setString(4, ServiceDuration);
 
         query.executeUpdate();
         query.close();
@@ -209,19 +206,21 @@ public class SQLHandler {
                     output.add((rs.getString("service")));
                     output.add((rs.getString("cost")));
                     output.add((rs.getString("status")));
-                }       //replace patient number with patient name
+                }
+                //replace patient number with patient name
+                if (output.isEmpty()) {
+                    break;
+                }
                 output.set(1, search("patient", "patientnumber", output.get(1)).get(0) + " " + search("patient", "patientnumber", output.get(1)).get(1));
                 break;
             }
             case "service": {
-                String sql = "SELECT servicenumber, name, cost, duration FROM service WHERE " + searchField + " = \"" + searchQuery + "\"";
+                String sql = "SELECT servicenumber, name FROM service WHERE " + searchField + " = \"" + searchQuery + "\"";
                 query = conn.prepareStatement(sql);
                 ResultSet rs = query.executeQuery();
                 while (rs.next()) {
                     output.add((rs.getString("servicenumber")));
                     output.add((rs.getString("name")));
-                    output.add((rs.getString("cost")));
-                    output.add((rs.getString("duration")));
                 }
                 break;
             }
@@ -320,13 +319,13 @@ public class SQLHandler {
         return output;
     }
 
-    //---------------------------------//
-    // SEARCH FOR ALL THERAPISTS NAMES //
-    //---------------------------------//
+    //------------------------------//
+    // SEARCH FOR ALL SERVICE NAMES //
+    //------------------------------//
     public ArrayList<String> getAllServices() throws SQLException {
 
         ArrayList<String> output = new ArrayList<>();
-        String sql = "SELECT servicenumber, name, cost, duration FROM service";
+        String sql = "SELECT servicenumber, name FROM service";
         query = conn.prepareStatement(sql);
         ResultSet rs = query.executeQuery();
 
@@ -367,12 +366,15 @@ public class SQLHandler {
         ResultSet rs = query.executeQuery();
 
         while (rs.next()) {
-            output.add("Appointment: " + (rs.getString("appointmentnumber"))
+            output.add("Time: " + (rs.getString("time"))
                     + " Patient: "
                     + search("patient", "patientnumber", (rs.getString("patientnumber"))).get(0) + " "
                     + search("patient", "patientnumber", (rs.getString("patientnumber"))).get(1)
-                    + " Time: " + (rs.getString("time")));
+                    + " Appointment: " + (rs.getString("appointmentnumber")));
         }
+        
+        sortByTime(output);
+        
         query.close();
         return output;
     }
@@ -389,30 +391,31 @@ public class SQLHandler {
         ResultSet rs = query.executeQuery();
 
         while (rs.next()) {
-            output.add("Appointment: " + (rs.getString("appointmentnumber"))
+            output.add("Time: " + (rs.getString("time"))
                     + " Patient: "
                     + search("patient", "patientnumber", (rs.getString("patientnumber"))).get(0) + " "
                     + search("patient", "patientnumber", (rs.getString("patientnumber"))).get(1)
-                    + " Time: " + (rs.getString("time"))
+                    + " Appointment: " + (rs.getString("appointmentnumber"))
                     + " Service: " + (rs.getString("service")));
         }
         if (output.size() < 1) {
             output.clear();
             return output;
         }
-
-        //https://stackoverflow.com/questions/13056178/java-sorting-an-string-array-by-a-substring-of-characters
-        Collections.sort(output, new Comparator<String>() {
-            public int compare(String time1, String time2) {
-                String subtime1 = time1.substring(39,44).split(":")[0] + time1.substring(39,44).split(":")[1];
-                String subtime2 = time2.substring(39,44).split(":")[0] + time2.substring(39,44).split(":")[1];
-
-                return Integer.valueOf(subtime1).compareTo(Integer.valueOf(subtime2));
-            }
-        });
-
+        
+        sortByTime(output);
+        
         query.close();
         return output;
+    }
+
+    //---------------------------//
+    // SORT APPOINTMENTS BY TIME //
+    //---------------------------//
+    public ArrayList<String> sortByTime(ArrayList<String> appointments) {
+        //https://stackoverflow.com/questions/13056178/java-sorting-an-string-array-by-a-substring-of-characters
+        Collections.sort(appointments);
+        return appointments;
     }
 
     //----------------------------//
@@ -498,16 +501,14 @@ public class SQLHandler {
     //------------------------------//
     // EDIT RECORD IN SERVICE TABLE //
     //------------------------------//
-    public void updateService(String ServiceNumber, String ServiceName, String ServiceCost, String ServiceDuration) throws SQLException {
+    public void updateService(String ServiceNumber, String ServiceName) throws SQLException {
 
-        String sql = "UPDATE service SET ServiceName = ? , ServiceCost = ? , ServiceDuration = ? WHERE servicenumber = ?";
+        String sql = "UPDATE service SET ServiceName = ? WHERE servicenumber = ?";
 
         query = conn.prepareStatement(sql);
 
         query.setString(1, ServiceName);
-        query.setString(2, ServiceCost);
-        query.setString(3, ServiceDuration);
-        query.setString(4, ServiceNumber);
+        query.setString(2, ServiceNumber);
 
         query.close();
         query.executeUpdate();

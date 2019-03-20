@@ -91,6 +91,5 @@ public class ViewPatientController implements Initializable {
 
     public void getAppointments() throws SQLException {
         ArrayList<String> appointments = sql.search("appointment", "patientnumber", patientNo.getText());
-        int numberAppointments = appointments.size() / sql.countFields("appointment");
     }
 }

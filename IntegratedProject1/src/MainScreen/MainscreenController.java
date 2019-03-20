@@ -71,11 +71,10 @@ public class MainscreenController implements Initializable {
     private ListView<String> saturdayAppointments;
     @FXML
     private ListView<String> sundayAppointments;
-    @FXML
     private ListView<String> appointmentDetails;
     @FXML
     private ChoiceBox<String> therapists;
-    
+
     public Button close;
 
     String userType;
@@ -110,7 +109,7 @@ public class MainscreenController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         //This allows setdata to be ran before this section of code
-        
+
         mondayAppointments.getStylesheets().add("/MainScreen/listview.css");
         tuesdayAppointments.getStylesheets().add("/MainScreen/listview.css");
         wednesdayAppointments.getStylesheets().add("/MainScreen/listview.css");
@@ -118,7 +117,7 @@ public class MainscreenController implements Initializable {
         fridayAppointments.getStylesheets().add("/MainScreen/listview.css");
         saturdayAppointments.getStylesheets().add("/MainScreen/listview.css");
         sundayAppointments.getStylesheets().add("/MainScreen/listview.css");
-        
+
         setListViewCellWrap();
 
         Platform.runLater(() -> {
@@ -157,14 +156,14 @@ public class MainscreenController implements Initializable {
 
     @FXML
     private void newPatient(ActionEvent event) throws IOException {
-            SwitchWindow.switchWindow((Stage) searchTherapist.getScene().getWindow(), new NewPatient());
+        SwitchWindow.switchWindow((Stage) searchTherapist.getScene().getWindow(), new NewPatient());
 
     }
 
     @FXML
     private void addTherapist(ActionEvent event) throws IOException {
 
-            SwitchWindow.switchWindow((Stage) searchTherapist.getScene().getWindow(), new AddTherapist());
+        SwitchWindow.switchWindow((Stage) searchTherapist.getScene().getWindow(), new AddTherapist());
     }
 
     @FXML
@@ -177,6 +176,11 @@ public class MainscreenController implements Initializable {
         ArrayList<String> patientData = search();
         if (patientData != null) {
             SwitchWindow.switchWindow((Stage) searchTherapist.getScene().getWindow(), new ViewPatient(patientData));
+        }
+        try {
+            displayAppointments();
+        } catch (SQLException ex) {
+            Logger.getLogger(MainscreenController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -237,16 +241,12 @@ public class MainscreenController implements Initializable {
         }
 
         //Get Appointment Number
-        int start = appointment.indexOf(" ") + 1;
-        int stop = appointment.indexOf(" ", start + 1);
+        int first = appointment.indexOf(": ") + 1;
+        int second = appointment.indexOf(": ", first) + 1;
+        int start = appointment.indexOf(": ", second) + 2;
+        int stop = appointment.indexOf(" S", start);
+        
         String appointmentNumber = appointment.substring(start, stop);
-
-        ArrayList<String> details = sql.search("appointment", "appointmentnumber", appointmentNumber); //ReadWriteFile.getAppointmentNumberInfo(appointmentNumber);
-        ObservableList<String> info = FXCollections.observableArrayList();
-        for (int i = 0; i < details.size(); i++) {
-            info.add((String) details.get(i));
-        }
-        appointmentDetails.setItems(info);
 
         SwitchWindow.switchWindow((Stage) searchTherapist.getScene().getWindow(), new EditAppointment(appointmentNumber));
         displayAppointments();
@@ -294,8 +294,6 @@ public class MainscreenController implements Initializable {
         fridayTitle.setText("Friday " + startDate.plusDays(4).getDayOfMonth() + "/" + startDate.plusDays(4).getMonthValue());
         saturdayTitle.setText("Saturday " + startDate.plusDays(5).getDayOfMonth() + "/" + startDate.plusDays(5).getMonthValue());
         sundayTitle.setText("Sunday " + startDate.plusDays(6).getDayOfMonth() + "/" + startDate.plusDays(6).getMonthValue());
-
-        appointmentDetails.getItems().clear();
 
         for (LocalDate i = startDate; i.getDayOfMonth() != endDate.plusDays(1).getDayOfMonth() || i.getMonth() != endDate.plusDays(1).getMonth(); i = i.plusDays(1)) {
             ArrayList<String> allAppointments;
@@ -365,12 +363,12 @@ public class MainscreenController implements Initializable {
                     } else if (item.contains("Acupuncture")) {
                         setStyle("-fx-background-color:#b3e0ff");
                     }
-                    
+
                     this.itemProperty().addListener((obs, oldItem, newItem) -> {
                         if (newItem == null) {
                             setStyle("-fx-background-colour:white");
                         }
-                    });                    
+                    });
 
                 }
             }
@@ -407,7 +405,7 @@ public class MainscreenController implements Initializable {
                         if (newItem == null) {
                             setStyle("-fx-background-colour:white");
                         }
-                    });                    
+                    });
 
                 }
             }
@@ -439,7 +437,7 @@ public class MainscreenController implements Initializable {
                     } else if (item.contains("Acupuncture")) {
                         setStyle("-fx-background-color:#b3e0ff");
                     }
-                    
+
                     this.itemProperty().addListener((obs, oldItem, newItem) -> {
                         if (newItem == null) {
                             setStyle("-fx-background-colour:white");
@@ -479,7 +477,7 @@ public class MainscreenController implements Initializable {
                         if (newItem == null) {
                             setStyle("-fx-background-colour:white");
                         }
-                    });                    
+                    });
 
                 }
             }
@@ -511,12 +509,12 @@ public class MainscreenController implements Initializable {
                     } else if (item.contains("Acupuncture")) {
                         setStyle("-fx-background-color:#b3e0ff");
                     }
-                    
+
                     this.itemProperty().addListener((obs, oldItem, newItem) -> {
                         if (newItem == null) {
                             setStyle("-fx-background-colour:white");
                         }
-                    });                    
+                    });
 
                 }
             }
@@ -548,7 +546,7 @@ public class MainscreenController implements Initializable {
                     } else if (item.contains("Acupuncture")) {
                         setStyle("-fx-background-color:#b3e0ff");
                     }
-                    
+
                     this.itemProperty().addListener((obs, oldItem, newItem) -> {
                         if (newItem == null) {
                             setStyle("-fx-background-colour:white");
@@ -578,7 +576,7 @@ public class MainscreenController implements Initializable {
                     setWrapText(true);
 
                     setText(item);
-                    
+
                     if (item.contains("Sports Massage")) {
                         setStyle("-fx-background-color:#ccffcc");
                     } else if (item.contains("Physiotherapy")) {
@@ -588,7 +586,7 @@ public class MainscreenController implements Initializable {
                     } else {
                         setStyle("-fx-background-colour:white");
                     }
-                    
+
                     this.itemProperty().addListener((obs, oldItem, newItem) -> {
                         if (newItem == null) {
                             setStyle("-fx-background-colour:white");
