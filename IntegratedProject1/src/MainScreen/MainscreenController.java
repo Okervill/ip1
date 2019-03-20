@@ -244,11 +244,19 @@ public class MainscreenController implements Initializable {
         int first = appointment.indexOf(": ") + 1;
         int second = appointment.indexOf(": ", first) + 1;
         int start = appointment.indexOf(": ", second) + 2;
-        int stop = appointment.indexOf(" S", start);
+        int stop = appointment.indexOf(" ", start);
+        
         
         String appointmentNumber = appointment.substring(start, stop);
-
+        
         SwitchWindow.switchWindow((Stage) searchTherapist.getScene().getWindow(), new EditAppointment(appointmentNumber));
+        mondayAppointments.getSelectionModel().clearSelection();
+        tuesdayAppointments.getSelectionModel().clearSelection();
+        wednesdayAppointments.getSelectionModel().clearSelection();
+        thursdayAppointments.getSelectionModel().clearSelection();
+        fridayAppointments.getSelectionModel().clearSelection();
+        saturdayAppointments.getSelectionModel().clearSelection();
+        sundayAppointments.getSelectionModel().clearSelection();
         displayAppointments();
     }
 

@@ -360,7 +360,7 @@ public class SQLHandler {
     public ArrayList<String> getShortAppointments(LocalDate date, String therapistUsername) throws SQLException {
 
         ArrayList<String> output = new ArrayList<>();
-        String sql = "SELECT appointmentnumber, patientnumber, time FROM appointment WHERE therapist = \"" + therapistUsername + "\" AND date = \"" + date + "\"";
+        String sql = "SELECT appointmentnumber, patientnumber, time, service FROM appointment WHERE therapist = \"" + therapistUsername + "\" AND date = \"" + date + "\"";
 
         query = conn.prepareStatement(sql);
         ResultSet rs = query.executeQuery();
@@ -370,11 +370,16 @@ public class SQLHandler {
                     + " Patient: "
                     + search("patient", "patientnumber", (rs.getString("patientnumber"))).get(0) + " "
                     + search("patient", "patientnumber", (rs.getString("patientnumber"))).get(1)
-                    + " Appointment: " + (rs.getString("appointmentnumber")));
+                    + " Appointment: " + (rs.getString("appointmentnumber"))
+                    + " Service: " + (rs.getString("service")));
         }
-        
+        if (output.size() < 1) {
+            output.clear();
+            return output;
+        }
+
         sortByTime(output);
-        
+
         query.close();
         return output;
     }
@@ -402,9 +407,9 @@ public class SQLHandler {
             output.clear();
             return output;
         }
-        
+
         sortByTime(output);
-        
+
         query.close();
         return output;
     }
