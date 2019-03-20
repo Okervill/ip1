@@ -9,6 +9,8 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.HBox;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class AddTherapist extends Application {
@@ -18,13 +20,10 @@ public class AddTherapist extends Application {
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/NewEmployee/AddTherapist.fxml"));
         Parent root = (Parent) loader.load();
-
-        Scene scene = new Scene(root);
-
-        stage.setScene(scene);
-        stage.setTitle("New Employee");
-
-        stage.show();        
-        stage.centerOnScreen();
+        Stage secondStage = new Stage();
+        secondStage.setScene(new Scene(new HBox(root)));
+        
+        secondStage.initModality(Modality.APPLICATION_MODAL);
+        secondStage.showAndWait();
     }
 }

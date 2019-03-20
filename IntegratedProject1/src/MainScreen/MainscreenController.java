@@ -5,10 +5,14 @@
  */
 package MainScreen;
 
+import AddPatient.NewPatient;
 import Animation.Shaker;
+import EditAppointment.EditAppointment;
 import Login.Login;
+import NewEmployee.AddTherapist;
 import SQL.SQLHandler;
 import ViewPatient.ViewPatient;
+import ViewTherapist.ViewTherapist;
 import integratedproject1.SwitchWindow;
 import integratedproject1.User;
 import java.io.IOException;
@@ -26,10 +30,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
@@ -37,8 +38,6 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
-import javafx.scene.layout.HBox;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 /**
@@ -156,26 +155,14 @@ public class MainscreenController implements Initializable {
 
     @FXML
     private void newPatient(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/AddPatient/NewPatient.fxml"));
-        Parent root = (Parent) loader.load();
-        Stage secondStage = new Stage();
-        secondStage.setScene(new Scene(new HBox(root)));
+            SwitchWindow.switchWindow((Stage) searchTherapist.getScene().getWindow(), new NewPatient());
 
-        secondStage.initModality(Modality.APPLICATION_MODAL);
-        secondStage.showAndWait();
     }
 
     @FXML
     private void addTherapist(ActionEvent event) throws IOException {
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/NewEmployee/AddTherapist.fxml"));
-        Parent root = (Parent) loader.load();
-        Stage secondStage = new Stage();
-        secondStage.setScene(new Scene(new HBox(root)));
-
-        secondStage.initModality(Modality.APPLICATION_MODAL);
-        secondStage.showAndWait();
-        //SwitchWindow.switchWindow((Stage) logout.getScene().getWindow(), new AddTherapist());
+            SwitchWindow.switchWindow((Stage) searchTherapist.getScene().getWindow(), new AddTherapist());
     }
 
     @FXML
@@ -193,15 +180,7 @@ public class MainscreenController implements Initializable {
 
     @FXML
     private void findTherapist(ActionEvent event) throws IOException {
-
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/ViewTherapist/ViewTherapist.fxml"));
-        Parent root = (Parent) loader.load();
-        Stage secondStage = new Stage();
-        secondStage.setScene(new Scene(new HBox(root)));
-
-        secondStage.initModality(Modality.APPLICATION_MODAL);
-        secondStage.showAndWait();
-        //SwitchWindow.switchWindow((Stage) searchTherapist.getScene().getWindow(), new ViewTherapist());
+        SwitchWindow.switchWindow((Stage) searchTherapist.getScene().getWindow(), new ViewTherapist());
     }
 
     private ArrayList<String> search() {
@@ -248,7 +227,7 @@ public class MainscreenController implements Initializable {
     }
 
     //Get full appointment details for selected appointment
-    private void displayAppointmentDetails(String appointment) throws SQLException {
+    private void displayAppointmentDetails(String appointment) throws SQLException, IOException {
 
         //Check for null/empty
         if (appointment == null || appointment.isEmpty() || appointment.length() < 8) {
@@ -266,6 +245,9 @@ public class MainscreenController implements Initializable {
             info.add((String) details.get(i));
         }
         appointmentDetails.setItems(info);
+
+            SwitchWindow.switchWindow((Stage) searchTherapist.getScene().getWindow(), new EditAppointment(appointmentNumber));
+        
     }
 
     public void displayTherapists() throws SQLException {
@@ -625,37 +607,65 @@ public class MainscreenController implements Initializable {
 
     @FXML
     private void mondayMouseClick(javafx.scene.input.MouseEvent event) throws SQLException {
-        displayAppointmentDetails(mondayAppointments.getSelectionModel().getSelectedItem());
+        try {
+            displayAppointmentDetails(mondayAppointments.getSelectionModel().getSelectedItem());
+        } catch (IOException ex) {
+            Logger.getLogger(MainscreenController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @FXML
     private void tuesdayMouseClick(javafx.scene.input.MouseEvent event) throws SQLException {
-        displayAppointmentDetails(tuesdayAppointments.getSelectionModel().getSelectedItem());
+        try {
+            displayAppointmentDetails(tuesdayAppointments.getSelectionModel().getSelectedItem());
+        } catch (IOException ex) {
+            Logger.getLogger(MainscreenController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @FXML
     private void wednesdayMouseClick(javafx.scene.input.MouseEvent event) throws SQLException {
-        displayAppointmentDetails(wednesdayAppointments.getSelectionModel().getSelectedItem());
+        try {
+            displayAppointmentDetails(wednesdayAppointments.getSelectionModel().getSelectedItem());
+        } catch (IOException ex) {
+            Logger.getLogger(MainscreenController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @FXML
     private void thursdayMouseClick(javafx.scene.input.MouseEvent event) throws SQLException {
-        displayAppointmentDetails(thursdayAppointments.getSelectionModel().getSelectedItem());
+        try {
+            displayAppointmentDetails(thursdayAppointments.getSelectionModel().getSelectedItem());
+        } catch (IOException ex) {
+            Logger.getLogger(MainscreenController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @FXML
     private void fridayMouseClick(javafx.scene.input.MouseEvent event) throws SQLException {
-        displayAppointmentDetails(fridayAppointments.getSelectionModel().getSelectedItem());
+        try {
+            displayAppointmentDetails(fridayAppointments.getSelectionModel().getSelectedItem());
+        } catch (IOException ex) {
+            Logger.getLogger(MainscreenController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @FXML
     private void saturdayMouseClick(javafx.scene.input.MouseEvent event) throws SQLException {
-        displayAppointmentDetails(saturdayAppointments.getSelectionModel().getSelectedItem());
+        try {
+            displayAppointmentDetails(saturdayAppointments.getSelectionModel().getSelectedItem());
+        } catch (IOException ex) {
+            Logger.getLogger(MainscreenController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @FXML
     private void sundayMouseClick(javafx.scene.input.MouseEvent event) throws SQLException {
-        displayAppointmentDetails(sundayAppointments.getSelectionModel().getSelectedItem());
+        try {
+            displayAppointmentDetails(sundayAppointments.getSelectionModel().getSelectedItem());
+        } catch (IOException ex) {
+            Logger.getLogger(MainscreenController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @FXML

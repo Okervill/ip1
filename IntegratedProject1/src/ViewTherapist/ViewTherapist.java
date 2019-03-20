@@ -9,6 +9,8 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.HBox;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class ViewTherapist extends Application {
@@ -17,13 +19,12 @@ public class ViewTherapist extends Application {
     @Override
     public void start(Stage stage) throws Exception {    
     
-        Parent root = FXMLLoader.load(getClass().getResource("/ViewTherapist/ViewTherapist.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/ViewTherapist/ViewTherapist.fxml"));
+        Parent root = (Parent) loader.load();
+        Stage secondStage = new Stage();
+        secondStage.setScene(new Scene(new HBox(root)));
         
-        Scene scene = new Scene(root);
-        
-        stage.setScene(scene);
-        stage.setTitle("View Therapist");
-        stage.show();           
-        stage.centerOnScreen();     
+        secondStage.initModality(Modality.APPLICATION_MODAL);
+        secondStage.showAndWait();  
     }
 }

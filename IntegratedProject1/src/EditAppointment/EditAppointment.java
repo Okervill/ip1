@@ -3,10 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ViewPatient;
+package EditAppointment;
 
-import EditAppointment.EditAppointmentController;
-import java.util.ArrayList;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -15,28 +13,27 @@ import javafx.scene.layout.HBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-public class ViewPatient extends Application {
+public class EditAppointment extends Application {
     
-    private final ArrayList<String> patientData;
-    
-    public ViewPatient(ArrayList<String> patientData) {
-        this.patientData = patientData;
-    }
-    
+    String appno;
+
     @Override
-    public void start(Stage stage) throws Exception {    
-    
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/ViewPatient/ViewPatient.fxml"));
+    public void start(Stage stage) throws Exception {
+        
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/EditAppointment/EditAppointment.fxml"));
         Parent root = (Parent) loader.load();
         Stage secondStage = new Stage();
         secondStage.setScene(new Scene(new HBox(root)));
         
-        ViewPatientController controller = loader.getController();
-        controller.setData(patientData);
+        
+        EditAppointmentController controller = loader.getController();
+        controller.setData(appno);
 
         secondStage.initModality(Modality.APPLICATION_MODAL);
         secondStage.showAndWait();
-        
     }
-    
+
+    public EditAppointment(String a) {
+        this.appno = a;
+    }
 }
