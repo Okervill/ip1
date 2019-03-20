@@ -85,7 +85,8 @@ public class ViewPatientController implements Initializable {
     @FXML
     private void back(ActionEvent event) {
 
-        SwitchWindow.switchWindow((Stage) back.getScene().getWindow(), new Mainscreen());
+        Stage stage = (Stage) back.getScene().getWindow();
+        stage.close();
     }
 
     public void getAppointments() throws SQLException {

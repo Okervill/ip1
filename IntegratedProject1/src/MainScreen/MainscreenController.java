@@ -75,6 +75,8 @@ public class MainscreenController implements Initializable {
     private ListView<String> appointmentDetails;
     @FXML
     private ChoiceBox<String> therapists;
+    
+    public Button close;
 
     String userType;
     String username;

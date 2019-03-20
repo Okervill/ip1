@@ -73,7 +73,6 @@ public class SQLHandler {
         query.setString(6, active);
 
         query.executeUpdate();
-        
         query.close();
     }
 
@@ -96,7 +95,6 @@ public class SQLHandler {
         query.setString(8, patientNumber);
 
         query.executeUpdate();
-        
         query.close();
     }
 
@@ -119,7 +117,6 @@ public class SQLHandler {
         query.setString(8, Status);
 
         query.executeUpdate();
-        
         query.close();
     }
 
@@ -138,7 +135,6 @@ public class SQLHandler {
         query.setString(4, ServiceDuration);
 
         query.executeUpdate();
-        
         query.close();
     }
 
@@ -427,8 +423,8 @@ public class SQLHandler {
         query.setString(4, active);
         query.setString(5, username);
         
-        query.close();
         query.executeUpdate();
+        query.close();
     }
 
     //----------------------------//
@@ -446,8 +442,8 @@ public class SQLHandler {
         query.setString(1, password);
         query.setString(2, username);
 
-        query.close();
         query.executeUpdate();
+        query.close();
     }
 
     //------------------------------//
@@ -467,14 +463,14 @@ public class SQLHandler {
         query.setString(6, postcode);
         query.setString(7, patientnumer);
         
-        query.close();
         query.executeUpdate();
+        query.close();
     }
 
     //----------------------------------//
     // EDIT RECORD IN APPOINTMENT TABLE //
     //----------------------------------//
-    public void updateAppointment(String AppointmentNumber, String PatientNumber, String Therapist, LocalDate Date, LocalTime Time, String Service, String Cost, String Status) throws SQLException {
+    public void updateAppointment(String AppointmentNumber, String Therapist, LocalDate Date, LocalTime Time, String Service, String Cost, String Status) throws SQLException {
 
         String sql = "UPDATE appointment SET therapist = ? , date = ? , time = ? , service = ? , cost = ? , status = ? WHERE appointmentnumber = ?";
 
@@ -488,8 +484,9 @@ public class SQLHandler {
         query.setString(6, Status);
         query.setString(7, AppointmentNumber);
         
-        query.close();
+
         query.executeUpdate();
+        query.close();
     }
 
     //------------------------------//
@@ -518,13 +515,9 @@ public class SQLHandler {
         String sql = "DELETE FROM " + table + " WHERE " + searchField + " = ?";
 
         query = conn.prepareStatement(sql);
-
-        //query.setString(1, table);
-        //query.setString(2, searchField);
         query.setString(1, searchQuery);
 
-        
-        query.close();
         query.executeUpdate();
+        query.close();
     }
 }

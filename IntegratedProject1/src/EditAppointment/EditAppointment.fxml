@@ -6,9 +6,19 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="EditAppointment.EditAppointmentController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="EditAppointment.EditAppointmentController">
    <children>
-      <Label fx:id="testDisplay" layoutX="14.0" layoutY="14.0" prefHeight="96.0" prefWidth="165.0" />
+      <Label fx:id="appointmentNumber" layoutX="162.0" layoutY="36.0" prefHeight="23.0" prefWidth="42.0" />
+      <Label fx:id="patientNumber" layoutX="162.0" layoutY="60.0" prefHeight="17.0" prefWidth="98.0" />
+      <Label layoutX="14.0" layoutY="39.0" prefHeight="17.0" prefWidth="146.0" text="Appointment Number" />
+      <Label layoutX="14.0" layoutY="60.0" prefHeight="17.0" prefWidth="146.0" text="Patient Name" />
+      <ChoiceBox fx:id="selectTherapist" layoutX="78.0" layoutY="97.0" prefWidth="150.0" />
+      <DatePicker fx:id="selectDate" layoutX="240.0" layoutY="97.0" />
+      <TextField fx:id="selectTime" layoutX="465.0" layoutY="97.0" prefHeight="27.0" prefWidth="81.0" />
+      <ChoiceBox fx:id="selectService" layoutX="78.0" layoutY="136.0" prefWidth="150.0" />
+      <TextField fx:id="selectCost" layoutX="240.0" layoutY="136.0" prefHeight="27.0" prefWidth="98.0" />
+      <ChoiceBox fx:id="selectStatus" layoutX="356.0" layoutY="136.0" prefWidth="150.0" />
+      <Button fx:id="close" layoutX="487.0" layoutY="206.0" mnemonicParsing="false" onAction="#close" text="Close" />
+      <Button fx:id="saveChanges" layoutX="402.0" layoutY="206.0" mnemonicParsing="false" onAction="#saveChanges" prefHeight="27.0" prefWidth="65.0" text="Save" />
    </children>
 </AnchorPane>
