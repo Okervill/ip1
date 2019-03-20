@@ -16,6 +16,9 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 
 /**
  *
@@ -149,7 +152,7 @@ public class SQLHandler {
         ResultSet rs = query.executeQuery();
         ResultSetMetaData rsmd = rs.getMetaData();
         numFields = rsmd.getColumnCount();
-        
+
         query.close();
 
         return numFields;
@@ -226,7 +229,7 @@ public class SQLHandler {
                 System.out.println("Invalid table name");
                 break;
         }
-        
+
         query.close();
         return output;
     }
@@ -262,7 +265,7 @@ public class SQLHandler {
         while (rs.next()) {
             output.add((rs.getString("username")));
         }
-        
+
         query.close();
         return output;
     }
@@ -279,7 +282,6 @@ public class SQLHandler {
             exists = true;
         }
 
-        
         query.close();
         return exists;
     }
@@ -296,7 +298,6 @@ public class SQLHandler {
             active = true;
         }
 
-        
         query.close();
         return active;
     }
@@ -314,7 +315,7 @@ public class SQLHandler {
         while (rs.next()) {
             output.add((rs.getString("firstname")) + " " + (rs.getString("surname")));
         }
-        
+
         query.close();
         return output;
     }
@@ -332,7 +333,7 @@ public class SQLHandler {
         while (rs.next()) {
             output.add(rs.getString("name"));
         }
-        
+
         query.close();
         return output;
     }
@@ -349,7 +350,7 @@ public class SQLHandler {
         while (rs.next()) {
             numRecords = rs.getInt(1);
         }
-        
+
         query.close();
         return numRecords;
     }
@@ -372,10 +373,6 @@ public class SQLHandler {
                     + search("patient", "patientnumber", (rs.getString("patientnumber"))).get(1)
                     + " Time: " + (rs.getString("time")));
         }
-        if (output.size() < 1) {
-            return output;
-        }
-        
         query.close();
         return output;
     }
@@ -403,7 +400,17 @@ public class SQLHandler {
             output.clear();
             return output;
         }
-        
+
+        //https://stackoverflow.com/questions/13056178/java-sorting-an-string-array-by-a-substring-of-characters
+        Collections.sort(output, new Comparator<String>() {
+            public int compare(String time1, String time2) {
+                String subtime1 = time1.substring(39,44).split(":")[0] + time1.substring(39,44).split(":")[1];
+                String subtime2 = time2.substring(39,44).split(":")[0] + time2.substring(39,44).split(":")[1];
+
+                return Integer.valueOf(subtime1).compareTo(Integer.valueOf(subtime2));
+            }
+        });
+
         query.close();
         return output;
     }
@@ -422,7 +429,7 @@ public class SQLHandler {
         query.setString(3, usertype);
         query.setString(4, active);
         query.setString(5, username);
-        
+
         query.executeUpdate();
         query.close();
     }
@@ -462,7 +469,7 @@ public class SQLHandler {
         query.setString(5, dob);
         query.setString(6, postcode);
         query.setString(7, patientnumer);
-        
+
         query.executeUpdate();
         query.close();
     }
@@ -475,7 +482,7 @@ public class SQLHandler {
         String sql = "UPDATE appointment SET therapist = ? , date = ? , time = ? , service = ? , cost = ? , status = ? WHERE appointmentnumber = ?";
 
         query = conn.prepareStatement(sql);
-        
+
         query.setString(1, Therapist);
         query.setString(2, Date.format(DateTimeFormatter.ofPattern("YYYY-MM-dd")));
         query.setString(3, Time.format(DateTimeFormatter.ofPattern("HH:mm")));
@@ -483,7 +490,6 @@ public class SQLHandler {
         query.setString(5, Cost);
         query.setString(6, Status);
         query.setString(7, AppointmentNumber);
-        
 
         query.executeUpdate();
         query.close();
@@ -497,12 +503,12 @@ public class SQLHandler {
         String sql = "UPDATE service SET ServiceName = ? , ServiceCost = ? , ServiceDuration = ? WHERE servicenumber = ?";
 
         query = conn.prepareStatement(sql);
-        
+
         query.setString(1, ServiceName);
         query.setString(2, ServiceCost);
         query.setString(3, ServiceDuration);
         query.setString(4, ServiceNumber);
-        
+
         query.close();
         query.executeUpdate();
     }

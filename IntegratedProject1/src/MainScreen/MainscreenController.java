@@ -248,8 +248,8 @@ public class MainscreenController implements Initializable {
         }
         appointmentDetails.setItems(info);
 
-            SwitchWindow.switchWindow((Stage) searchTherapist.getScene().getWindow(), new EditAppointment(appointmentNumber));
-        
+        SwitchWindow.switchWindow((Stage) searchTherapist.getScene().getWindow(), new EditAppointment(appointmentNumber));
+        displayAppointments();
     }
 
     public void displayTherapists() throws SQLException {
@@ -314,31 +314,24 @@ public class MainscreenController implements Initializable {
             switch (loopDayOfWeek) {
                 case MONDAY:
                     mondayAppointments.setItems(appointments);
-                    mondayAppointments.getSelectionModel().selectFirst();
                     break;
                 case TUESDAY:
                     tuesdayAppointments.setItems(appointments);
-                    tuesdayAppointments.getSelectionModel().selectFirst();
                     break;
                 case WEDNESDAY:
                     wednesdayAppointments.setItems(appointments);
-                    wednesdayAppointments.getSelectionModel().selectFirst();
                     break;
                 case THURSDAY:
                     thursdayAppointments.setItems(appointments);
-                    thursdayAppointments.getSelectionModel().selectFirst();
                     break;
                 case FRIDAY:
                     fridayAppointments.setItems(appointments);
-                    fridayAppointments.getSelectionModel().selectFirst();
                     break;
                 case SATURDAY:
                     saturdayAppointments.setItems(appointments);
-                    saturdayAppointments.getSelectionModel().selectFirst();
                     break;
                 case SUNDAY:
                     sundayAppointments.setItems(appointments);
-                    sundayAppointments.getSelectionModel().selectFirst();
                     break;
             }
         }
