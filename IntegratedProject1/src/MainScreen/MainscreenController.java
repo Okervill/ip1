@@ -195,7 +195,7 @@ public class MainscreenController implements Initializable {
 
         ArrayList<String> patient = null;
         try {
-            patient = sql.search("patient", "patientnumber", patientNumber);//ReadWriteFile.getPatientData(currentUsername);
+            patient = sql.search("patient", "patientnumber", patientNumber);
             if (patient.size() < 8) {
 
                 Shaker shaker = new Shaker(findPatient);
@@ -244,7 +244,7 @@ public class MainscreenController implements Initializable {
         int first = appointment.indexOf(": ") + 1;
         int second = appointment.indexOf(": ", first) + 1;
         int start = appointment.indexOf(": ", second) + 2;
-        int stop = appointment.indexOf(" ", start);
+        int stop = appointment.indexOf("\n", start);
         
         
         String appointmentNumber = appointment.substring(start, stop);

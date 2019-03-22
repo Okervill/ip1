@@ -366,12 +366,12 @@ public class SQLHandler {
         ResultSet rs = query.executeQuery();
 
         while (rs.next()) {
-            output.add("Time: " + (rs.getString("time"))
-                    + " Patient: "
+            output.add("Time: " + (rs.getString("time")) + "\n"
+                    + "Patient: "
                     + search("patient", "patientnumber", (rs.getString("patientnumber"))).get(0) + " "
-                    + search("patient", "patientnumber", (rs.getString("patientnumber"))).get(1)
-                    + " Appointment: " + (rs.getString("appointmentnumber"))
-                    + " Service: " + (rs.getString("service")));
+                    + search("patient", "patientnumber", (rs.getString("patientnumber"))).get(1) + "\n"
+                    + "Appointment: " + (rs.getString("appointmentnumber")) + "\n"
+                    + "Service: " + (rs.getString("service")));
         }
         if (output.size() < 1) {
             output.clear();
@@ -396,12 +396,12 @@ public class SQLHandler {
         ResultSet rs = query.executeQuery();
 
         while (rs.next()) {
-            output.add("Time: " + (rs.getString("time"))
-                    + " Patient: "
+            output.add("Time: " + (rs.getString("time")) + "\n"
+                    + "Patient: "
                     + search("patient", "patientnumber", (rs.getString("patientnumber"))).get(0) + " "
-                    + search("patient", "patientnumber", (rs.getString("patientnumber"))).get(1)
-                    + " Appointment: " + (rs.getString("appointmentnumber"))
-                    + " Service: " + (rs.getString("service")));
+                    + search("patient", "patientnumber", (rs.getString("patientnumber"))).get(1) + "\n"
+                    + "Appointment: " + (rs.getString("appointmentnumber")) + "\n"
+                    + "Service: " + (rs.getString("service")));
         }
         if (output.size() < 1) {
             output.clear();
