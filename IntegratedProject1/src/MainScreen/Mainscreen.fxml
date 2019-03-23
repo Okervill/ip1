@@ -59,11 +59,11 @@
          </children>
       </HBox>
       <Button fx:id="logout" layoutX="953.0" layoutY="13.0" mnemonicParsing="false" onAction="#logout" text="Log out" />
-      <Button layoutX="366.0" layoutY="14.0" mnemonicParsing="false" onAction="#newPatient" text="New Patient" />
-      <Button fx:id="search" layoutX="861.0" layoutY="13.0" mnemonicParsing="false" onAction="#findPatient" text="Search" />
-      <TextField fx:id="findPatient" layoutX="611.0" layoutY="13.0" onAction="#findPatient" prefHeight="25.0" prefWidth="250.0" promptText="Find Patient" />
-      <DatePicker fx:id="datePicker" layoutX="21.0" layoutY="14.0" onAction="#pickDate" />
-      <ChoiceBox fx:id="therapists" layoutX="229.0" layoutY="14.0" prefHeight="25.0" prefWidth="129.0" />
-      <Button fx:id="management" layoutX="479.0" layoutY="13.0" mnemonicParsing="false" onAction="#openManagementOptions" text="Management" />
+      <Button layoutX="209.0" layoutY="13.0" mnemonicParsing="false" onAction="#newPatient" text="New Patient" />
+      <Button fx:id="search" layoutX="885.0" layoutY="14.0" mnemonicParsing="false" onAction="#findPatient" text="Search" />
+      <TextField fx:id="findPatient" layoutX="635.0" layoutY="14.0" onAction="#findPatient" prefHeight="25.0" prefWidth="250.0" promptText="Find Patient" />
+      <DatePicker fx:id="datePicker" layoutX="23.0" layoutY="13.0" onAction="#pickDate" />
+      <ChoiceBox fx:id="therapists" layoutX="303.0" layoutY="13.0" prefHeight="25.0" prefWidth="129.0" />
+      <Button fx:id="management" layoutX="446.0" layoutY="13.0" mnemonicParsing="false" onAction="#openManagementOptions" text="Management" />
    </children>
 </AnchorPane>
