@@ -6,7 +6,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="209.0" prefWidth="387.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ViewTherapist.ViewTherapistController">
+<AnchorPane id="AnchorPane" prefHeight="209.0" prefWidth="387.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="EditEmployee.EditEmployeeController">
     <children>
         <TextField fx:id="currentUser" layoutX="61.0" layoutY="21.0" onAction="#search" promptText="Current Username" />
         <Button fx:id="search" layoutX="227.0" layoutY="21.0" mnemonicParsing="false" onAction="#search" text="Search" />

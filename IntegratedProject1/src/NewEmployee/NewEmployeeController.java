@@ -5,8 +5,6 @@
  */
 package NewEmployee;
 
-import MainScreen.Mainscreen;
-import integratedproject1.SwitchWindow;
 import integratedproject1.Therapist;
 import java.io.IOException;
 import java.net.URL;
@@ -22,7 +20,7 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-public class AddTherapistController implements Initializable {
+public class NewEmployeeController implements Initializable {
 
     @FXML
     private Button discard;

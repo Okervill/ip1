@@ -3,11 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ViewTherapist;
+package EditEmployee;
 
-import MainScreen.Mainscreen;
 import SQL.SQLHandler;
-import integratedproject1.SwitchWindow;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -24,7 +22,7 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-public class ViewTherapistController implements Initializable {
+public class EditEmployeeController implements Initializable {
 
     @FXML
     private TextField firstname;
@@ -74,7 +72,7 @@ public class ViewTherapistController implements Initializable {
         try {
             current = sql.search("login", "username", currentUsername);
         } catch (SQLException ex) {
-            Logger.getLogger(ViewTherapistController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(EditEmployeeController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         String newFirst = firstname.getText();
@@ -104,14 +102,14 @@ public class ViewTherapistController implements Initializable {
                 return;
             }
         } catch (SQLException ex) {
-            Logger.getLogger(ViewTherapistController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(EditEmployeeController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         ArrayList<String> current = null;
         try {
             current = sql.search("login", "username", currentUsername);
         } catch (SQLException ex) {
-            Logger.getLogger(ViewTherapistController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(EditEmployeeController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         firstname.setText(current.get(2));

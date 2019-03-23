@@ -6,9 +6,9 @@
 package Management;
 
 import ManageService.ManageService;
-import NewEmployee.AddTherapist;
+import NewEmployee.NewEmployee;
 import NewService.NewService;
-import ViewTherapist.ViewTherapist;
+import EditEmployee.EditEmployee;
 import integratedproject1.SwitchWindow;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -45,12 +45,12 @@ public class ManagementController implements Initializable {
 
     @FXML
     private void newEmployeeLoad(ActionEvent event) {
-        SwitchWindow.switchWindow((Stage) newEmployee.getScene().getWindow(), new AddTherapist());
+        SwitchWindow.switchWindow((Stage) newEmployee.getScene().getWindow(), new NewEmployee());
     }
 
     @FXML
     private void manageEmployeeLoad(ActionEvent event) {
-        SwitchWindow.switchWindow((Stage) manageEmployee.getScene().getWindow(), new ViewTherapist());
+        SwitchWindow.switchWindow((Stage) manageEmployee.getScene().getWindow(), new EditEmployee());
     }
 
     @FXML

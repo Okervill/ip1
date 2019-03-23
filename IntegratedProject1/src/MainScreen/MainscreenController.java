@@ -5,7 +5,7 @@
  */
 package MainScreen;
 
-import AddPatient.NewPatient;
+import NewPatient.NewPatient;
 import Animation.Shaker;
 import EditAppointment.EditAppointment;
 import Login.Login;
@@ -30,6 +30,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
@@ -66,7 +67,6 @@ public class MainscreenController implements Initializable {
     private ListView<String> saturdayAppointments;
     @FXML
     private ListView<String> sundayAppointments;
-    private ListView<String> appointmentDetails;
     @FXML
     private ChoiceBox<String> therapists;
 
@@ -231,10 +231,9 @@ public class MainscreenController implements Initializable {
         int second = appointment.indexOf(": ", first) + 1;
         int start = appointment.indexOf(": ", second) + 2;
         int stop = appointment.indexOf("\n", start);
-        
-        
+
         String appointmentNumber = appointment.substring(start, stop);
-        
+
         SwitchWindow.switchWindow((Stage) nextWeek.getScene().getWindow(), new EditAppointment(appointmentNumber));
         mondayAppointments.getSelectionModel().clearSelection();
         tuesdayAppointments.getSelectionModel().clearSelection();
@@ -261,7 +260,7 @@ public class MainscreenController implements Initializable {
         therapists.getSelectionModel().select(0);
         therapists.getSelectionModel().selectedItemProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
             selectedTherapist = newValue;
-            if (selectedTherapist.toUpperCase().equals("ALL")) {
+            if (selectedTherapist == null || selectedTherapist.isEmpty() || selectedTherapist.toUpperCase().equals("ALL")) {
                 selectedTherapist = "";
             }
             try {
@@ -678,5 +677,15 @@ public class MainscreenController implements Initializable {
     @FXML
     private void openManagementOptions(ActionEvent event) {
         SwitchWindow.switchWindow((Stage) management.getScene().getWindow(), new Management());
+        try {
+            displayTherapists();
+        } catch (SQLException ex) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Error");
+            alert.setHeaderText("Unable to load therapist usernames");
+            alert.setContentText("Error connecting to database, unable to load therapists");
+            alert.showAndWait();
+            return;
+        }
     }
 }

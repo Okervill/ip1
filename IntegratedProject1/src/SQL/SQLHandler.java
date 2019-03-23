@@ -17,7 +17,7 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
+import javafx.scene.control.Alert;
 
 /**
  *
@@ -50,7 +50,12 @@ public class SQLHandler {
         try {
             conn = DriverManager.getConnection(url);
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Error");
+            alert.setHeaderText("Unable to connect to database");
+            alert.setContentText("Unable to connect to database, try agian later");
+            alert.showAndWait();
+            return null;
         }
         return conn;
     }

@@ -6,7 +6,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="219.0" prefWidth="344.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="AddPatient.NewPatientController">
+<AnchorPane id="AnchorPane" prefHeight="219.0" prefWidth="344.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="NewPatient.NewPatientController">
    <children>
       <TextField fx:id="firstname" layoutX="14.0" layoutY="14.0" promptText="First name" />
       <TextField fx:id="surname" layoutX="170.0" layoutY="14.0" promptText="Surname" />
