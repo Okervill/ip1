@@ -219,7 +219,7 @@ public class MainscreenController implements Initializable {
     }
 
     //Get full appointment details for selected appointment
-    private void displayAppointmentDetails(String appointment) throws SQLException, IOException {
+    private void displayAppointmentDetails(String appointment) throws SQLException {
 
         //Check for null/empty
         if (appointment == null || appointment.isEmpty() || appointment.length() < 8) {
@@ -355,6 +355,10 @@ public class MainscreenController implements Initializable {
                         setStyle("-fx-background-color:#d9b3ff");
                     } else if (item.contains("Acupuncture")) {
                         setStyle("-fx-background-color:#b3e0ff");
+                    } else if (item.contains("Hairdressing")) {
+                        setStyle("-fx-background-color:#fccf64");
+                    } else if (item.contains("cancelled")) {
+                        setStyle("-fx-background-color:red");
                     }
 
                     this.itemProperty().addListener((obs, oldItem, newItem) -> {
@@ -392,6 +396,10 @@ public class MainscreenController implements Initializable {
                         setStyle("-fx-background-color:#d9b3ff");
                     } else if (item.contains("Acupuncture")) {
                         setStyle("-fx-background-color:#b3e0ff");
+                    } else if (item.contains("Hairdressing")) {
+                        setStyle("-fx-background-color:#fccf64");
+                    } else if (item.contains("cancelled")) {
+                        setStyle("-fx-background-color:red");
                     }
 
                     this.itemProperty().addListener((obs, oldItem, newItem) -> {
@@ -429,6 +437,10 @@ public class MainscreenController implements Initializable {
                         setStyle("-fx-background-color:#d9b3ff");
                     } else if (item.contains("Acupuncture")) {
                         setStyle("-fx-background-color:#b3e0ff");
+                    } else if (item.contains("Hairdressing")) {
+                        setStyle("-fx-background-color:#fccf64");
+                    } else if (item.contains("cancelled")) {
+                        setStyle("-fx-background-color:red");
                     }
 
                     this.itemProperty().addListener((obs, oldItem, newItem) -> {
@@ -465,7 +477,12 @@ public class MainscreenController implements Initializable {
                         setStyle("-fx-background-color:#d9b3ff");
                     } else if (item.contains("Acupuncture")) {
                         setStyle("-fx-background-color:#b3e0ff");
+                    } else if (item.contains("Hairdressing")) {
+                        setStyle("-fx-background-color:#fccf64");
+                    } else if (item.contains("cancelled")) {
+                        setStyle("-fx-background-color:red");
                     }
+                    
                     this.itemProperty().addListener((obs, oldItem, newItem) -> {
                         if (newItem == null) {
                             setStyle("-fx-background-colour:white");
@@ -501,6 +518,10 @@ public class MainscreenController implements Initializable {
                         setStyle("-fx-background-color:#d9b3ff");
                     } else if (item.contains("Acupuncture")) {
                         setStyle("-fx-background-color:#b3e0ff");
+                    } else if (item.contains("Hairdressing")) {
+                        setStyle("-fx-background-color:#fccf64");
+                    } else if (item.contains("cancelled")) {
+                        setStyle("-fx-background-color:red");
                     }
 
                     this.itemProperty().addListener((obs, oldItem, newItem) -> {
@@ -538,6 +559,10 @@ public class MainscreenController implements Initializable {
                         setStyle("-fx-background-color:#d9b3ff");
                     } else if (item.contains("Acupuncture")) {
                         setStyle("-fx-background-color:#b3e0ff");
+                    } else if (item.contains("Hairdressing")) {
+                        setStyle("-fx-background-color:#fccf64");
+                    } else if (item.contains("cancelled")) {
+                        setStyle("-fx-background-color:red");
                     }
 
                     this.itemProperty().addListener((obs, oldItem, newItem) -> {
@@ -576,8 +601,10 @@ public class MainscreenController implements Initializable {
                         setStyle("-fx-background-color:#d9b3ff");
                     } else if (item.contains("Acupuncture")) {
                         setStyle("-fx-background-color:#b3e0ff");
-                    } else {
-                        setStyle("-fx-background-colour:white");
+                    } else if (item.contains("Hairdressing")) {
+                        setStyle("-fx-background-color:#fccf64");
+                    } else if (item.contains("cancelled")) {
+                        setStyle("-fx-background-color:red");
                     }
 
                     this.itemProperty().addListener((obs, oldItem, newItem) -> {
@@ -593,65 +620,37 @@ public class MainscreenController implements Initializable {
 
     @FXML
     private void mondayMouseClick(javafx.scene.input.MouseEvent event) throws SQLException {
-        try {
-            displayAppointmentDetails(mondayAppointments.getSelectionModel().getSelectedItem());
-        } catch (IOException ex) {
-            Logger.getLogger(MainscreenController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        displayAppointmentDetails(mondayAppointments.getSelectionModel().getSelectedItem());
     }
 
     @FXML
     private void tuesdayMouseClick(javafx.scene.input.MouseEvent event) throws SQLException {
-        try {
-            displayAppointmentDetails(tuesdayAppointments.getSelectionModel().getSelectedItem());
-        } catch (IOException ex) {
-            Logger.getLogger(MainscreenController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        displayAppointmentDetails(tuesdayAppointments.getSelectionModel().getSelectedItem());
     }
 
     @FXML
     private void wednesdayMouseClick(javafx.scene.input.MouseEvent event) throws SQLException {
-        try {
-            displayAppointmentDetails(wednesdayAppointments.getSelectionModel().getSelectedItem());
-        } catch (IOException ex) {
-            Logger.getLogger(MainscreenController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        displayAppointmentDetails(wednesdayAppointments.getSelectionModel().getSelectedItem());
     }
 
     @FXML
     private void thursdayMouseClick(javafx.scene.input.MouseEvent event) throws SQLException {
-        try {
-            displayAppointmentDetails(thursdayAppointments.getSelectionModel().getSelectedItem());
-        } catch (IOException ex) {
-            Logger.getLogger(MainscreenController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        displayAppointmentDetails(thursdayAppointments.getSelectionModel().getSelectedItem());
     }
 
     @FXML
     private void fridayMouseClick(javafx.scene.input.MouseEvent event) throws SQLException {
-        try {
-            displayAppointmentDetails(fridayAppointments.getSelectionModel().getSelectedItem());
-        } catch (IOException ex) {
-            Logger.getLogger(MainscreenController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        displayAppointmentDetails(fridayAppointments.getSelectionModel().getSelectedItem());
     }
 
     @FXML
     private void saturdayMouseClick(javafx.scene.input.MouseEvent event) throws SQLException {
-        try {
-            displayAppointmentDetails(saturdayAppointments.getSelectionModel().getSelectedItem());
-        } catch (IOException ex) {
-            Logger.getLogger(MainscreenController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        displayAppointmentDetails(saturdayAppointments.getSelectionModel().getSelectedItem());
     }
 
     @FXML
     private void sundayMouseClick(javafx.scene.input.MouseEvent event) throws SQLException {
-        try {
-            displayAppointmentDetails(sundayAppointments.getSelectionModel().getSelectedItem());
-        } catch (IOException ex) {
-            Logger.getLogger(MainscreenController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        displayAppointmentDetails(sundayAppointments.getSelectionModel().getSelectedItem());
     }
 
     @FXML

@@ -13,10 +13,12 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Locale;
 import javafx.scene.control.Alert;
 
 /**
@@ -439,6 +441,40 @@ public class SQLHandler {
         return output;
     }
 
+    //-----------------------------//
+    // GET APPOINTMENTS BY PATIENT //
+    //-----------------------------//
+    public ArrayList<String> getPatientAppointments(String patientNumber) throws SQLException {
+
+        ArrayList<String> output = new ArrayList<>();
+        String sql = "SELECT appointmentnumber, therapist, date, time, service, status FROM appointment WHERE patientnumber = ?";
+
+        query = conn.prepareStatement(sql);
+        
+        query.setString(1, patientNumber);
+        
+        ResultSet rs = query.executeQuery();
+
+        while (rs.next()) {
+            output.add(
+                     "Date: " + (rs.getString("date")) + " "
+                    + "Time: " + (rs.getString("time")) + " "
+                    + "Appointment: " + (rs.getString("appointmentnumber")) + " "
+                    + "Service: " + (rs.getString("service")) + " "
+                    + "Status: " + (rs.getString("status"))
+            );
+        }
+        if (output.size() < 1) {
+            output.clear();
+            return output;
+        }
+        
+        Collections.sort(output, Collections.reverseOrder());
+
+        query.close();
+        return output;
+    }
+
     //---------------------------//
     // SORT APPOINTMENTS BY TIME //
     //---------------------------//
@@ -489,7 +525,7 @@ public class SQLHandler {
     //------------------------------//
     // EDIT RECORD IN PATIENT TABLE //
     //------------------------------//
-    public void updatePatient(String firstname, String surname, String email, String mobile, String dob, String gender, String postcode, String patientnumer) throws SQLException {
+    public void updatePatient(String firstname, String surname, String email, String mobile, LocalDate dob, String gender, String postcode, String patientnumer) throws SQLException {
 
         String sql = "UPDATE patient SET firstname = ? , surname = ? , email = ? , mobile = ? , dob = ? , gender = ? , postcode = ? WHERE patientnumber = ?";
 
@@ -499,9 +535,10 @@ public class SQLHandler {
         query.setString(2, surname);
         query.setString(3, email);
         query.setString(4, mobile);
-        query.setString(5, dob);
-        query.setString(6, postcode);
-        query.setString(7, patientnumer);
+        query.setString(5, dob.format(DateTimeFormatter.ofPattern("YYYY-MM-dd")));
+        query.setString(6, gender);
+        query.setString(7, postcode);
+        query.setString(8, patientnumer);
 
         query.executeUpdate();
         query.close();
