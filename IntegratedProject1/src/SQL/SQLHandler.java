@@ -125,14 +125,15 @@ public class SQLHandler {
     //-------------------------------//
     // ADD NEW DATA TO SERVICE TABLE //
     //-------------------------------//
-    public void addToService(String serviceNumber, String ServiceName) throws SQLException {
+    public void addToService(String serviceNumber, String ServiceName, String ServiceActive) throws SQLException {
 
-        String sql = "INSERT INTO service (servicenumber, name) VALUES(?,?)";
+        String sql = "INSERT INTO service (servicenumber, name, active) VALUES(?,?,?)";
 
         query = conn.prepareStatement(sql);
 
         query.setString(1, serviceNumber);
         query.setString(2, ServiceName);
+        query.setString(3, ServiceActive);
 
         query.executeUpdate();
         query.close();
@@ -215,12 +216,13 @@ public class SQLHandler {
                 break;
             }
             case "service": {
-                String sql = "SELECT servicenumber, name FROM service WHERE " + searchField + " = \"" + searchQuery + "\"";
+                String sql = "SELECT servicenumber, name, active FROM service WHERE " + searchField + " = \"" + searchQuery + "\"";
                 query = conn.prepareStatement(sql);
                 ResultSet rs = query.executeQuery();
                 while (rs.next()) {
                     output.add((rs.getString("servicenumber")));
                     output.add((rs.getString("name")));
+                    output.add((rs.getString("active")));
                 }
                 break;
             }
@@ -325,7 +327,7 @@ public class SQLHandler {
     public ArrayList<String> getAllServices() throws SQLException {
 
         ArrayList<String> output = new ArrayList<>();
-        String sql = "SELECT servicenumber, name FROM service";
+        String sql = "SELECT name FROM service";
         query = conn.prepareStatement(sql);
         ResultSet rs = query.executeQuery();
 
@@ -442,9 +444,9 @@ public class SQLHandler {
         query.close();
     }
 
-    //----------------------------//
-    // EDIT RECORD IN LOGIN TABLE //
-    //----------------------------//
+    //------------------------------//
+    // EDIT PASSWORD IN LOGIN TABLE //
+    //------------------------------//
     public void updateLoginPassword(String username, String password) throws SQLException {
 
         String sql = "UPDATE login SET password = ? WHERE username = ?";
@@ -506,17 +508,19 @@ public class SQLHandler {
     //------------------------------//
     // EDIT RECORD IN SERVICE TABLE //
     //------------------------------//
-    public void updateService(String ServiceNumber, String ServiceName) throws SQLException {
+    public void updateService(String ServiceNumber, String ServiceName, String ServiceActive) throws SQLException {
 
-        String sql = "UPDATE service SET ServiceName = ? WHERE servicenumber = ?";
+        String sql = "UPDATE service SET name = ?, active = ? WHERE servicenumber = ?";
 
         query = conn.prepareStatement(sql);
 
         query.setString(1, ServiceName);
-        query.setString(2, ServiceNumber);
+        query.setString(2, ServiceActive);
+        query.setString(3, ServiceNumber);
 
-        query.close();
         query.executeUpdate();
+        query.close();
+
     }
 
     //--------------------------------//

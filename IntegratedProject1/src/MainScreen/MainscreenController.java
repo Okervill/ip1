@@ -9,10 +9,9 @@ import AddPatient.NewPatient;
 import Animation.Shaker;
 import EditAppointment.EditAppointment;
 import Login.Login;
-import NewEmployee.AddTherapist;
+import Management.Management;
 import SQL.SQLHandler;
 import ViewPatient.ViewPatient;
-import ViewTherapist.ViewTherapist;
 import integratedproject1.SwitchWindow;
 import integratedproject1.User;
 import java.io.IOException;
@@ -51,10 +50,6 @@ public class MainscreenController implements Initializable {
     private Button logout;
     @FXML
     private TextField findPatient;
-    @FXML
-    private Button searchTherapist;
-    @FXML
-    private Button addTherapist;
     @FXML
     private DatePicker datePicker;
     @FXML
@@ -99,12 +94,16 @@ public class MainscreenController implements Initializable {
     private Button previousWeek;
     @FXML
     private Button nextWeek;
+    @FXML
+    private Button management;
 
     /**
      * Initializes the controller class.
      */
     //initialise sql
     SQLHandler sql = new SQLHandler();
+    @FXML
+    private Button search;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -156,14 +155,8 @@ public class MainscreenController implements Initializable {
 
     @FXML
     private void newPatient(ActionEvent event) throws IOException {
-        SwitchWindow.switchWindow((Stage) searchTherapist.getScene().getWindow(), new NewPatient());
+        SwitchWindow.switchWindow((Stage) findPatient.getScene().getWindow(), new NewPatient());
 
-    }
-
-    @FXML
-    private void addTherapist(ActionEvent event) throws IOException {
-
-        SwitchWindow.switchWindow((Stage) searchTherapist.getScene().getWindow(), new AddTherapist());
     }
 
     @FXML
@@ -175,18 +168,13 @@ public class MainscreenController implements Initializable {
 
         ArrayList<String> patientData = search();
         if (patientData != null) {
-            SwitchWindow.switchWindow((Stage) searchTherapist.getScene().getWindow(), new ViewPatient(patientData));
+            SwitchWindow.switchWindow((Stage) search.getScene().getWindow(), new ViewPatient(patientData));
         }
         try {
             displayAppointments();
         } catch (SQLException ex) {
             Logger.getLogger(MainscreenController.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
-
-    @FXML
-    private void findTherapist(ActionEvent event) throws IOException {
-        SwitchWindow.switchWindow((Stage) searchTherapist.getScene().getWindow(), new ViewTherapist());
     }
 
     private ArrayList<String> search() {
@@ -213,13 +201,11 @@ public class MainscreenController implements Initializable {
         userType = t;
         username = u;
 
-        searchTherapist.setVisible(false);
-        addTherapist.setVisible(false);
+        management.setVisible(false);
         therapists.setVisible(false);
 
         if (userType.equals("manager")) {
-            searchTherapist.setVisible(true);
-            addTherapist.setVisible(true);
+            management.setVisible(true);
             therapists.setVisible(true);
         }
         if (userType.equals("receptionist")) {
@@ -249,7 +235,7 @@ public class MainscreenController implements Initializable {
         
         String appointmentNumber = appointment.substring(start, stop);
         
-        SwitchWindow.switchWindow((Stage) searchTherapist.getScene().getWindow(), new EditAppointment(appointmentNumber));
+        SwitchWindow.switchWindow((Stage) nextWeek.getScene().getWindow(), new EditAppointment(appointmentNumber));
         mondayAppointments.getSelectionModel().clearSelection();
         tuesdayAppointments.getSelectionModel().clearSelection();
         wednesdayAppointments.getSelectionModel().clearSelection();
@@ -264,7 +250,7 @@ public class MainscreenController implements Initializable {
         //-----------------------------------------------------------//
         //Add all therapists to a choice box for receptionists to use//
         //-----------------------------------------------------------//
-        ArrayList<String> allTherapists = sql.getAllUsernames("therapist");//ReadWriteFile.getUsernames("therapist");
+        ArrayList<String> allTherapists = sql.getAllUsernames("therapist");
         ObservableList<String> t = FXCollections.observableArrayList();
         //option for viewing all appointments
         t.add("All");
@@ -687,5 +673,10 @@ public class MainscreenController implements Initializable {
         ArrayList<String> appointment = sql.search("appointment", "appointmentnumber", appointmentNumber);
 
         return appointment;
+    }
+
+    @FXML
+    private void openManagementOptions(ActionEvent event) {
+        SwitchWindow.switchWindow((Stage) management.getScene().getWindow(), new Management());
     }
 }

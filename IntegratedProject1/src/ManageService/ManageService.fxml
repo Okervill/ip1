@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane id="AnchorPane" prefHeight="147.0" prefWidth="179.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="ManageService.ManageServiceController">
+   <children>
+      <ChoiceBox fx:id="selectService" layoutX="14.0" layoutY="14.0" prefWidth="150.0" />
+      <TextField fx:id="serviceName" layoutX="15.0" layoutY="46.0" promptText="Select Service First" />
+      <ChoiceBox fx:id="selectActive" layoutX="14.0" layoutY="77.0" prefWidth="150.0" />
+      <Button fx:id="save" layoutX="15.0" layoutY="108.0" mnemonicParsing="false" onAction="#save" text="Save" />
+      <Button fx:id="discard" layoutX="106.0" layoutY="108.0" mnemonicParsing="false" onAction="#discard" text="Discard" />
+   </children>
+</AnchorPane>
