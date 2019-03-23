@@ -44,7 +44,7 @@ public class NewServiceController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        serviceActive.setItems(FXCollections.observableArrayList("Active", "Inactive"));
+        serviceActive.setItems(FXCollections.observableArrayList("True", "False"));
 
     }
 

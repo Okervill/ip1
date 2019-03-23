@@ -51,7 +51,7 @@ public class ManageServiceController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        selectActive.setItems(FXCollections.observableArrayList("Active", "Inactive"));
+        selectActive.setItems(FXCollections.observableArrayList("True", "False"));
         ArrayList<String> allServices = new ArrayList<>();
 
         try {

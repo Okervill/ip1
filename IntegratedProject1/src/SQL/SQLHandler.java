@@ -339,6 +339,24 @@ public class SQLHandler {
         return output;
     }
 
+    //------------------------------//
+    // SEARCH FOR ALL SERVICE NAMES //
+    //------------------------------//
+    public ArrayList<String> getAllActiveServices() throws SQLException {
+
+        ArrayList<String> output = new ArrayList<>();
+        String sql = "SELECT name FROM service WHERE active = \"True\"";
+        query = conn.prepareStatement(sql);
+        ResultSet rs = query.executeQuery();
+
+        while (rs.next()) {
+            output.add(rs.getString("name"));
+        }
+
+        query.close();
+        return output;
+    }
+
     //-----------------------------------//
     // COUNT RECORDS IN GIVEN TABLE NAME //
     //-----------------------------------//

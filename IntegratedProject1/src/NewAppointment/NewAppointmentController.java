@@ -77,7 +77,7 @@ public class NewAppointmentController implements Initializable {
         ArrayList<String> allServices = new ArrayList<>();
         ObservableList<String> services = FXCollections.observableArrayList();
         try {
-            allServices = sql.getAllServices();
+            allServices = sql.getAllActiveServices();
         } catch (SQLException ex) {
             Logger.getLogger(NewAppointmentController.class.getName()).log(Level.SEVERE, null, ex);
         }
