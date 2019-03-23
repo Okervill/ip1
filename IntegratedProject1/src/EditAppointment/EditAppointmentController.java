@@ -192,7 +192,7 @@ public class EditAppointmentController implements Initializable {
 
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Save");
-                alert.setHeaderText("Save successfull");
+                alert.setHeaderText("Save successful");
                 alert.setContentText("Appointment updated successfully");
                 alert.showAndWait();
 
