@@ -21,7 +21,6 @@ public class Mainscreen extends Application {
     public void start(Stage stage) throws Exception {
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/MainScreen/Mainscreen.fxml"));
-        
         Parent root = (Parent) loader.load();
         
         MainscreenController controller = loader.getController();

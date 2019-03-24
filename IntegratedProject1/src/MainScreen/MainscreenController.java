@@ -29,7 +29,10 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
@@ -37,6 +40,7 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -117,7 +121,11 @@ public class MainscreenController implements Initializable {
         saturdayAppointments.getStylesheets().add("/MainScreen/listview.css");
         sundayAppointments.getStylesheets().add("/MainScreen/listview.css");
 
-        setListViewCellWrap();
+        try {
+            setListViewCellWrap();
+        } catch (IOException ex) {
+            Logger.getLogger(MainscreenController.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
         Platform.runLater(() -> {
             if (username == null && userType == null) {
@@ -328,280 +336,70 @@ public class MainscreenController implements Initializable {
         }
     }
 
-    private void setListViewCellWrap() {
-        mondayAppointments.setCellFactory(param -> new ListCell<String>() {
-            @Override
-            protected void updateItem(String item, boolean empty) {
-                super.updateItem(item, empty);
-                if (empty || item == null) {
-                    setGraphic(null);
-                    setText(null);
-                    // other stuff to do...
+    public void addAllDescendents(Parent parent, ArrayList<Node> nodes) {
 
-                } else {
-
-                    // set the width's
-                    setMinWidth(param.getWidth());
-                    setMaxWidth(param.getWidth());
-                    setPrefWidth(param.getWidth());
-
-                    // allow wrapping
-                    setWrapText(true);
-
-                    setText(item);
-                    int start = item.indexOf("Service: ") + 9;
-                    String serviceName = item.substring(start, item.length());
-
-                    try {
-                        setStyle("-fx-background-color:#" + sql.getServiceColour(serviceName).get(0).substring(2, 8));
-                    } catch (SQLException ex) {
-                        Logger.getLogger(MainscreenController.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-
-                    this.itemProperty().addListener((obs, oldItem, newItem) -> {
-                        if (newItem == null) {
-                            setStyle("-fx-background-colour:white");
-                        }
-                    });
-
-                }
+        for (Node node : parent.getChildrenUnmodifiable()) {
+            nodes.add(node);
+            if (node instanceof Parent) {
+                addAllDescendents((Parent) node, nodes);
             }
-        });
-        tuesdayAppointments.setCellFactory(param -> new ListCell<String>() {
-            @Override
-            protected void updateItem(String item, boolean empty) {
-                super.updateItem(item, empty);
-                if (empty || item == null) {
-                    setGraphic(null);
-                    setText(null);
-                    // other stuff to do...
-
-                } else {
-
-                    // set the width's
-                    setMinWidth(param.getWidth());
-                    setMaxWidth(param.getWidth());
-                    setPrefWidth(param.getWidth());
-
-                    // allow wrapping
-                    setWrapText(true);
-
-                    setText(item);
-
-                    int start = item.indexOf("Service: ") + 9;
-                    String serviceName = item.substring(start, item.length());
-
-                    try {
-                        setStyle("-fx-background-color:#" + sql.getServiceColour(serviceName).get(0).substring(2, 8));
-                    } catch (SQLException ex) {
-                        Logger.getLogger(MainscreenController.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-
-                    this.itemProperty().addListener((obs, oldItem, newItem) -> {
-                        if (newItem == null) {
-                            setStyle("-fx-background-colour:white");
-                        }
-                    });
-
-                }
-            }
-        });
-        wednesdayAppointments.setCellFactory(param -> new ListCell<String>() {
-            @Override
-            protected void updateItem(String item, boolean empty) {
-                super.updateItem(item, empty);
-                if (empty || item == null) {
-                    setGraphic(null);
-                    setText(null);
-                    // other stuff to do...
-
-                } else {
-
-                    // set the width's
-                    setMinWidth(param.getWidth());
-                    setMaxWidth(param.getWidth());
-                    setPrefWidth(param.getWidth());
-
-                    // allow wrapping
-                    setWrapText(true);
-
-                    setText(item);
-
-                    int start = item.indexOf("Service: ") + 9;
-                    String serviceName = item.substring(start, item.length());
-
-                    try {
-                        setStyle("-fx-background-color:#" + sql.getServiceColour(serviceName).get(0).substring(2, 8));
-                    } catch (SQLException ex) {
-                        Logger.getLogger(MainscreenController.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-
-                    this.itemProperty().addListener((obs, oldItem, newItem) -> {
-                        if (newItem == null) {
-                            setStyle("-fx-background-colour:white");
-                        }
-                    });
-                }
-            }
-        });
-        thursdayAppointments.setCellFactory(param -> new ListCell<String>() {
-            @Override
-            protected void updateItem(String item, boolean empty) {
-                super.updateItem(item, empty);
-                if (empty || item == null) {
-                    setGraphic(null);
-                    setText(null);
-                    // other stuff to do...
-
-                } else {
-
-                    // set the width's
-                    setMinWidth(param.getWidth());
-                    setMaxWidth(param.getWidth());
-                    setPrefWidth(param.getWidth());
-
-                    // allow wrapping
-                    setWrapText(true);
-
-                    setText(item);
-
-                    int start = item.indexOf("Service: ") + 9;
-                    String serviceName = item.substring(start, item.length());
-
-                    try {
-                        setStyle("-fx-background-color:#" + sql.getServiceColour(serviceName).get(0).substring(2, 8));
-                    } catch (SQLException ex) {
-                        Logger.getLogger(MainscreenController.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-
-                    this.itemProperty().addListener((obs, oldItem, newItem) -> {
-                        if (newItem == null) {
-                            setStyle("-fx-background-colour:white");
-                        }
-                    });
-
-                }
-            }
-        });
-        fridayAppointments.setCellFactory(param -> new ListCell<String>() {
-            @Override
-            protected void updateItem(String item, boolean empty) {
-                super.updateItem(item, empty);
-                if (empty || item == null) {
-                    setGraphic(null);
-                    setText(null);
-                    // other stuff to do...
-
-                } else {
-
-                    // set the width's
-                    setMinWidth(param.getWidth());
-                    setMaxWidth(param.getWidth());
-                    setPrefWidth(param.getWidth());
-
-                    // allow wrapping
-                    setWrapText(true);
-
-                    setText(item);
-
-                    int start = item.indexOf("Service: ") + 9;
-                    String serviceName = item.substring(start, item.length());
-
-                    try {
-                        setStyle("-fx-background-color:#" + sql.getServiceColour(serviceName).get(0).substring(2, 8));
-                    } catch (SQLException ex) {
-                        Logger.getLogger(MainscreenController.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-
-                    this.itemProperty().addListener((obs, oldItem, newItem) -> {
-                        if (newItem == null) {
-                            setStyle("-fx-background-colour:white");
-                        }
-                    });
-
-                }
-            }
-        });
-        saturdayAppointments.setCellFactory(param -> new ListCell<String>() {
-            @Override
-            protected void updateItem(String item, boolean empty) {
-                super.updateItem(item, empty);
-                if (empty || item == null) {
-                    setGraphic(null);
-                    setText(null);
-                    // other stuff to do...
-
-                } else {
-
-                    // set the width's
-                    setMinWidth(param.getWidth());
-                    setMaxWidth(param.getWidth());
-                    setPrefWidth(param.getWidth());
-
-                    // allow wrapping
-                    setWrapText(true);
-
-                    setText(item);
-
-                    int start = item.indexOf("Service: ") + 9;
-                    String serviceName = item.substring(start, item.length());
-
-                    try {
-                        setStyle("-fx-background-color:#" + sql.getServiceColour(serviceName).get(0).substring(2, 8));
-                    } catch (SQLException ex) {
-                        Logger.getLogger(MainscreenController.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-
-                    this.itemProperty().addListener((obs, oldItem, newItem) -> {
-                        if (newItem == null) {
-                            setStyle("-fx-background-colour:white");
-                        }
-                    });
-
-                }
-            }
-        });
-        sundayAppointments.setCellFactory(param -> new ListCell<String>() {
-            @Override
-            protected void updateItem(String item, boolean empty) {
-                super.updateItem(item, empty);
-                if (empty || item == null) {
-                    setGraphic(null);
-                    setText(null);
-                    // other stuff to do...
-
-                } else {
-
-                    // set the width's
-                    setMinWidth(param.getWidth());
-                    setMaxWidth(param.getWidth());
-                    setPrefWidth(param.getWidth());
-
-                    // allow wrapping
-                    setWrapText(true);
-
-                    setText(item);
-
-                    int start = item.indexOf("Service: ") + 9;
-                    String serviceName = item.substring(start, item.length());
-
-                    try {
-                        setStyle("-fx-background-color:#" + sql.getServiceColour(serviceName).get(0).substring(2, 8));
-                    } catch (SQLException ex) {
-                        Logger.getLogger(MainscreenController.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-
-                    this.itemProperty().addListener((obs, oldItem, newItem) -> {
-                        if (newItem == null) {
-                            setStyle("-fx-background-colour:white");
-                        }
-                    });
-
-                }
-            }
-        });
+        }
     }
 
+    public ArrayList<Node> getAllNodes(Parent root) {
+        ArrayList<Node> nodes = new ArrayList<>();
+        addAllDescendents(root, nodes);
+        return nodes;
+    }
+
+    private void setListViewCellWrap() throws IOException {
+
+        ArrayList<ListView> lists = new ArrayList<>();
+        lists.add(mondayAppointments);
+        lists.add(tuesdayAppointments);
+        lists.add(wednesdayAppointments);
+        lists.add(thursdayAppointments);
+        lists.add(fridayAppointments);
+        lists.add(saturdayAppointments);
+        lists.add(sundayAppointments);
+
+        lists.forEach((list) -> {
+            list.setCellFactory(param -> new ListCell<String>() {
+                @Override
+                protected void updateItem(String item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (empty || item == null) {
+                        setGraphic(null);
+                        setText(null);
+                        // other stuff to do...
+
+                    } else {
+
+                        // allow wrapping
+                        setWrapText(true);
+
+                        setText(item);
+                        int start = item.indexOf("Service: ") + 9;
+                        String serviceName = item.substring(start, item.length());
+
+                        try {
+                            setStyle("-fx-background-color:#" + sql.getServiceColour(serviceName).get(0).substring(2, 8));
+                        } catch (SQLException ex) {
+                            Logger.getLogger(MainscreenController.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+
+                        this.itemProperty().addListener((obs, oldItem, newItem) -> {
+                            if (newItem == null) {
+                                setStyle("-fx-background-colour:white");
+                            }
+                        });
+
+                    }
+                }
+            });
+        });
+    }
+    
     @FXML
     private void mondayMouseClick(javafx.scene.input.MouseEvent event) throws SQLException {
         displayAppointmentDetails(mondayAppointments.getSelectionModel().getSelectedItem());
@@ -658,7 +456,7 @@ public class MainscreenController implements Initializable {
     }
 
     @FXML
-    private void openManagementOptions(ActionEvent event) throws SQLException {
+    private void openManagementOptions(ActionEvent event) throws SQLException, IOException {
         SwitchWindow.switchWindow((Stage) management.getScene().getWindow(), new Management());
         try {
             setListViewCellWrap();
