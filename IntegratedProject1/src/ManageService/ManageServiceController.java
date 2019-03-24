@@ -22,7 +22,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ColorPicker;
 import javafx.scene.control.TextField;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 /**
@@ -44,12 +46,17 @@ public class ManageServiceController implements Initializable {
     private Button discard;
 
     SQLHandler sql = new SQLHandler();
+    @FXML
+    private ColorPicker selectColour;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+
+        selectColour.getStylesheets().add("/ManageService/service.css");
+
         selectActive.setItems(FXCollections.observableArrayList("True", "False"));
         ArrayList<String> allServices = new ArrayList<>();
 
@@ -81,6 +88,7 @@ public class ManageServiceController implements Initializable {
         String selected = selectService.getSelectionModel().getSelectedItem();
         String name = serviceName.getText();
         String active = selectActive.getSelectionModel().getSelectedItem();
+        Color colour = selectColour.getValue();
 
         if (name.isEmpty() || active.isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -113,7 +121,7 @@ public class ManageServiceController implements Initializable {
         }
 
         try {
-            sql.updateService(sql.search("service", "name", selectService.getSelectionModel().getSelectedItem()).get(0), name, active);
+            sql.updateService(sql.search("service", "name", selectService.getSelectionModel().getSelectedItem()).get(0), name, active, colour.toString());
         } catch (SQLException ex) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Error");
@@ -129,6 +137,10 @@ public class ManageServiceController implements Initializable {
 
     @FXML
     private void discard(ActionEvent event) {
+
+        Color colour = selectColour.getValue();
+        System.out.println(colour + " " + colour.toString());
+
         Stage stage = (Stage) discard.getScene().getWindow();
         stage.close();
     }
@@ -137,6 +149,10 @@ public class ManageServiceController implements Initializable {
         ArrayList<String> serviceInfo = sql.search("service", "name", service);
         serviceName.setText(serviceInfo.get(1));
         selectActive.getSelectionModel().select(serviceInfo.get(2));
+        if (serviceInfo.get(3) == null ||serviceInfo.get(3).isEmpty()) {
+            selectColour.setValue(Color.WHITE);
+        } else {
+            selectColour.setValue(Color.valueOf(serviceInfo.get(3)));
+        }
     }
-
 }

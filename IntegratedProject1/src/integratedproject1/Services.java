@@ -17,16 +17,18 @@ public class Services {
     String serviceNumber;
     String serviceName;
     String serviceActive;
+    String serviceColour;
 
     SQLHandler sql = new SQLHandler();
 
-    public Services(String name, String active) throws SQLException {
+    public Services(String name, String active, String colour) throws SQLException {
 
         this.serviceName = name;
         this.serviceActive = active;
         this.serviceNumber = String.valueOf(sql.countRecords("service") + 1);
+        this.serviceColour = colour;
 
-        sql.addToService(serviceNumber, serviceName, serviceActive);
+        sql.addToService(serviceNumber, serviceName, serviceActive, serviceColour);
 
     }
 

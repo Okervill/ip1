@@ -349,16 +349,13 @@ public class MainscreenController implements Initializable {
                     setWrapText(true);
 
                     setText(item);
-                    if (item.contains("Sports Massage")) {
-                        setStyle("-fx-background-color:#ccffcc");
-                    } else if (item.contains("Physiotherapy")) {
-                        setStyle("-fx-background-color:#d9b3ff");
-                    } else if (item.contains("Acupuncture")) {
-                        setStyle("-fx-background-color:#b3e0ff");
-                    } else if (item.contains("Hairdressing")) {
-                        setStyle("-fx-background-color:#fccf64");
-                    } else if (item.contains("cancelled")) {
-                        setStyle("-fx-background-color:red");
+                    int start = item.indexOf("Service: ") + 9;
+                    String serviceName = item.substring(start, item.length());
+
+                    try {
+                        setStyle("-fx-background-color:#" + sql.getServiceColour(serviceName).get(0).substring(2, 8));
+                    } catch (SQLException ex) {
+                        Logger.getLogger(MainscreenController.class.getName()).log(Level.SEVERE, null, ex);
                     }
 
                     this.itemProperty().addListener((obs, oldItem, newItem) -> {
@@ -390,16 +387,14 @@ public class MainscreenController implements Initializable {
                     setWrapText(true);
 
                     setText(item);
-                    if (item.contains("Sports Massage")) {
-                        setStyle("-fx-background-color:#ccffcc");
-                    } else if (item.contains("Physiotherapy")) {
-                        setStyle("-fx-background-color:#d9b3ff");
-                    } else if (item.contains("Acupuncture")) {
-                        setStyle("-fx-background-color:#b3e0ff");
-                    } else if (item.contains("Hairdressing")) {
-                        setStyle("-fx-background-color:#fccf64");
-                    } else if (item.contains("cancelled")) {
-                        setStyle("-fx-background-color:red");
+
+                    int start = item.indexOf("Service: ") + 9;
+                    String serviceName = item.substring(start, item.length());
+
+                    try {
+                        setStyle("-fx-background-color:#" + sql.getServiceColour(serviceName).get(0).substring(2, 8));
+                    } catch (SQLException ex) {
+                        Logger.getLogger(MainscreenController.class.getName()).log(Level.SEVERE, null, ex);
                     }
 
                     this.itemProperty().addListener((obs, oldItem, newItem) -> {
@@ -431,16 +426,14 @@ public class MainscreenController implements Initializable {
                     setWrapText(true);
 
                     setText(item);
-                    if (item.contains("Sports Massage")) {
-                        setStyle("-fx-background-color:#ccffcc");
-                    } else if (item.contains("Physiotherapy")) {
-                        setStyle("-fx-background-color:#d9b3ff");
-                    } else if (item.contains("Acupuncture")) {
-                        setStyle("-fx-background-color:#b3e0ff");
-                    } else if (item.contains("Hairdressing")) {
-                        setStyle("-fx-background-color:#fccf64");
-                    } else if (item.contains("cancelled")) {
-                        setStyle("-fx-background-color:red");
+
+                    int start = item.indexOf("Service: ") + 9;
+                    String serviceName = item.substring(start, item.length());
+
+                    try {
+                        setStyle("-fx-background-color:#" + sql.getServiceColour(serviceName).get(0).substring(2, 8));
+                    } catch (SQLException ex) {
+                        Logger.getLogger(MainscreenController.class.getName()).log(Level.SEVERE, null, ex);
                     }
 
                     this.itemProperty().addListener((obs, oldItem, newItem) -> {
@@ -471,18 +464,16 @@ public class MainscreenController implements Initializable {
                     setWrapText(true);
 
                     setText(item);
-                    if (item.contains("Sports Massage")) {
-                        setStyle("-fx-background-color:#ccffcc");
-                    } else if (item.contains("Physiotherapy")) {
-                        setStyle("-fx-background-color:#d9b3ff");
-                    } else if (item.contains("Acupuncture")) {
-                        setStyle("-fx-background-color:#b3e0ff");
-                    } else if (item.contains("Hairdressing")) {
-                        setStyle("-fx-background-color:#fccf64");
-                    } else if (item.contains("cancelled")) {
-                        setStyle("-fx-background-color:red");
+
+                    int start = item.indexOf("Service: ") + 9;
+                    String serviceName = item.substring(start, item.length());
+
+                    try {
+                        setStyle("-fx-background-color:#" + sql.getServiceColour(serviceName).get(0).substring(2, 8));
+                    } catch (SQLException ex) {
+                        Logger.getLogger(MainscreenController.class.getName()).log(Level.SEVERE, null, ex);
                     }
-                    
+
                     this.itemProperty().addListener((obs, oldItem, newItem) -> {
                         if (newItem == null) {
                             setStyle("-fx-background-colour:white");
@@ -512,16 +503,14 @@ public class MainscreenController implements Initializable {
                     setWrapText(true);
 
                     setText(item);
-                    if (item.contains("Sports Massage")) {
-                        setStyle("-fx-background-color:#ccffcc");
-                    } else if (item.contains("Physiotherapy")) {
-                        setStyle("-fx-background-color:#d9b3ff");
-                    } else if (item.contains("Acupuncture")) {
-                        setStyle("-fx-background-color:#b3e0ff");
-                    } else if (item.contains("Hairdressing")) {
-                        setStyle("-fx-background-color:#fccf64");
-                    } else if (item.contains("cancelled")) {
-                        setStyle("-fx-background-color:red");
+
+                    int start = item.indexOf("Service: ") + 9;
+                    String serviceName = item.substring(start, item.length());
+
+                    try {
+                        setStyle("-fx-background-color:#" + sql.getServiceColour(serviceName).get(0).substring(2, 8));
+                    } catch (SQLException ex) {
+                        Logger.getLogger(MainscreenController.class.getName()).log(Level.SEVERE, null, ex);
                     }
 
                     this.itemProperty().addListener((obs, oldItem, newItem) -> {
@@ -553,16 +542,14 @@ public class MainscreenController implements Initializable {
                     setWrapText(true);
 
                     setText(item);
-                    if (item.contains("Sports Massage")) {
-                        setStyle("-fx-background-color:#ccffcc");
-                    } else if (item.contains("Physiotherapy")) {
-                        setStyle("-fx-background-color:#d9b3ff");
-                    } else if (item.contains("Acupuncture")) {
-                        setStyle("-fx-background-color:#b3e0ff");
-                    } else if (item.contains("Hairdressing")) {
-                        setStyle("-fx-background-color:#fccf64");
-                    } else if (item.contains("cancelled")) {
-                        setStyle("-fx-background-color:red");
+
+                    int start = item.indexOf("Service: ") + 9;
+                    String serviceName = item.substring(start, item.length());
+
+                    try {
+                        setStyle("-fx-background-color:#" + sql.getServiceColour(serviceName).get(0).substring(2, 8));
+                    } catch (SQLException ex) {
+                        Logger.getLogger(MainscreenController.class.getName()).log(Level.SEVERE, null, ex);
                     }
 
                     this.itemProperty().addListener((obs, oldItem, newItem) -> {
@@ -595,16 +582,13 @@ public class MainscreenController implements Initializable {
 
                     setText(item);
 
-                    if (item.contains("Sports Massage")) {
-                        setStyle("-fx-background-color:#ccffcc");
-                    } else if (item.contains("Physiotherapy")) {
-                        setStyle("-fx-background-color:#d9b3ff");
-                    } else if (item.contains("Acupuncture")) {
-                        setStyle("-fx-background-color:#b3e0ff");
-                    } else if (item.contains("Hairdressing")) {
-                        setStyle("-fx-background-color:#fccf64");
-                    } else if (item.contains("cancelled")) {
-                        setStyle("-fx-background-color:red");
+                    int start = item.indexOf("Service: ") + 9;
+                    String serviceName = item.substring(start, item.length());
+
+                    try {
+                        setStyle("-fx-background-color:#" + sql.getServiceColour(serviceName).get(0).substring(2, 8));
+                    } catch (SQLException ex) {
+                        Logger.getLogger(MainscreenController.class.getName()).log(Level.SEVERE, null, ex);
                     }
 
                     this.itemProperty().addListener((obs, oldItem, newItem) -> {
@@ -674,9 +658,10 @@ public class MainscreenController implements Initializable {
     }
 
     @FXML
-    private void openManagementOptions(ActionEvent event) {
+    private void openManagementOptions(ActionEvent event) throws SQLException {
         SwitchWindow.switchWindow((Stage) management.getScene().getWindow(), new Management());
         try {
+            setListViewCellWrap();
             displayTherapists();
         } catch (SQLException ex) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);

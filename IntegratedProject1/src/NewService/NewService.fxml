@@ -6,12 +6,12 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="131.0" prefWidth="183.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="NewService.NewServiceController">
+<AnchorPane id="AnchorPane" prefHeight="190.0" prefWidth="272.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="NewService.NewServiceController">
    <children>
-      <TextField fx:id="serviceName" layoutX="14.0" layoutY="14.0" promptText="Enter New Service Name" />
-      <ChoiceBox fx:id="serviceActive" layoutX="14.0" layoutY="48.0" prefWidth="150.0" />
-      <Button fx:id="save" layoutX="14.0" layoutY="85.0" mnemonicParsing="false" onAction="#save" text="Save" />
-      <Button fx:id="discard" layoutX="107.0" layoutY="85.0" mnemonicParsing="false" onAction="#discard" prefHeight="25.0" prefWidth="56.0" text="Discard" />
+      <TextField fx:id="serviceName" layoutX="14.0" layoutY="14.0" prefHeight="27.0" prefWidth="174.0" promptText="Enter New Service Name" />
+      <ChoiceBox fx:id="serviceActive" layoutX="14.0" layoutY="48.0" prefHeight="27.0" prefWidth="174.0" />
+      <Button fx:id="save" layoutX="14.0" layoutY="127.0" mnemonicParsing="false" onAction="#save" text="Save" />
+      <Button fx:id="discard" layoutX="107.0" layoutY="127.0" mnemonicParsing="false" onAction="#discard" prefHeight="27.0" prefWidth="73.0" text="Discard" />
+      <ColorPicker fx:id="selectColour" layoutX="14.0" layoutY="82.0" prefHeight="27.0" prefWidth="174.0" />
    </children>
 </AnchorPane>

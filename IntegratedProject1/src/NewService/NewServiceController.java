@@ -17,7 +17,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ColorPicker;
 import javafx.scene.control.TextField;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 /**
@@ -37,12 +39,16 @@ public class NewServiceController implements Initializable {
     private Button discard;
 
     SQLHandler sql = new SQLHandler();
+    @FXML
+    private ColorPicker selectColour;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+
+        selectColour.getStylesheets().add("/ManageService/service.css");
         serviceActive.setItems(FXCollections.observableArrayList("True", "False"));
 
     }
@@ -52,6 +58,7 @@ public class NewServiceController implements Initializable {
 
         String name = serviceName.getText();
         String active = serviceActive.getSelectionModel().getSelectedItem();
+        Color colour = selectColour.getValue();
 
         if (name.isEmpty() || active.isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -66,9 +73,16 @@ public class NewServiceController implements Initializable {
             alert.setHeaderText("Service Exists");
             alert.setContentText("Service already exists");
             alert.showAndWait();
+            return;
         }
-        Services newService = new Services(name, active);
 
+        Services newService = new Services(name, active, colour.toString());
+        
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Success");
+        alert.setHeaderText("Service saved successfully");
+        alert.showAndWait();
+        
         Stage stage = (Stage) save.getScene().getWindow();
         stage.close();
     }

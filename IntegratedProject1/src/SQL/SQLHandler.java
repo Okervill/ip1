@@ -132,15 +132,16 @@ public class SQLHandler {
     //-------------------------------//
     // ADD NEW DATA TO SERVICE TABLE //
     //-------------------------------//
-    public void addToService(String serviceNumber, String ServiceName, String ServiceActive) throws SQLException {
+    public void addToService(String serviceNumber, String ServiceName, String ServiceActive, String ServiceColour) throws SQLException {
 
-        String sql = "INSERT INTO service (servicenumber, name, active) VALUES(?,?,?)";
+        String sql = "INSERT INTO service (servicenumber, name, active, colour) VALUES(?,?,?,?)";
 
         query = conn.prepareStatement(sql);
 
         query.setString(1, serviceNumber);
         query.setString(2, ServiceName);
         query.setString(3, ServiceActive);
+        query.setString(4, ServiceColour);
 
         query.executeUpdate();
         query.close();
@@ -223,13 +224,14 @@ public class SQLHandler {
                 break;
             }
             case "service": {
-                String sql = "SELECT servicenumber, name, active FROM service WHERE " + searchField + " = \"" + searchQuery + "\"";
+                String sql = "SELECT servicenumber, name, active, colour FROM service WHERE " + searchField + " = \"" + searchQuery + "\"";
                 query = conn.prepareStatement(sql);
                 ResultSet rs = query.executeQuery();
                 while (rs.next()) {
                     output.add((rs.getString("servicenumber")));
                     output.add((rs.getString("name")));
                     output.add((rs.getString("active")));
+                    output.add((rs.getString("colour")));
                 }
                 break;
             }
@@ -322,6 +324,25 @@ public class SQLHandler {
 
         while (rs.next()) {
             output.add((rs.getString("firstname")) + " " + (rs.getString("surname")));
+        }
+
+        query.close();
+        return output;
+    }
+
+    //--------------------------------//
+    // SEARCH FOR ALL SERVICE COLOURS //
+    //--------------------------------//
+    public ArrayList<String> getServiceColour(String serviceName) throws SQLException {
+
+        ArrayList<String> output = new ArrayList<>();
+        String sql = "SELECT colour FROM service WHERE name = \"" + serviceName + "\"";
+        
+        query = conn.prepareStatement(sql);
+        ResultSet rs = query.executeQuery();
+
+        while (rs.next()) {
+            output.add(rs.getString("colour"));
         }
 
         query.close();
@@ -568,15 +589,16 @@ public class SQLHandler {
     //------------------------------//
     // EDIT RECORD IN SERVICE TABLE //
     //------------------------------//
-    public void updateService(String ServiceNumber, String ServiceName, String ServiceActive) throws SQLException {
+    public void updateService(String ServiceNumber, String ServiceName, String ServiceActive, String ServiceColour) throws SQLException {
 
-        String sql = "UPDATE service SET name = ?, active = ? WHERE servicenumber = ?";
+        String sql = "UPDATE service SET name = ?, active = ?, colour = ? WHERE servicenumber = ?";
 
         query = conn.prepareStatement(sql);
 
         query.setString(1, ServiceName);
         query.setString(2, ServiceActive);
-        query.setString(3, ServiceNumber);
+        query.setString(3, ServiceColour);
+        query.setString(4, ServiceNumber);
 
         query.executeUpdate();
         query.close();
