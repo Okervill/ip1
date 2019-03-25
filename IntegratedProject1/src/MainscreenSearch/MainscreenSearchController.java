@@ -5,7 +5,6 @@
  */
 package MainscreenSearch;
 
-import Animation.Shaker;
 import MainScreen.MainscreenController;
 import SQL.SQLHandler;
 import ViewPatient.ViewPatient;
@@ -151,6 +150,7 @@ public class MainscreenSearchController implements Initializable {
 
     @FXML
     private void patientSelected(MouseEvent event) {
+        if (patientDisplay.getSelectionModel().isEmpty()) return;
         String patientNumber = patientDisplay.getSelectionModel().getSelectedItem().substring(0, patientDisplay.getSelectionModel().getSelectedItem().indexOf(" "));
 
         ArrayList<String> patient = null;
@@ -161,6 +161,7 @@ public class MainscreenSearchController implements Initializable {
         }
         if (patient != null) {
             SwitchWindow.switchWindow((Stage) patientDisplay.getScene().getWindow(), new ViewPatient(patient));
+            patientDisplay.getSelectionModel().clearSelection();
         }
     }
 

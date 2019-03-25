@@ -30,6 +30,5 @@ public class MainscreenSearch extends Application {
         secondStage.initModality(Modality.APPLICATION_MODAL);
         secondStage.showAndWait();
     }
-    
 }
 

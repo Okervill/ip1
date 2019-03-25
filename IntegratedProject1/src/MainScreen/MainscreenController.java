@@ -171,8 +171,7 @@ public class MainscreenController implements Initializable {
 
     @FXML
     private void findPatient(ActionEvent event) {
-
-        SwitchWindow.switchWindow((Stage) findPatient.getScene().getWindow(), new MainscreenSearch());
+        SwitchWindow.switchWindow((Stage) logout.getScene().getWindow(), new MainscreenSearch());
         try {
             displayAppointments();
         } catch (SQLException ex) {
