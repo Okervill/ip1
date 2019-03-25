@@ -29,7 +29,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -40,7 +39,6 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -251,6 +249,11 @@ public class MainscreenController implements Initializable {
         saturdayAppointments.getSelectionModel().clearSelection();
         sundayAppointments.getSelectionModel().clearSelection();
         displayAppointments();
+        try {
+            setListViewCellWrap();
+        } catch (IOException ex) {
+            Logger.getLogger(MainscreenController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public void displayTherapists() throws SQLException {
@@ -381,12 +384,26 @@ public class MainscreenController implements Initializable {
                         setText(item);
                         int start = item.indexOf("Service: ") + 9;
                         String serviceName = item.substring(start, item.length());
+                        
+                        String appointmentNumber = item.substring(item.indexOf("Appointment: ") + 13, item.indexOf("Service: ") -1);
+                        System.out.println(appointmentNumber + " " + serviceName);
 
+                        //set colours per service
                         try {
                             setStyle("-fx-background-color:#" + sql.getServiceColour(serviceName).get(0).substring(2, 8));
                         } catch (SQLException ex) {
                             Logger.getLogger(MainscreenController.class.getName()).log(Level.SEVERE, null, ex);
                         }
+                        
+                        //If cancelled set red
+                        try {
+                            if (sql.search("appointment", "appointmentnumber", appointmentNumber).get(7).contains("cancelled")){
+                                setStyle("-fx-background-color:red");
+                            }
+                        } catch (SQLException ex) {
+                            Logger.getLogger(MainscreenController.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                        
 
                         this.itemProperty().addListener((obs, oldItem, newItem) -> {
                             if (newItem == null) {
