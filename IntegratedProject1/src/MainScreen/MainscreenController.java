@@ -9,6 +9,7 @@ import NewPatient.NewPatient;
 import Animation.Shaker;
 import EditAppointment.EditAppointment;
 import Login.Login;
+import MainscreenSearch.MainscreenSearch;
 import Management.Management;
 import SQL.SQLHandler;
 import ViewPatient.ViewPatient;
@@ -35,6 +36,7 @@ import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
@@ -106,10 +108,11 @@ public class MainscreenController implements Initializable {
     SQLHandler sql = new SQLHandler();
     @FXML
     private Button search;
+    @FXML
+    private ComboBox<String> chooseSearchField;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        //This allows setdata to be ran before this section of code
 
         mondayAppointments.getStylesheets().add("/MainScreen/listview.css");
         tuesdayAppointments.getStylesheets().add("/MainScreen/listview.css");
@@ -152,6 +155,7 @@ public class MainscreenController implements Initializable {
             LocalDate today = LocalDate.now();
             datePicker.setValue(today);
         });
+
     }
 
     @FXML
@@ -168,38 +172,12 @@ public class MainscreenController implements Initializable {
     @FXML
     private void findPatient(ActionEvent event) {
 
-        if (findPatient.getText().length() < 1) {
-            return;
-        }
-
-        ArrayList<String> patientData = search();
-        if (patientData != null) {
-            SwitchWindow.switchWindow((Stage) search.getScene().getWindow(), new ViewPatient(patientData));
-        }
+        SwitchWindow.switchWindow((Stage) findPatient.getScene().getWindow(), new MainscreenSearch());
         try {
             displayAppointments();
         } catch (SQLException ex) {
             Logger.getLogger(MainscreenController.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
-
-    private ArrayList<String> search() {
-
-        String patientNumber = findPatient.getText();
-
-        ArrayList<String> patient = null;
-        try {
-            patient = sql.search("patient", "patientnumber", patientNumber);
-            if (patient.size() < 8) {
-
-                Shaker shaker = new Shaker(findPatient);
-                shaker.shake();
-                return null;
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(MainscreenController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return patient;
     }
 
     public void setData(String u, String t) {
@@ -336,6 +314,11 @@ public class MainscreenController implements Initializable {
                     sundayAppointments.setItems(appointments);
                     break;
             }
+        }
+        try {
+            setListViewCellWrap();
+        } catch (IOException ex) {
+            Logger.getLogger(MainscreenController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

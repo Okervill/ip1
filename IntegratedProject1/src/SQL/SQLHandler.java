@@ -13,12 +13,10 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Locale;
 import javafx.scene.control.Alert;
 
 /**
@@ -244,6 +242,156 @@ public class SQLHandler {
         return output;
     }
 
+    //
+    // MAINSCREEN PATIENT SEARCH //
+    //
+    public ArrayList<String> searchPatientDetails(ArrayList<String> searchQuery) throws SQLException {
+        
+        if (searchQuery.get(0).equals(" ") && searchQuery.get(1).equals(" ") && searchQuery.get(2).equals(" ")){
+            return null;
+        }
+        
+        ArrayList<String> output = new ArrayList<>();
+
+        
+        String searchFirstname = searchQuery.get(0);
+        String searchSurname = searchQuery.get(1);
+        String searchPostcode = searchQuery.get(2);
+
+         if (searchPostcode.equals(" ") && searchFirstname.equals(" ")){
+            String sql = "SELECT firstname, surname, email, mobile, dob, gender, postcode, patientnumber FROM patient WHERE surname = ?";
+
+            query = conn.prepareStatement(sql);
+            query.setString(1, searchSurname);
+
+            ResultSet rs = query.executeQuery();
+            while (rs.next()) {
+                output.add((rs.getString("firstname")));
+                output.add((rs.getString("surname")));
+                output.add((rs.getString("email")));
+                output.add((rs.getString("mobile")));
+                output.add((rs.getString("dob")));
+                output.add((rs.getString("gender")));
+                output.add((rs.getString("postcode")));
+                output.add((rs.getString("patientnumber")));
+            }
+            return output;
+        }  else if (searchSurname.equals(" ") && searchFirstname.equals(" ")){
+            String sql = "SELECT firstname, surname, email, mobile, dob, gender, postcode, patientnumber FROM patient WHERE postcode = ?";
+
+            query = conn.prepareStatement(sql);
+            query.setString(1, searchPostcode);
+
+            ResultSet rs = query.executeQuery();
+            while (rs.next()) {
+                output.add((rs.getString("firstname")));
+                output.add((rs.getString("surname")));
+                output.add((rs.getString("email")));
+                output.add((rs.getString("mobile")));
+                output.add((rs.getString("dob")));
+                output.add((rs.getString("gender")));
+                output.add((rs.getString("postcode")));
+                output.add((rs.getString("patientnumber")));
+            }
+            return output;
+        } else if (searchPostcode.equals(" ") && searchSurname.equals(" ")){
+            String sql = "SELECT firstname, surname, email, mobile, dob, gender, postcode, patientnumber FROM patient WHERE firstname = ?";
+
+            query = conn.prepareStatement(sql);
+            query.setString(1, searchFirstname);
+
+            ResultSet rs = query.executeQuery();
+            while (rs.next()) {
+                output.add((rs.getString("firstname")));
+                output.add((rs.getString("surname")));
+                output.add((rs.getString("email")));
+                output.add((rs.getString("mobile")));
+                output.add((rs.getString("dob")));
+                output.add((rs.getString("gender")));
+                output.add((rs.getString("postcode")));
+                output.add((rs.getString("patientnumber")));
+            }
+            return output;
+        } else if (searchFirstname.equals(" ")) {
+            String sql = "SELECT firstname, surname, email, mobile, dob, gender, postcode, patientnumber FROM patient WHERE surname = ? and postcode = ?";
+
+            query = conn.prepareStatement(sql);
+            query.setString(1, searchSurname);
+            query.setString(2, searchPostcode);
+
+            ResultSet rs = query.executeQuery();
+            while (rs.next()) {
+                output.add((rs.getString("firstname")));
+                output.add((rs.getString("surname")));
+                output.add((rs.getString("email")));
+                output.add((rs.getString("mobile")));
+                output.add((rs.getString("dob")));
+                output.add((rs.getString("gender")));
+                output.add((rs.getString("postcode")));
+                output.add((rs.getString("patientnumber")));
+            }
+            return output;
+        } else if (searchSurname.equals(" ")){
+            String sql = "SELECT firstname, surname, email, mobile, dob, gender, postcode, patientnumber FROM patient WHERE firstname = ? and postcode = ?";
+
+            query = conn.prepareStatement(sql);
+            query.setString(1, searchFirstname);
+            query.setString(2, searchPostcode);
+
+            ResultSet rs = query.executeQuery();
+            while (rs.next()) {
+                output.add((rs.getString("firstname")));
+                output.add((rs.getString("surname")));
+                output.add((rs.getString("email")));
+                output.add((rs.getString("mobile")));
+                output.add((rs.getString("dob")));
+                output.add((rs.getString("gender")));
+                output.add((rs.getString("postcode")));
+                output.add((rs.getString("patientnumber")));
+            }
+            return output;
+        } else if (searchPostcode.equals(" ")){
+            String sql = "SELECT firstname, surname, email, mobile, dob, gender, postcode, patientnumber FROM patient WHERE firstname = ? and surname = ?";
+
+            query = conn.prepareStatement(sql);
+            query.setString(1, searchFirstname);
+            query.setString(2, searchSurname);
+
+            ResultSet rs = query.executeQuery();
+            while (rs.next()) {
+                output.add((rs.getString("firstname")));
+                output.add((rs.getString("surname")));
+                output.add((rs.getString("email")));
+                output.add((rs.getString("mobile")));
+                output.add((rs.getString("dob")));
+                output.add((rs.getString("gender")));
+                output.add((rs.getString("postcode")));
+                output.add((rs.getString("patientnumber")));
+            }
+            return output;
+        } else {
+            String sql = "SELECT firstname, surname, email, mobile, dob, gender, postcode, patientnumber FROM patient WHERE firstname = ? AND surname = ? AND postcode = ?";
+
+            query = conn.prepareStatement(sql);
+            query.setString(1, searchFirstname);
+            query.setString(2, searchSurname);
+            query.setString(3, searchPostcode);
+
+            ResultSet rs = query.executeQuery();
+            while (rs.next()) {
+                output.add((rs.getString("firstname")));
+                output.add((rs.getString("surname")));
+                output.add((rs.getString("email")));
+                output.add((rs.getString("mobile")));
+                output.add((rs.getString("dob")));
+                output.add((rs.getString("gender")));
+                output.add((rs.getString("postcode")));
+                output.add((rs.getString("patientnumber")));
+            }
+            return output;
+        }
+    }
+
     //------------------------------------------------//
     // SEARCH FOR USERNAMES TAKING USERTYPE AS STRING //
     //------------------------------------------------//
@@ -337,7 +485,7 @@ public class SQLHandler {
 
         ArrayList<String> output = new ArrayList<>();
         String sql = "SELECT colour FROM service WHERE name = \"" + serviceName + "\"";
-        
+
         query = conn.prepareStatement(sql);
         ResultSet rs = query.executeQuery();
 
@@ -471,14 +619,14 @@ public class SQLHandler {
         String sql = "SELECT appointmentnumber, therapist, date, time, service, status FROM appointment WHERE patientnumber = ?";
 
         query = conn.prepareStatement(sql);
-        
+
         query.setString(1, patientNumber);
-        
+
         ResultSet rs = query.executeQuery();
 
         while (rs.next()) {
             output.add(
-                     "Date: " + (rs.getString("date")) + " "
+                    "Date: " + (rs.getString("date")) + " "
                     + "Time: " + (rs.getString("time")) + " "
                     + "Appointment: " + (rs.getString("appointmentnumber")) + " "
                     + "Service: " + (rs.getString("service")) + " "
@@ -489,7 +637,7 @@ public class SQLHandler {
             output.clear();
             return output;
         }
-        
+
         Collections.sort(output, Collections.reverseOrder());
 
         query.close();

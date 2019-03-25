@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package NewPatient;
+package MainscreenSearch;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -17,12 +17,12 @@ import javafx.stage.Stage;
  *
  * @author patrick
  */
-public class NewPatient extends Application {
+public class MainscreenSearch extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {    
     
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/NewPatient/NewPatient.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/MainscreenSearch/MainscreenSearch.fxml"));
         Parent root = (Parent) loader.load();
         Stage secondStage = new Stage();
         secondStage.setScene(new Scene(new HBox(root)));
@@ -32,3 +32,4 @@ public class NewPatient extends Application {
     }
     
 }
+
