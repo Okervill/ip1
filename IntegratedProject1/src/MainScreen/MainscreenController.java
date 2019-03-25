@@ -379,14 +379,17 @@ public class MainscreenController implements Initializable {
                     } else {
 
                         // allow wrapping
+                        setMinWidth(list.getWidth());
+                        setMaxWidth(list.getWidth());
+                        setPrefWidth(list.getWidth());
+
                         setWrapText(true);
 
                         setText(item);
                         int start = item.indexOf("Service: ") + 9;
                         String serviceName = item.substring(start, item.length());
-                        
-                        String appointmentNumber = item.substring(item.indexOf("Appointment: ") + 13, item.indexOf("Service: ") -1);
-                        System.out.println(appointmentNumber + " " + serviceName);
+
+                        String appointmentNumber = item.substring(item.indexOf("Appointment: ") + 13, item.indexOf("Service: ") - 1);
 
                         //set colours per service
                         try {
@@ -394,16 +397,15 @@ public class MainscreenController implements Initializable {
                         } catch (SQLException ex) {
                             Logger.getLogger(MainscreenController.class.getName()).log(Level.SEVERE, null, ex);
                         }
-                        
+
                         //If cancelled set red
                         try {
-                            if (sql.search("appointment", "appointmentnumber", appointmentNumber).get(7).contains("cancelled")){
+                            if (sql.search("appointment", "appointmentnumber", appointmentNumber).get(7).contains("cancelled")) {
                                 setStyle("-fx-background-color:red");
                             }
                         } catch (SQLException ex) {
                             Logger.getLogger(MainscreenController.class.getName()).log(Level.SEVERE, null, ex);
                         }
-                        
 
                         this.itemProperty().addListener((obs, oldItem, newItem) -> {
                             if (newItem == null) {
@@ -416,7 +418,7 @@ public class MainscreenController implements Initializable {
             });
         });
     }
-    
+
     @FXML
     private void mondayMouseClick(javafx.scene.input.MouseEvent event) throws SQLException {
         displayAppointmentDetails(mondayAppointments.getSelectionModel().getSelectedItem());
