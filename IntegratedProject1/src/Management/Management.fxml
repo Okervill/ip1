@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import java.lang.*?>
 <?import java.util.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="114.0" prefWidth="257.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Management.ManagementController">
+<AnchorPane id="AnchorPane" prefHeight="189.0" prefWidth="299.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Management.ManagementController">
    <children>
-      <Button fx:id="newEmployee" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#newEmployeeLoad" text="New Employee" />
-      <Button fx:id="manageEmployee" layoutX="14.0" layoutY="45.0" mnemonicParsing="false" onAction="#manageEmployeeLoad" text="Manage Employee" />
-      <Button fx:id="newService" layoutX="162.0" layoutY="14.0" mnemonicParsing="false" onAction="#newServiceLoad" text="New Service" />
-      <Button fx:id="manageService" layoutX="143.0" layoutY="45.0" mnemonicParsing="false" onAction="#manageServiceLoad" text="Manage Service" />
-      <Button fx:id="close" layoutX="193.0" layoutY="78.0" mnemonicParsing="false" onAction="#close" text="Close" />
+      <Button fx:id="newEmployee" layoutX="87.0" layoutY="14.0" mnemonicParsing="false" onAction="#newEmployeeLoad" prefHeight="30.0" prefWidth="140.0" text="New Employee" AnchorPane.rightAnchor="80.0" />
+      <Button fx:id="manageEmployee" layoutX="80.0" layoutY="49.0" mnemonicParsing="false" onAction="#manageEmployeeLoad" prefHeight="30.0" prefWidth="140.0" text="Manage Employee" AnchorPane.rightAnchor="80.0" />
+      <Button fx:id="newService" layoutX="80.0" layoutY="84.0" mnemonicParsing="false" onAction="#newServiceLoad" prefHeight="30.0" prefWidth="140.0" text="New Service" AnchorPane.rightAnchor="80.0" />
+      <Button fx:id="manageService" layoutX="80.0" layoutY="119.0" mnemonicParsing="false" onAction="#manageServiceLoad" prefHeight="30.0" prefWidth="140.0" text="Manage Service" AnchorPane.rightAnchor="80.0" />
+      <Button fx:id="close" layoutX="232.0" layoutY="149.0" mnemonicParsing="false" onAction="#close" text="Close" AnchorPane.rightAnchor="14.0" />
    </children>
 </AnchorPane>
