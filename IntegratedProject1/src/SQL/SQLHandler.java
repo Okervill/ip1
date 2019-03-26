@@ -259,12 +259,11 @@ public class SQLHandler {
         String searchPostcode = searchQuery.get(2);
 
          if (searchPostcode.equals(" ") && searchFirstname.equals(" ")){
-            String sql = "SELECT firstname, surname, email, mobile, dob, gender, postcode, patientnumber FROM patient WHERE surname = ?";
+            String sql = "SELECT firstname, surname, email, mobile, dob, gender, postcode, patientnumber FROM patient WHERE surname LIKE \"%" + searchSurname + "%\"";
 
             query = conn.prepareStatement(sql);
-            query.setString(1, searchSurname);
-
             ResultSet rs = query.executeQuery();
+            
             while (rs.next()) {
                 output.add((rs.getString("firstname")));
                 output.add((rs.getString("surname")));
@@ -277,12 +276,11 @@ public class SQLHandler {
             }
             return output;
         }  else if (searchSurname.equals(" ") && searchFirstname.equals(" ")){
-            String sql = "SELECT firstname, surname, email, mobile, dob, gender, postcode, patientnumber FROM patient WHERE postcode = ?";
+            String sql = "SELECT firstname, surname, email, mobile, dob, gender, postcode, patientnumber FROM patient WHERE postcode LIKE \"%" + searchPostcode + "%\"";
 
             query = conn.prepareStatement(sql);
-            query.setString(1, searchPostcode);
-
             ResultSet rs = query.executeQuery();
+            
             while (rs.next()) {
                 output.add((rs.getString("firstname")));
                 output.add((rs.getString("surname")));
@@ -295,12 +293,11 @@ public class SQLHandler {
             }
             return output;
         } else if (searchPostcode.equals(" ") && searchSurname.equals(" ")){
-            String sql = "SELECT firstname, surname, email, mobile, dob, gender, postcode, patientnumber FROM patient WHERE firstname = ?";
+            String sql = "SELECT firstname, surname, email, mobile, dob, gender, postcode, patientnumber FROM patient WHERE firstname LIKE \"%" + searchFirstname + "%\"";
 
             query = conn.prepareStatement(sql);
-            query.setString(1, searchFirstname);
-
             ResultSet rs = query.executeQuery();
+            
             while (rs.next()) {
                 output.add((rs.getString("firstname")));
                 output.add((rs.getString("surname")));
@@ -313,13 +310,11 @@ public class SQLHandler {
             }
             return output;
         } else if (searchFirstname.equals(" ")) {
-            String sql = "SELECT firstname, surname, email, mobile, dob, gender, postcode, patientnumber FROM patient WHERE surname = ? and postcode = ?";
+            String sql = "SELECT firstname, surname, email, mobile, dob, gender, postcode, patientnumber FROM patient WHERE surname LIKE \"%" + searchSurname + "%\" AND postcode LIKE \"%" + searchPostcode + "%\"";
 
             query = conn.prepareStatement(sql);
-            query.setString(1, searchSurname);
-            query.setString(2, searchPostcode);
-
             ResultSet rs = query.executeQuery();
+            
             while (rs.next()) {
                 output.add((rs.getString("firstname")));
                 output.add((rs.getString("surname")));
@@ -332,13 +327,11 @@ public class SQLHandler {
             }
             return output;
         } else if (searchSurname.equals(" ")){
-            String sql = "SELECT firstname, surname, email, mobile, dob, gender, postcode, patientnumber FROM patient WHERE firstname = ? and postcode = ?";
+            String sql = "SELECT firstname, surname, email, mobile, dob, gender, postcode, patientnumber FROM patient WHERE firstname LIKE \"%" + searchFirstname + "%\" AND postcode LIKE \"%" + searchPostcode + "%\"";
 
             query = conn.prepareStatement(sql);
-            query.setString(1, searchFirstname);
-            query.setString(2, searchPostcode);
-
             ResultSet rs = query.executeQuery();
+            
             while (rs.next()) {
                 output.add((rs.getString("firstname")));
                 output.add((rs.getString("surname")));
@@ -351,13 +344,11 @@ public class SQLHandler {
             }
             return output;
         } else if (searchPostcode.equals(" ")){
-            String sql = "SELECT firstname, surname, email, mobile, dob, gender, postcode, patientnumber FROM patient WHERE firstname = ? and surname = ?";
+            String sql = "SELECT firstname, surname, email, mobile, dob, gender, postcode, patientnumber FROM patient WHERE firstname LIKE \"%" + searchFirstname + "%\" and surname LIKE \"%" + searchSurname + "%\"";
 
             query = conn.prepareStatement(sql);
-            query.setString(1, searchFirstname);
-            query.setString(2, searchSurname);
-
             ResultSet rs = query.executeQuery();
+            
             while (rs.next()) {
                 output.add((rs.getString("firstname")));
                 output.add((rs.getString("surname")));
@@ -370,14 +361,11 @@ public class SQLHandler {
             }
             return output;
         } else {
-            String sql = "SELECT firstname, surname, email, mobile, dob, gender, postcode, patientnumber FROM patient WHERE firstname = ? AND surname = ? AND postcode = ?";
+            String sql = "SELECT firstname, surname, email, mobile, dob, gender, postcode, patientnumber FROM patient WHERE firstname LIKE \"%" + searchFirstname + "%\" AND surname LIKE \"%" + searchSurname + "%\" AND postcode LIKE \"%" + searchPostcode + "%\"";
 
             query = conn.prepareStatement(sql);
-            query.setString(1, searchFirstname);
-            query.setString(2, searchSurname);
-            query.setString(3, searchPostcode);
-
             ResultSet rs = query.executeQuery();
+            
             while (rs.next()) {
                 output.add((rs.getString("firstname")));
                 output.add((rs.getString("surname")));

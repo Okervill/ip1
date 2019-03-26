@@ -52,6 +52,8 @@ public class MainscreenSearchController implements Initializable {
 
     /**
      * Initializes the controller class.
+     * @param url
+     * @param rb
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -65,7 +67,7 @@ public class MainscreenSearchController implements Initializable {
             ObservableList<String> displayPatientInfo = FXCollections.observableArrayList();
 
             if (getPatientNumber.getText().isEmpty() && getFirstname.getText().isEmpty() && getSurname.getText().isEmpty() && getPostcode.getText().isEmpty()) {
-                patientDisplay.getSelectionModel().clearSelection();
+                patientDisplay.getItems().clear();
                 return;
             }
             if (!getPatientNumber.getText().isEmpty()) {
@@ -78,9 +80,7 @@ public class MainscreenSearchController implements Initializable {
                     Logger.getLogger(MainscreenSearchController.class.getName()).log(Level.SEVERE, null, ex);
                 }
 
-                if (patientInfo == null || patientInfo.isEmpty()) {
-                    return;
-                }
+                if (patientInfo == null || patientInfo.isEmpty()) return;
 
                 for (int i = 0; i < patientInfo.size(); i = i + 8) {
                     displayPatientInfo.add(patientInfo.get(i + 7) + " " + patientInfo.get(i) + " " + patientInfo.get(i + 1) + " DOB: " + patientInfo.get(i + 4) + " Mobile: " + patientInfo.get(3));
@@ -119,9 +119,7 @@ public class MainscreenSearchController implements Initializable {
                 Logger.getLogger(MainscreenSearchController.class.getName()).log(Level.SEVERE, null, ex);
             }
 
-            if (patientInfo == null) {
-                return;
-            }
+            if (patientInfo == null) return;
 
             int patientsFound = 0;
 
@@ -151,9 +149,10 @@ public class MainscreenSearchController implements Initializable {
     @FXML
     private void patientSelected(MouseEvent event) {
         if (patientDisplay.getSelectionModel().isEmpty()) return;
+        
         String patientNumber = patientDisplay.getSelectionModel().getSelectedItem().substring(0, patientDisplay.getSelectionModel().getSelectedItem().indexOf(" "));
-
         ArrayList<String> patient = null;
+        
         try {
             patient = sql.search("patient", "patientnumber", patientNumber);
         } catch (SQLException ex) {

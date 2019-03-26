@@ -19,31 +19,33 @@
 
 <AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="700.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Login.LoginController">
     <children>
-      <AnchorPane layoutX="341.0" layoutY="22.0" prefHeight="356.0" prefWidth="341.0" style="-fx-background-color: #115d99;">
-         <children>
-            <TextField fx:id="inputuser" alignment="TOP_LEFT" layoutX="65.0" layoutY="108.0" onAction="#swapFocusToPassword" prefHeight="35.0" prefWidth="211.0" promptText="Username" style="-fx-background-color: #115d99; -fx-text-fill: white;">
-               <font>
-                  <Font name="System Bold" size="15.0" />
-               </font></TextField>
-            <PasswordField fx:id="inputpass" alignment="TOP_LEFT" layoutX="65.0" layoutY="174.0" onAction="#login" prefHeight="35.0" prefWidth="211.0" promptText="Password" style="-fx-background-color: #115d99; -fx-text-fill: white;">
-               <font>
-                  <Font name="System Bold" size="15.0" />
-               </font></PasswordField>
-              <Button fx:id="button" alignment="CENTER" layoutX="151.0" layoutY="229.0" onAction="#login" text="Login" textAlignment="CENTER" />
-            <Line endX="100.0" layoutX="174.0" layoutY="137.0" startX="-100.0" stroke="WHITE" />
-            <Line endX="100.0" layoutX="174.0" layoutY="203.0" startX="-100.0" stroke="WHITE" />
-         </children>
-      </AnchorPane>
+        <Text fill="#2e2e2e" layoutX="7.0" layoutY="246.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Caledonian Sports and Wellbeing Clinic" wrappingWidth="334.263671875">
+            <font>
+                <Font size="18.0" />
+            </font>
+        </Text>
+        <ImageView fitHeight="172.0" fitWidth="272.0" layoutX="28.0" layoutY="56.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@images/GCULogoP293.png" />
+            </image>
+        </ImageView>
+        <AnchorPane layoutX="341.0" layoutY="22.0" prefHeight="356.0" prefWidth="341.0" style="-fx-background-color: #115d99;" AnchorPane.rightAnchor="18.0">
+            <children>
+                <TextField fx:id="inputuser" alignment="TOP_LEFT" layoutX="65.0" layoutY="108.0" onAction="#swapFocusToPassword" prefHeight="35.0" prefWidth="211.0" promptText="Username" style="-fx-background-color: #115d99; -fx-text-fill: white;" AnchorPane.rightAnchor="65.0">
+                    <font>
+                        <Font name="System Bold" size="15.0" />
+                    </font>
+                </TextField>
+                <PasswordField fx:id="inputpass" alignment="TOP_LEFT" layoutX="65.0" layoutY="174.0" onAction="#login" prefHeight="35.0" prefWidth="211.0" promptText="Password" style="-fx-background-color: #115d99; -fx-text-fill: white;" AnchorPane.rightAnchor="65.0">
+                    <font>
+                        <Font name="System Bold" size="15.0" />
+                    </font>
+                </PasswordField>
+                <Button fx:id="button" alignment="CENTER" layoutX="151.0" layoutY="229.0" onAction="#login" text="Login" textAlignment="CENTER" AnchorPane.rightAnchor="138.0" />
+                <Line endX="100.0" layoutX="174.0" layoutY="137.0" startX="-100.0" stroke="WHITE" AnchorPane.rightAnchor="66.5" />
+                <Line endX="100.0" layoutX="174.0" layoutY="203.0" startX="-100.0" stroke="WHITE" AnchorPane.rightAnchor="66.5" />
+            </children>
+        </AnchorPane>
         <Label fx:id="label" layoutX="126" layoutY="120" minHeight="16" minWidth="69" />
-      <ImageView fitHeight="172.0" fitWidth="272.0" layoutX="28.0" layoutY="56.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@images/GCULogoP293.png" />
-         </image>
-      </ImageView>
-      <Text fill="#2e2e2e" layoutX="7.0" layoutY="246.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Caledonian Sports and Wellbeing Clinic" wrappingWidth="334.263671875">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Text>
     </children>
 </AnchorPane>
