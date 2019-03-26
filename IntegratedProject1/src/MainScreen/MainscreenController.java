@@ -165,7 +165,7 @@ public class MainscreenController implements Initializable {
 
     @FXML
     private void newPatient(ActionEvent event) throws IOException {
-        SwitchWindow.switchWindow((Stage) findPatient.getScene().getWindow(), new NewPatient());
+        SwitchWindow.switchWindow((Stage) logout.getScene().getWindow(), new NewPatient());
 
     }
 

@@ -70,14 +70,22 @@ public class NewPatientController implements Initializable {
         String c = contactno.getText();
 
         if (f.isEmpty() || s.isEmpty() || e.isEmpty() || c.isEmpty() || gender.getSelectionModel().isEmpty()) {
-            
+
             //Display error is details are not entered correctly
             Alert alert = new Alert(AlertType.INFORMATION);
             alert.setTitle("Error");
             alert.setHeaderText("Enter details!");
             alert.setContentText("You must enter details in all boxes");
             alert.showAndWait();
-            
+            return;
+        }
+
+        if (c.length() < 11) {
+            Alert alert = new Alert(AlertType.INFORMATION);
+            alert.setTitle("Error");
+            alert.setHeaderText("Invalid Contact Number!");
+            alert.setContentText("The contact number should be 11 numbers in length");
+            alert.showAndWait();
             return;
         }
 

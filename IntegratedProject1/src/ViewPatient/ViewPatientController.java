@@ -167,6 +167,15 @@ public class ViewPatientController implements Initializable {
             return;
         }
 
+        if (mob.length() < 11) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Error");
+            alert.setHeaderText("Invalid Contact Number!");
+            alert.setContentText("The contact number should be 11 numbers in length");
+            alert.showAndWait();
+            return;
+        }
+
         try {
             sql.updatePatient(fname, sname, em, mob, dateob, gen, pcode, patientNo.getText());
 
@@ -174,12 +183,13 @@ public class ViewPatientController implements Initializable {
             alert.setTitle("Success");
             alert.setHeaderText("Save Sucessful");
             alert.showAndWait();
+            
         } catch (SQLException ex) {
             Logger.getLogger(ViewPatientController.class.getName()).log(Level.SEVERE, null, ex);
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Error");
             alert.setHeaderText("Connection Error");
-            alert.setContentText("Unable to connect to database, please try again later");
+            alert.setContentText("Unable to connect to database, please try again later.");
             alert.showAndWait();
         }
     }
