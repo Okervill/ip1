@@ -1,0 +1,912 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ClassDiagram name="IntegratedProject1">
+  <ClassDiagramComponents>
+    <Class name="Mainscreen" package="MainScreen" visibility="public" xPosition="20.0" yPosition="20.0">
+      <Fields>
+        <Field name="userType" type="String" visibility="package"/>
+        <Field name="username" type="String" visibility="package"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public"/>
+        <Constructor visibility="public">
+          <Argument type="String" name="u"/>
+          <Argument type="String" name="t"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="start" returnType="void" visibility="public">
+          <Argument type="Stage" name="stage"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="MainscreenController" package="MainScreen" visibility="public" xPosition="320.0" yPosition="20.0">
+      <Fields>
+        <Field name="logout" type="Button" visibility="private"/>
+        <Field name="findPatient" type="TextField" visibility="private"/>
+        <Field name="datePicker" type="DatePicker" visibility="private"/>
+        <Field name="mondayAppointments" type="ListView&lt;String&gt;" visibility="private"/>
+        <Field name="tuesdayAppointments" type="ListView&lt;String&gt;" visibility="private"/>
+        <Field name="wednesdayAppointments" type="ListView&lt;String&gt;" visibility="private"/>
+        <Field name="thursdayAppointments" type="ListView&lt;String&gt;" visibility="private"/>
+        <Field name="fridayAppointments" type="ListView&lt;String&gt;" visibility="private"/>
+        <Field name="saturdayAppointments" type="ListView&lt;String&gt;" visibility="private"/>
+        <Field name="sundayAppointments" type="ListView&lt;String&gt;" visibility="private"/>
+        <Field name="therapists" type="ChoiceBox&lt;String&gt;" visibility="private"/>
+        <Field name="close" type="Button" visibility="public"/>
+        <Field name="userType" type="String" visibility="package"/>
+        <Field name="username" type="String" visibility="package"/>
+        <Field name="selectedTherapist" type="String" visibility="package"/>
+        <Field name="mondayTitle" type="Text" visibility="private"/>
+        <Field name="tuesdayTitle" type="Text" visibility="private"/>
+        <Field name="wednesdayTitle" type="Text" visibility="private"/>
+        <Field name="thursdayTitle" type="Text" visibility="private"/>
+        <Field name="fridayTitle" type="Text" visibility="private"/>
+        <Field name="saturdayTitle" type="Text" visibility="private"/>
+        <Field name="sundayTitle" type="Text" visibility="private"/>
+        <Field name="previousWeek" type="Button" visibility="private"/>
+        <Field name="nextWeek" type="Button" visibility="private"/>
+        <Field name="management" type="Button" visibility="private"/>
+        <Field name="sql" type="SQLHandler" visibility="package"/>
+        <Field name="search" type="Button" visibility="private"/>
+        <Field name="chooseSearchField" type="ComboBox&lt;String&gt;" visibility="private"/>
+      </Fields>
+      <Constructors/>
+      <Methods>
+        <Method name="initialize" returnType="void" visibility="public">
+          <Argument type="URL" name="url"/>
+          <Argument type="ResourceBundle" name="rb"/>
+        </Method>
+        <Method name="logout" returnType="void" visibility="private">
+          <Argument type="ActionEvent" name="event"/>
+        </Method>
+        <Method name="newPatient" returnType="void" visibility="private">
+          <Argument type="ActionEvent" name="event"/>
+        </Method>
+        <Method name="findPatient" returnType="void" visibility="private">
+          <Argument type="ActionEvent" name="event"/>
+        </Method>
+        <Method name="setData" returnType="void" visibility="public">
+          <Argument type="String" name="u"/>
+          <Argument type="String" name="t"/>
+        </Method>
+        <Method name="pickDate" returnType="void" visibility="private">
+          <Argument type="ActionEvent" name="event"/>
+        </Method>
+        <Method name="displayAppointmentDetails" returnType="void" visibility="private">
+          <Argument type="String" name="appointment"/>
+        </Method>
+        <Method name="displayTherapists" returnType="void" visibility="public"/>
+        <Method name="displayAppointments" returnType="void" visibility="public"/>
+        <Method name="addAllDescendents" returnType="void" visibility="public">
+          <Argument type="Parent" name="parent"/>
+          <Argument type="ArrayList&lt;Node&gt;" name="nodes"/>
+        </Method>
+        <Method name="getAllNodes" returnType="ArrayList&lt;Node&gt;" visibility="public">
+          <Argument type="Parent" name="root"/>
+        </Method>
+        <Method name="setListViewCellWrap" returnType="void" visibility="private"/>
+        <Method name="mondayMouseClick" returnType="void" visibility="private">
+          <Argument type="javafx.scene.input.MouseEvent" name="event"/>
+        </Method>
+        <Method name="tuesdayMouseClick" returnType="void" visibility="private">
+          <Argument type="javafx.scene.input.MouseEvent" name="event"/>
+        </Method>
+        <Method name="wednesdayMouseClick" returnType="void" visibility="private">
+          <Argument type="javafx.scene.input.MouseEvent" name="event"/>
+        </Method>
+        <Method name="thursdayMouseClick" returnType="void" visibility="private">
+          <Argument type="javafx.scene.input.MouseEvent" name="event"/>
+        </Method>
+        <Method name="fridayMouseClick" returnType="void" visibility="private">
+          <Argument type="javafx.scene.input.MouseEvent" name="event"/>
+        </Method>
+        <Method name="saturdayMouseClick" returnType="void" visibility="private">
+          <Argument type="javafx.scene.input.MouseEvent" name="event"/>
+        </Method>
+        <Method name="sundayMouseClick" returnType="void" visibility="private">
+          <Argument type="javafx.scene.input.MouseEvent" name="event"/>
+        </Method>
+        <Method name="goToPreviousWeek" returnType="void" visibility="private">
+          <Argument type="ActionEvent" name="event"/>
+        </Method>
+        <Method name="goToNextWeek" returnType="void" visibility="private">
+          <Argument type="ActionEvent" name="event"/>
+        </Method>
+        <Method name="searchAppointments" returnType="ArrayList&lt;String&gt;" visibility="public">
+          <Argument type="String" name="appointmentNumber"/>
+        </Method>
+        <Method name="openManagementOptions" returnType="void" visibility="private">
+          <Argument type="ActionEvent" name="event"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="EditAppointment" package="EditAppointment" visibility="public" xPosition="742.0" yPosition="20.0">
+      <Fields>
+        <Field name="appno" type="String" visibility="package"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="String" name="a"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="start" returnType="void" visibility="public">
+          <Argument type="Stage" name="stage"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="EditAppointmentController" package="EditAppointment" visibility="public" xPosition="920.0" yPosition="20.0">
+      <Fields>
+        <Field name="appointmentNumber" type="Label" visibility="private"/>
+        <Field name="patientNumber" type="Label" visibility="private"/>
+        <Field name="selectTherapist" type="ChoiceBox&lt;String&gt;" visibility="private"/>
+        <Field name="selectDate" type="DatePicker" visibility="private"/>
+        <Field name="selectTime" type="TextField" visibility="private"/>
+        <Field name="selectService" type="ChoiceBox&lt;String&gt;" visibility="private"/>
+        <Field name="selectCost" type="TextField" visibility="private"/>
+        <Field name="selectStatus" type="ChoiceBox&lt;String&gt;" visibility="private"/>
+        <Field name="close" type="Button" visibility="private"/>
+        <Field name="saveChanges" type="Button" visibility="private"/>
+        <Field name="appointmentInfo" type="ArrayList&lt;String&gt;" visibility="package"/>
+        <Field name="sql" type="SQLHandler" visibility="package"/>
+      </Fields>
+      <Constructors/>
+      <Methods>
+        <Method name="initialize" returnType="void" visibility="public">
+          <Argument type="URL" name="url"/>
+          <Argument type="ResourceBundle" name="rb"/>
+        </Method>
+        <Method name="setData" returnType="void" visibility="public">
+          <Argument type="String" name="a"/>
+        </Method>
+        <Method name="close" returnType="void" visibility="private">
+          <Argument type="ActionEvent" name="event"/>
+        </Method>
+        <Method name="saveChanges" returnType="void" visibility="private">
+          <Argument type="ActionEvent" name="event"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="ViewPatientController" package="ViewPatient" visibility="public" xPosition="1220.0" yPosition="20.0">
+      <Fields>
+        <Field name="firstname" type="TextField" visibility="private"/>
+        <Field name="gender" type="ChoiceBox&lt;String&gt;" visibility="private"/>
+        <Field name="dob" type="DatePicker" visibility="private"/>
+        <Field name="mobno" type="TextField" visibility="private"/>
+        <Field name="email" type="TextField" visibility="private"/>
+        <Field name="surname" type="TextField" visibility="private"/>
+        <Field name="postcode" type="TextField" visibility="private"/>
+        <Field name="patientNo" type="Label" visibility="private"/>
+        <Field name="newAppointmentButton" type="Button" visibility="private"/>
+        <Field name="back" type="Button" visibility="private"/>
+        <Field name="sql" type="SQLHandler" visibility="package"/>
+        <Field name="appointmentDisplay" type="ListView&lt;String&gt;" visibility="private"/>
+        <Field name="save" type="Button" visibility="private"/>
+      </Fields>
+      <Constructors/>
+      <Methods>
+        <Method name="initialize" returnType="void" visibility="public">
+          <Argument type="URL" name="url"/>
+          <Argument type="ResourceBundle" name="rb"/>
+        </Method>
+        <Method name="setData" returnType="void" visibility="public">
+          <Argument type="ArrayList&lt;String&gt;" name="data"/>
+        </Method>
+        <Method name="newAppointment" returnType="void" visibility="private">
+          <Argument type="ActionEvent" name="event"/>
+        </Method>
+        <Method name="back" returnType="void" visibility="private">
+          <Argument type="ActionEvent" name="event"/>
+        </Method>
+        <Method name="getAppointments" returnType="void" visibility="public"/>
+        <Method name="displayFullAppointment" returnType="void" visibility="public">
+          <Argument type="String" name="appointment"/>
+        </Method>
+        <Method name="save" returnType="void" visibility="private">
+          <Argument type="ActionEvent" name="event"/>
+        </Method>
+        <Method name="addColour" returnType="void" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="ViewPatient" package="ViewPatient" visibility="public" xPosition="1581.0" yPosition="20.0">
+      <Fields>
+        <Field name="patientData" type="ArrayList&lt;String&gt;" visibility="private" isFinal="true"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="ArrayList&lt;String&gt;" name="patientData"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="start" returnType="void" visibility="public">
+          <Argument type="Stage" name="stage"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="NewPatientController" package="NewPatient" visibility="public" xPosition="1905.0" yPosition="20.0">
+      <Fields>
+        <Field name="firstname" type="TextField" visibility="private"/>
+        <Field name="surname" type="TextField" visibility="private"/>
+        <Field name="dob" type="DatePicker" visibility="private"/>
+        <Field name="email" type="TextField" visibility="private"/>
+        <Field name="postcode" type="TextField" visibility="private"/>
+        <Field name="gender" type="ChoiceBox&lt;String&gt;" visibility="private"/>
+        <Field name="contactno" type="TextField" visibility="private"/>
+        <Field name="save" type="Button" visibility="private"/>
+        <Field name="discard" type="Button" visibility="private"/>
+      </Fields>
+      <Constructors/>
+      <Methods>
+        <Method name="initialize" returnType="void" visibility="public">
+          <Argument type="URL" name="url"/>
+          <Argument type="ResourceBundle" name="rb"/>
+        </Method>
+        <Method name="save" returnType="void" visibility="private">
+          <Argument type="ActionEvent" name="event"/>
+        </Method>
+        <Method name="close" returnType="void" visibility="private">
+          <Argument type="ActionEvent" name="event"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="NewPatient" package="NewPatient" visibility="public" xPosition="2259.0" yPosition="20.0">
+      <Fields/>
+      <Constructors/>
+      <Methods>
+        <Method name="start" returnType="void" visibility="public">
+          <Argument type="Stage" name="stage"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="NewService" package="NewService" visibility="public" xPosition="20.0" yPosition="420.0">
+      <Fields/>
+      <Constructors/>
+      <Methods>
+        <Method name="start" returnType="void" visibility="public">
+          <Argument type="Stage" name="stage"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="NewServiceController" package="NewService" visibility="public" xPosition="20.0" yPosition="188.0">
+      <Fields>
+        <Field name="serviceName" type="TextField" visibility="private"/>
+        <Field name="serviceActive" type="ChoiceBox&lt;String&gt;" visibility="private"/>
+        <Field name="save" type="Button" visibility="private"/>
+        <Field name="discard" type="Button" visibility="private"/>
+        <Field name="sql" type="SQLHandler" visibility="package"/>
+        <Field name="selectColour" type="ColorPicker" visibility="private"/>
+      </Fields>
+      <Constructors/>
+      <Methods>
+        <Method name="initialize" returnType="void" visibility="public">
+          <Argument type="URL" name="url"/>
+          <Argument type="ResourceBundle" name="rb"/>
+        </Method>
+        <Method name="save" returnType="void" visibility="private">
+          <Argument type="ActionEvent" name="event"/>
+        </Method>
+        <Method name="discard" returnType="void" visibility="private">
+          <Argument type="ActionEvent" name="event"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="BCrypt" package="org.mindrot.jbcrypt" visibility="public" xPosition="771.0" yPosition="410.0">
+      <Fields>
+        <Field name="GENSALT_DEFAULT_LOG2_ROUNDS" type="int" visibility="private" isStatic="true" isFinal="true"/>
+        <Field name="BCRYPT_SALT_LEN" type="int" visibility="private" isStatic="true" isFinal="true"/>
+        <Field name="BLOWFISH_NUM_ROUNDS" type="int" visibility="private" isStatic="true" isFinal="true"/>
+        <Field name="P_orig" type="int" visibility="private" isStatic="true" isFinal="true"/>
+        <Field name="S_orig" type="int" visibility="private" isStatic="true" isFinal="true"/>
+        <Field name="bf_crypt_ciphertext" type="int" visibility="private" isStatic="true" isFinal="true"/>
+        <Field name="base64_code" type="char" visibility="private" isStatic="true" isFinal="true"/>
+        <Field name="index_64" type="byte" visibility="private" isStatic="true" isFinal="true"/>
+        <Field name="P" type="int" visibility="private"/>
+        <Field name="S" type="int" visibility="private"/>
+      </Fields>
+      <Constructors/>
+      <Methods>
+        <Method name="encode_base64" returnType="String" visibility="private" isStatic="true">
+          <Argument type="byte" name="d"/>
+          <Argument type="int" name="len"/>
+        </Method>
+        <Method name="char64" returnType="byte" visibility="private" isStatic="true">
+          <Argument type="char" name="x"/>
+        </Method>
+        <Method name="decode_base64" returnType="byte[]" visibility="private" isStatic="true">
+          <Argument type="String" name="s"/>
+          <Argument type="int" name="maxolen"/>
+        </Method>
+        <Method name="encipher" returnType="void" visibility="private" isFinal="true">
+          <Argument type="int" name="lr"/>
+          <Argument type="int" name="off"/>
+        </Method>
+        <Method name="streamtoword" returnType="int" visibility="private" isStatic="true">
+          <Argument type="byte" name="data"/>
+          <Argument type="int" name="offp"/>
+        </Method>
+        <Method name="init_key" returnType="void" visibility="private"/>
+        <Method name="key" returnType="void" visibility="private">
+          <Argument type="byte" name="key"/>
+        </Method>
+        <Method name="ekskey" returnType="void" visibility="private">
+          <Argument type="byte" name="data"/>
+          <Argument type="byte" name="key"/>
+        </Method>
+        <Method name="crypt_raw" returnType="byte[]" visibility="public">
+          <Argument type="byte" name="password"/>
+          <Argument type="byte" name="salt"/>
+          <Argument type="int" name="log_rounds"/>
+          <Argument type="int" name="cdata"/>
+        </Method>
+        <Method name="hashpw" returnType="String" visibility="public" isStatic="true">
+          <Argument type="String" name="password"/>
+          <Argument type="String" name="salt"/>
+        </Method>
+        <Method name="gensalt" returnType="String" visibility="public" isStatic="true">
+          <Argument type="int" name="log_rounds"/>
+          <Argument type="SecureRandom" name="random"/>
+        </Method>
+        <Method name="gensalt" returnType="String" visibility="public" isStatic="true">
+          <Argument type="int" name="log_rounds"/>
+        </Method>
+        <Method name="gensalt" returnType="String" visibility="public" isStatic="true"/>
+        <Method name="checkpw" returnType="boolean" visibility="public" isStatic="true">
+          <Argument type="String" name="plaintext"/>
+          <Argument type="String" name="hashed"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="MainscreenSearchController" package="MainscreenSearch" visibility="public" xPosition="1235.0" yPosition="598.0">
+      <Fields>
+        <Field name="getFirstname" type="TextField" visibility="private"/>
+        <Field name="getPatientNumber" type="TextField" visibility="private"/>
+        <Field name="getPostcode" type="TextField" visibility="private"/>
+        <Field name="getSurname" type="TextField" visibility="private"/>
+        <Field name="closeScene" type="Button" visibility="private"/>
+        <Field name="sql" type="SQLHandler" visibility="package"/>
+        <Field name="patientDisplay" type="ListView&lt;String&gt;" visibility="private"/>
+      </Fields>
+      <Constructors/>
+      <Methods>
+        <Method name="initialize" returnType="void" visibility="public">
+          <Argument type="URL" name="url"/>
+          <Argument type="ResourceBundle" name="rb"/>
+        </Method>
+        <Method name="handleKeyPress" returnType="void" visibility="public">
+          <Argument type="KeyEvent" name="e"/>
+        </Method>
+        <Method name="close" returnType="void" visibility="private">
+          <Argument type="ActionEvent" name="event"/>
+        </Method>
+        <Method name="patientSelected" returnType="void" visibility="private">
+          <Argument type="MouseEvent" name="event"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="MainscreenSearch" package="MainscreenSearch" visibility="public" xPosition="1345.0" yPosition="468.0">
+      <Fields/>
+      <Constructors/>
+      <Methods>
+        <Method name="start" returnType="void" visibility="public">
+          <Argument type="Stage" name="stage"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="NewEmployeeController" package="NewEmployee" visibility="public" xPosition="1520.0" yPosition="420.0">
+      <Fields>
+        <Field name="discard" type="Button" visibility="private"/>
+        <Field name="save" type="Button" visibility="private"/>
+        <Field name="surname" type="TextField" visibility="private"/>
+        <Field name="password" type="TextField" visibility="private"/>
+        <Field name="firstname" type="TextField" visibility="private"/>
+        <Field name="type" type="ChoiceBox&lt;String&gt;" visibility="private"/>
+      </Fields>
+      <Constructors/>
+      <Methods>
+        <Method name="initialize" returnType="void" visibility="public">
+          <Argument type="URL" name="url"/>
+          <Argument type="ResourceBundle" name="rb"/>
+        </Method>
+        <Method name="discard" returnType="void" visibility="private">
+          <Argument type="ActionEvent" name="event"/>
+        </Method>
+        <Method name="save" returnType="void" visibility="private">
+          <Argument type="ActionEvent" name="event"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="NewEmployee" package="NewEmployee" visibility="public" xPosition="1820.0" yPosition="420.0">
+      <Fields/>
+      <Constructors/>
+      <Methods>
+        <Method name="start" returnType="void" visibility="public">
+          <Argument type="Stage" name="stage"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="ManagementController" package="Management" visibility="public" xPosition="2120.0" yPosition="420.0">
+      <Fields>
+        <Field name="newEmployee" type="Button" visibility="private"/>
+        <Field name="manageEmployee" type="Button" visibility="private"/>
+        <Field name="newService" type="Button" visibility="private"/>
+        <Field name="manageService" type="Button" visibility="private"/>
+        <Field name="close" type="Button" visibility="private"/>
+      </Fields>
+      <Constructors/>
+      <Methods>
+        <Method name="initialize" returnType="void" visibility="public">
+          <Argument type="URL" name="url"/>
+          <Argument type="ResourceBundle" name="rb"/>
+        </Method>
+        <Method name="newEmployeeLoad" returnType="void" visibility="private">
+          <Argument type="ActionEvent" name="event"/>
+        </Method>
+        <Method name="manageEmployeeLoad" returnType="void" visibility="private">
+          <Argument type="ActionEvent" name="event"/>
+        </Method>
+        <Method name="newServiceLoad" returnType="void" visibility="private">
+          <Argument type="ActionEvent" name="event"/>
+        </Method>
+        <Method name="manageServiceLoad" returnType="void" visibility="private">
+          <Argument type="ActionEvent" name="event"/>
+        </Method>
+        <Method name="close" returnType="void" visibility="private">
+          <Argument type="ActionEvent" name="event"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="Management" package="Management" visibility="public" xPosition="20.0" yPosition="820.0">
+      <Fields/>
+      <Constructors/>
+      <Methods>
+        <Method name="start" returnType="void" visibility="public">
+          <Argument type="Stage" name="stage"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="Shaker" package="Animation" visibility="public" xPosition="20.0" yPosition="598.0">
+      <Fields>
+        <Field name="translateTransition" type="TranslateTransition" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="Node" name="node"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="shake" returnType="void" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="Therapist" package="integratedproject1" visibility="public" xPosition="20.0" yPosition="947.0">
+      <Fields>
+        <Field name="firstname" type="String" visibility="private"/>
+        <Field name="surname" type="String" visibility="private"/>
+        <Field name="username" type="String" visibility="private"/>
+        <Field name="password" type="String" visibility="private"/>
+        <Field name="userType" type="String" visibility="private"/>
+        <Field name="active" type="String" visibility="private"/>
+        <Field name="sql" type="SQLHandler" visibility="package"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="String" name="f"/>
+          <Argument type="String" name="s"/>
+          <Argument type="String" name="p"/>
+          <Argument type="String" name="t"/>
+        </Constructor>
+      </Constructors>
+      <Methods/>
+    </Class>
+    <Class name="Appointment" package="integratedproject1" visibility="public" xPosition="343.0" yPosition="1065.0">
+      <Fields>
+        <Field name="sql" type="SQLHandler" visibility="package"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="String" name="patientNumber"/>
+          <Argument type="String" name="therapist"/>
+          <Argument type="LocalDate" name="date"/>
+          <Argument type="LocalTime" name="time"/>
+          <Argument type="String" name="service"/>
+          <Argument type="String" name="cost"/>
+        </Constructor>
+      </Constructors>
+      <Methods/>
+    </Class>
+    <Class name="Hash" package="integratedproject1" visibility="public" xPosition="1195.0" yPosition="1048.0">
+      <Fields>
+        <Field name="logRounds" type="int" visibility="private" isFinal="true"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="hash" returnType="String" visibility="public">
+          <Argument type="String" name="password"/>
+        </Method>
+        <Method name="verifyHash" returnType="boolean" visibility="public">
+          <Argument type="String" name="password"/>
+          <Argument type="String" name="hash"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="User" package="integratedproject1" visibility="public" xPosition="1520.0" yPosition="820.0">
+      <Fields>
+        <Field name="username" type="String" visibility="private" isStatic="true"/>
+        <Field name="userType" type="String" visibility="private" isStatic="true"/>
+      </Fields>
+      <Constructors/>
+      <Methods>
+        <Method name="getUsername" returnType="String" visibility="public"/>
+        <Method name="getUserType" returnType="String" visibility="public"/>
+        <Method name="setUsername" returnType="void" visibility="public">
+          <Argument type="String" name="username"/>
+        </Method>
+        <Method name="setUserType" returnType="void" visibility="public">
+          <Argument type="String" name="type"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="IntegratedProject1" package="integratedproject1" visibility="public" xPosition="1820.0" yPosition="820.0">
+      <Fields/>
+      <Constructors/>
+      <Methods>
+        <Method name="start" returnType="void" visibility="public">
+          <Argument type="Stage" name="stage"/>
+        </Method>
+        <Method name="main" returnType="void" visibility="public" isStatic="true">
+          <Argument type="String[]" name="args"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="Services" package="integratedproject1" visibility="public" xPosition="2120.0" yPosition="820.0">
+      <Fields>
+        <Field name="serviceNumber" type="String" visibility="package"/>
+        <Field name="serviceName" type="String" visibility="package"/>
+        <Field name="serviceActive" type="String" visibility="package"/>
+        <Field name="serviceColour" type="String" visibility="package"/>
+        <Field name="sql" type="SQLHandler" visibility="package"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="String" name="name"/>
+          <Argument type="String" name="active"/>
+          <Argument type="String" name="colour"/>
+        </Constructor>
+      </Constructors>
+      <Methods/>
+    </Class>
+    <Class name="SwitchWindow" package="integratedproject1" visibility="public" xPosition="20.0" yPosition="1220.0">
+      <Fields/>
+      <Constructors/>
+      <Methods>
+        <Method name="switchWindow" returnType="void" visibility="public" isStatic="true">
+          <Argument type="Stage" name="window"/>
+          <Argument type="Application" name="app"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="Patient" package="integratedproject1" visibility="public" xPosition="320.0" yPosition="1220.0">
+      <Fields>
+        <Field name="firstname" type="String" visibility="private" isFinal="true"/>
+        <Field name="surname" type="String" visibility="private" isFinal="true"/>
+        <Field name="email" type="String" visibility="private" isFinal="true"/>
+        <Field name="mobile" type="String" visibility="private" isFinal="true"/>
+        <Field name="dob" type="LocalDate" visibility="private" isFinal="true"/>
+        <Field name="gender" type="String" visibility="private" isFinal="true"/>
+        <Field name="postcode" type="String" visibility="private" isFinal="true"/>
+        <Field name="patientNo" type="String" visibility="private" isFinal="true"/>
+        <Field name="sql" type="SQLHandler" visibility="package"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="String" name="f"/>
+          <Argument type="String" name="s"/>
+          <Argument type="String" name="e"/>
+          <Argument type="String" name="m"/>
+          <Argument type="LocalDate" name="d"/>
+          <Argument type="String" name="g"/>
+          <Argument type="String" name="p"/>
+        </Constructor>
+      </Constructors>
+      <Methods/>
+    </Class>
+    <Class name="ManageServiceController" package="ManageService" visibility="public" xPosition="620.0" yPosition="1220.0">
+      <Fields>
+        <Field name="selectService" type="ChoiceBox&lt;String&gt;" visibility="private"/>
+        <Field name="serviceName" type="TextField" visibility="private"/>
+        <Field name="selectActive" type="ChoiceBox&lt;String&gt;" visibility="private"/>
+        <Field name="save" type="Button" visibility="private"/>
+        <Field name="discard" type="Button" visibility="private"/>
+        <Field name="sql" type="SQLHandler" visibility="package"/>
+        <Field name="selectColour" type="ColorPicker" visibility="private"/>
+      </Fields>
+      <Constructors/>
+      <Methods>
+        <Method name="initialize" returnType="void" visibility="public">
+          <Argument type="URL" name="url"/>
+          <Argument type="ResourceBundle" name="rb"/>
+        </Method>
+        <Method name="save" returnType="void" visibility="private">
+          <Argument type="ActionEvent" name="event"/>
+        </Method>
+        <Method name="discard" returnType="void" visibility="private">
+          <Argument type="ActionEvent" name="event"/>
+        </Method>
+        <Method name="displayDetails" returnType="void" visibility="public">
+          <Argument type="String" name="service"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="ManageService" package="ManageService" visibility="public" xPosition="920.0" yPosition="1220.0">
+      <Fields/>
+      <Constructors/>
+      <Methods>
+        <Method name="start" returnType="void" visibility="public">
+          <Argument type="Stage" name="stage"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="Login" package="Login" visibility="public" xPosition="1220.0" yPosition="1220.0">
+      <Fields/>
+      <Constructors/>
+      <Methods>
+        <Method name="start" returnType="void" visibility="public">
+          <Argument type="Stage" name="stage"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="LoginController" package="Login" visibility="public" xPosition="1520.0" yPosition="1220.0">
+      <Fields>
+        <Field name="sql" type="SQLHandler" visibility="package"/>
+        <Field name="label" type="Label" visibility="private"/>
+        <Field name="button" type="Button" visibility="private"/>
+        <Field name="inputuser" type="TextField" visibility="private"/>
+        <Field name="inputpass" type="TextField" visibility="private"/>
+      </Fields>
+      <Constructors/>
+      <Methods>
+        <Method name="login" returnType="void" visibility="private">
+          <Argument type="ActionEvent" name="event"/>
+        </Method>
+        <Method name="initialize" returnType="void" visibility="public">
+          <Argument type="URL" name="url"/>
+          <Argument type="ResourceBundle" name="rb"/>
+        </Method>
+        <Method name="swapFocusToPassword" returnType="void" visibility="private">
+          <Argument type="ActionEvent" name="event"/>
+        </Method>
+        <Method name="loginFailed" returnType="void" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="EditEmployee" package="EditEmployee" visibility="public" xPosition="1820.0" yPosition="1220.0">
+      <Fields/>
+      <Constructors/>
+      <Methods>
+        <Method name="start" returnType="void" visibility="public">
+          <Argument type="Stage" name="stage"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="EditEmployeeController" package="EditEmployee" visibility="public" xPosition="2120.0" yPosition="1220.0">
+      <Fields>
+        <Field name="firstname" type="TextField" visibility="private"/>
+        <Field name="surname" type="TextField" visibility="private"/>
+        <Field name="save" type="Button" visibility="private"/>
+        <Field name="discard" type="Button" visibility="private"/>
+        <Field name="currentUser" type="TextField" visibility="private"/>
+        <Field name="search" type="Button" visibility="private"/>
+        <Field name="manager" type="ChoiceBox&lt;String&gt;" visibility="private"/>
+        <Field name="sql" type="SQLHandler" visibility="package"/>
+        <Field name="password" type="TextField" visibility="private"/>
+        <Field name="active" type="ChoiceBox&lt;String&gt;" visibility="private"/>
+      </Fields>
+      <Constructors/>
+      <Methods>
+        <Method name="initialize" returnType="void" visibility="public">
+          <Argument type="URL" name="url"/>
+          <Argument type="ResourceBundle" name="rb"/>
+        </Method>
+        <Method name="save" returnType="void" visibility="private">
+          <Argument type="ActionEvent" name="event"/>
+        </Method>
+        <Method name="discard" returnType="void" visibility="private">
+          <Argument type="ActionEvent" name="event"/>
+        </Method>
+        <Method name="search" returnType="void" visibility="private">
+          <Argument type="ActionEvent" name="event"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="NewAppointment" package="NewAppointment" visibility="public" xPosition="20.0" yPosition="1620.0">
+      <Fields>
+        <Field name="patientNumber" type="String" visibility="package"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="String" name="patientNo"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="start" returnType="void" visibility="public">
+          <Argument type="Stage" name="stage"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="NewAppointmentController" package="NewAppointment" visibility="public" xPosition="320.0" yPosition="1620.0">
+      <Fields>
+        <Field name="chooseTherapist" type="ChoiceBox&lt;String&gt;" visibility="private"/>
+        <Field name="close" type="Button" visibility="private"/>
+        <Field name="sql" type="SQLHandler" visibility="package"/>
+        <Field name="date" type="DatePicker" visibility="private"/>
+        <Field name="time" type="TextField" visibility="private"/>
+        <Field name="chooseService" type="ChoiceBox&lt;String&gt;" visibility="private"/>
+        <Field name="save" type="Button" visibility="private"/>
+        <Field name="patientNumber" type="String" visibility="package"/>
+        <Field name="appointmentNumber" type="Label" visibility="private"/>
+        <Field name="selectCost" type="TextField" visibility="private"/>
+      </Fields>
+      <Constructors/>
+      <Methods>
+        <Method name="initialize" returnType="void" visibility="public">
+          <Argument type="URL" name="url"/>
+          <Argument type="ResourceBundle" name="rb"/>
+        </Method>
+        <Method name="saveAppointment" returnType="void" visibility="private">
+          <Argument type="ActionEvent" name="event"/>
+        </Method>
+        <Method name="close" returnType="void" visibility="private">
+          <Argument type="ActionEvent" name="event"/>
+        </Method>
+        <Method name="setData" returnType="void" visibility="public">
+          <Argument type="String" name="patientNo"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="SQLHandler" package="SQL" visibility="public" xPosition="620.0" yPosition="1620.0">
+      <Fields>
+        <Field name="conn" type="Connection" visibility="package"/>
+        <Field name="query" type="PreparedStatement" visibility="package"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="getConn" returnType="Connection" visibility="public" isStatic="true"/>
+        <Method name="addToLogin" returnType="void" visibility="public">
+          <Argument type="String" name="username"/>
+          <Argument type="String" name="password"/>
+          <Argument type="String" name="firstname"/>
+          <Argument type="String" name="surname"/>
+          <Argument type="String" name="usertype"/>
+          <Argument type="String" name="active"/>
+        </Method>
+        <Method name="addToPatient" returnType="void" visibility="public">
+          <Argument type="String" name="firstname"/>
+          <Argument type="String" name="surname"/>
+          <Argument type="String" name="email"/>
+          <Argument type="String" name="mobile"/>
+          <Argument type="LocalDate" name="dob"/>
+          <Argument type="String" name="gender"/>
+          <Argument type="String" name="postcode"/>
+          <Argument type="String" name="patientNumber"/>
+        </Method>
+        <Method name="addToAppointment" returnType="void" visibility="public">
+          <Argument type="String" name="AppointmentNumber"/>
+          <Argument type="String" name="PatientNumber"/>
+          <Argument type="String" name="Therapist"/>
+          <Argument type="LocalDate" name="Date"/>
+          <Argument type="LocalTime" name="Time"/>
+          <Argument type="String" name="Service"/>
+          <Argument type="String" name="Cost"/>
+          <Argument type="String" name="Status"/>
+        </Method>
+        <Method name="addToService" returnType="void" visibility="public">
+          <Argument type="String" name="serviceNumber"/>
+          <Argument type="String" name="ServiceName"/>
+          <Argument type="String" name="ServiceActive"/>
+          <Argument type="String" name="ServiceColour"/>
+        </Method>
+        <Method name="countFields" returnType="int" visibility="public">
+          <Argument type="String" name="table"/>
+        </Method>
+        <Method name="search" returnType="ArrayList&lt;String&gt;" visibility="public">
+          <Argument type="String" name="table"/>
+          <Argument type="String" name="searchField"/>
+          <Argument type="String" name="searchQuery"/>
+        </Method>
+        <Method name="searchPatientDetails" returnType="ArrayList&lt;String&gt;" visibility="public">
+          <Argument type="ArrayList&lt;String&gt;" name="searchQuery"/>
+        </Method>
+        <Method name="getAllUsernames" returnType="ArrayList&lt;String&gt;" visibility="public">
+          <Argument type="String" name="type"/>
+        </Method>
+        <Method name="checkUserExists" returnType="boolean" visibility="public">
+          <Argument type="String" name="username"/>
+        </Method>
+        <Method name="checkUserActive" returnType="boolean" visibility="public">
+          <Argument type="String" name="username"/>
+        </Method>
+        <Method name="getTherapistNames" returnType="ArrayList&lt;String&gt;" visibility="public"/>
+        <Method name="getServiceColour" returnType="ArrayList&lt;String&gt;" visibility="public">
+          <Argument type="String" name="serviceName"/>
+        </Method>
+        <Method name="getAllServices" returnType="ArrayList&lt;String&gt;" visibility="public"/>
+        <Method name="getAllActiveServices" returnType="ArrayList&lt;String&gt;" visibility="public"/>
+        <Method name="countRecords" returnType="int" visibility="public">
+          <Argument type="String" name="table"/>
+        </Method>
+        <Method name="getShortAppointments" returnType="ArrayList&lt;String&gt;" visibility="public">
+          <Argument type="LocalDate" name="date"/>
+          <Argument type="String" name="therapistUsername"/>
+        </Method>
+        <Method name="getAllShortAppointments" returnType="ArrayList&lt;String&gt;" visibility="public">
+          <Argument type="LocalDate" name="date"/>
+        </Method>
+        <Method name="getPatientAppointments" returnType="ArrayList&lt;String&gt;" visibility="public">
+          <Argument type="String" name="patientNumber"/>
+        </Method>
+        <Method name="sortByTime" returnType="ArrayList&lt;String&gt;" visibility="public">
+          <Argument type="ArrayList&lt;String&gt;" name="appointments"/>
+        </Method>
+        <Method name="updateLogin" returnType="void" visibility="public">
+          <Argument type="String" name="username"/>
+          <Argument type="String" name="firstname"/>
+          <Argument type="String" name="surname"/>
+          <Argument type="String" name="usertype"/>
+          <Argument type="String" name="active"/>
+        </Method>
+        <Method name="updateLoginPassword" returnType="void" visibility="public">
+          <Argument type="String" name="username"/>
+          <Argument type="String" name="password"/>
+        </Method>
+        <Method name="updatePatient" returnType="void" visibility="public">
+          <Argument type="String" name="firstname"/>
+          <Argument type="String" name="surname"/>
+          <Argument type="String" name="email"/>
+          <Argument type="String" name="mobile"/>
+          <Argument type="LocalDate" name="dob"/>
+          <Argument type="String" name="gender"/>
+          <Argument type="String" name="postcode"/>
+          <Argument type="String" name="patientnumer"/>
+        </Method>
+        <Method name="updateAppointment" returnType="void" visibility="public">
+          <Argument type="String" name="AppointmentNumber"/>
+          <Argument type="String" name="Therapist"/>
+          <Argument type="LocalDate" name="Date"/>
+          <Argument type="LocalTime" name="Time"/>
+          <Argument type="String" name="Service"/>
+          <Argument type="String" name="Cost"/>
+          <Argument type="String" name="Status"/>
+        </Method>
+        <Method name="updateService" returnType="void" visibility="public">
+          <Argument type="String" name="ServiceNumber"/>
+          <Argument type="String" name="ServiceName"/>
+          <Argument type="String" name="ServiceActive"/>
+          <Argument type="String" name="ServiceColour"/>
+        </Method>
+        <Method name="deleteRecord" returnType="void" visibility="public">
+          <Argument type="String" name="table"/>
+          <Argument type="String" name="searchField"/>
+          <Argument type="String" name="searchQuery"/>
+        </Method>
+      </Methods>
+    </Class>
+  </ClassDiagramComponents>
+  <ClassDiagramRelations>
+    <HasRelation name="sql" source="integratedproject1.Therapist" target="SQL.SQLHandler" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="sql" source="integratedproject1.Services" target="SQL.SQLHandler" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="sql" source="integratedproject1.Patient" target="SQL.SQLHandler" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="sql" source="Login.LoginController" target="SQL.SQLHandler" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="sql" source="EditAppointment.EditAppointmentController" target="SQL.SQLHandler" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="sql" source="EditEmployee.EditEmployeeController" target="SQL.SQLHandler" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="sql" source="MainscreenSearch.MainscreenSearchController" target="SQL.SQLHandler" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="sql" source="ViewPatient.ViewPatientController" target="SQL.SQLHandler" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="sql" source="ManageService.ManageServiceController" target="SQL.SQLHandler" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="sql" source="NewService.NewServiceController" target="SQL.SQLHandler" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="sql" source="NewAppointment.NewAppointmentController" target="SQL.SQLHandler" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="sql" source="integratedproject1.Appointment" target="SQL.SQLHandler" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="sql" source="MainScreen.MainscreenController" target="SQL.SQLHandler" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+  </ClassDiagramRelations>
+</ClassDiagram>

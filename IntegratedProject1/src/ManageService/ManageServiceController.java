@@ -74,11 +74,7 @@ public class ManageServiceController implements Initializable {
         selectService.setItems(services);
         selectService.getSelectionModel().selectedItemProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
             String selectedService = newValue;
-            try {
-                displayDetails(selectedService);
-            } catch (SQLException ex) {
-                Logger.getLogger(MainscreenController.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            displayDetails(selectedService);
         });
 
     }
@@ -104,6 +100,7 @@ public class ManageServiceController implements Initializable {
         try {
             allServices = sql.getAllServices();
         } catch (SQLException ex) {
+            Logger.getLogger(ManageServiceController.class.getName()).log(Level.SEVERE, null, ex);
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Error");
             alert.setHeaderText("Unable to save");
@@ -123,6 +120,7 @@ public class ManageServiceController implements Initializable {
         try {
             sql.updateService(sql.search("service", "name", selectService.getSelectionModel().getSelectedItem()).get(0), name, active, colour.toString());
         } catch (SQLException ex) {
+            Logger.getLogger(ManageServiceController.class.getName()).log(Level.SEVERE, null, ex);
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Error");
             alert.setHeaderText("Unable to save");
@@ -139,17 +137,27 @@ public class ManageServiceController implements Initializable {
     private void discard(ActionEvent event) {
 
         Color colour = selectColour.getValue();
-        System.out.println(colour + " " + colour.toString());
 
         Stage stage = (Stage) discard.getScene().getWindow();
         stage.close();
     }
 
-    public void displayDetails(String service) throws SQLException {
-        ArrayList<String> serviceInfo = sql.search("service", "name", service);
+    public void displayDetails(String service) {
+        ArrayList<String> serviceInfo;
+        try {
+            serviceInfo = sql.search("service", "name", service);
+        } catch (SQLException ex) {
+            Logger.getLogger(ManageServiceController.class.getName()).log(Level.SEVERE, null, ex);
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Error");
+            alert.setHeaderText("Unable to save");
+            alert.setContentText("Unable to save to database, please try again later");
+            alert.showAndWait();
+            return;
+        }
         serviceName.setText(serviceInfo.get(1));
         selectActive.getSelectionModel().select(serviceInfo.get(2));
-        if (serviceInfo.get(3) == null ||serviceInfo.get(3).isEmpty()) {
+        if (serviceInfo.get(3) == null || serviceInfo.get(3).isEmpty()) {
             selectColour.setValue(Color.WHITE);
         } else {
             selectColour.setValue(Color.valueOf(serviceInfo.get(3)));
