@@ -6,16 +6,16 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="219.0" prefWidth="344.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="NewPatient.NewPatientController">
+<AnchorPane id="AnchorPane" prefHeight="219.0" prefWidth="381.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="NewPatient.NewPatientController">
    <children>
       <TextField fx:id="firstname" layoutX="14.0" layoutY="14.0" promptText="First name" />
-      <TextField fx:id="surname" layoutX="170.0" layoutY="14.0" promptText="Surname" />
+      <TextField fx:id="surname" layoutX="188.0" layoutY="14.0" promptText="Surname" />
       <DatePicker fx:id="dob" layoutX="14.0" layoutY="48.0" prefHeight="25.0" prefWidth="149.0" promptText="Date Of Birth" />
       <ChoiceBox fx:id="gender" layoutX="14.0" layoutY="79.0" prefHeight="25.0" prefWidth="149.0" />
-      <TextField fx:id="postcode" layoutX="170.0" layoutY="48.0" prefHeight="25.0" prefWidth="149.0" promptText="Postcode" />
+      <TextField fx:id="postcode" layoutX="188.0" layoutY="48.0" prefHeight="27.0" prefWidth="91.0" promptText="Postcode" />
       <TextField fx:id="email" layoutX="14.0" layoutY="113.0" prefHeight="27.0" prefWidth="257.0" promptText="Email Address" />
       <TextField fx:id="contactno" layoutX="14.0" layoutY="147.0" prefHeight="27.0" prefWidth="143.0" promptText="Contact Number" />
-      <Button fx:id="save" contentDisplay="CENTER" layoutX="194.0" layoutY="179.0" mnemonicParsing="false" onAction="#save" prefHeight="27.0" prefWidth="65.0" text="Save" />
-      <Button fx:id="discard" layoutX="274.0" layoutY="180.0" mnemonicParsing="false" onAction="#close" text="Discard" />
+      <Button fx:id="save" contentDisplay="CENTER" layoutX="216.0" layoutY="177.0" mnemonicParsing="false" onAction="#save" prefHeight="27.0" prefWidth="65.0" text="Save" />
+      <Button fx:id="discard" layoutX="296.0" layoutY="178.0" mnemonicParsing="false" onAction="#close" text="Discard" />
    </children>
 </AnchorPane>

@@ -6,12 +6,15 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="190.0" prefWidth="272.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="NewService.NewServiceController">
+<AnchorPane id="AnchorPane" prefHeight="166.0" prefWidth="297.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="NewService.NewServiceController">
    <children>
-      <TextField fx:id="serviceName" layoutX="14.0" layoutY="14.0" prefHeight="27.0" prefWidth="174.0" promptText="Enter New Service Name" />
-      <ChoiceBox fx:id="serviceActive" layoutX="14.0" layoutY="48.0" prefHeight="27.0" prefWidth="174.0" />
-      <Button fx:id="save" layoutX="14.0" layoutY="127.0" mnemonicParsing="false" onAction="#save" text="Save" />
-      <Button fx:id="discard" layoutX="107.0" layoutY="127.0" mnemonicParsing="false" onAction="#discard" prefHeight="27.0" prefWidth="73.0" text="Discard" />
-      <ColorPicker fx:id="selectColour" layoutX="14.0" layoutY="82.0" prefHeight="27.0" prefWidth="174.0" />
+      <TextField fx:id="serviceName" layoutX="112.0" layoutY="15.0" prefHeight="27.0" prefWidth="174.0" promptText="Enter New Service Name" />
+      <ChoiceBox fx:id="serviceActive" layoutX="112.0" layoutY="49.0" prefHeight="27.0" prefWidth="174.0" />
+      <Button fx:id="save" layoutX="151.0" layoutY="122.0" mnemonicParsing="false" onAction="#save" text="Save" />
+      <Button fx:id="discard" layoutX="213.0" layoutY="122.0" mnemonicParsing="false" onAction="#discard" prefHeight="27.0" prefWidth="73.0" text="Discard" />
+      <ColorPicker fx:id="selectColour" layoutX="112.0" layoutY="83.0" prefHeight="27.0" prefWidth="174.0" />
+      <Label alignment="CENTER_RIGHT" layoutX="18.0" layoutY="14.0" prefHeight="27.0" prefWidth="91.0" text="Service Name" />
+      <Label alignment="CENTER_RIGHT" layoutX="49.0" layoutY="48.0" prefHeight="27.0" prefWidth="60.0" text="Available" />
+      <Label alignment="CENTER_RIGHT" layoutX="14.0" layoutY="85.0" prefHeight="27.0" prefWidth="98.0" text="Display Colour" />
    </children>
 </AnchorPane>

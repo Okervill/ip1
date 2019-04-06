@@ -468,7 +468,6 @@ public class MainscreenController implements Initializable {
             alert.setHeaderText("Unable to load therapist usernames");
             alert.setContentText("Error connecting to database, unable to load therapists");
             alert.showAndWait();
-            return;
         }
     }
 }

@@ -131,7 +131,7 @@ public class ViewPatientController implements Initializable {
     }
 
     public void displayFullAppointment(String appointment) throws SQLException {
-
+        
         if (appointment == null || appointment.isEmpty() || appointment.length() < 8) {
             return;
         }
@@ -212,8 +212,9 @@ public class ViewPatientController implements Initializable {
                     setText(item);
                     int start = item.indexOf("Service: ") + 9;
                     int stop = item.indexOf("Status: ") - 1;
+                    
                     String serviceName = item.substring(start, stop);
-
+                    
                     try {
                         setStyle("-fx-background-color:#" + sql.getServiceColour(serviceName).get(0).substring(2, 8));
                     } catch (SQLException ex) {
