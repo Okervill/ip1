@@ -9,6 +9,7 @@ import ManageService.ManageService;
 import NewEmployee.NewEmployee;
 import NewService.NewService;
 import EditEmployee.EditEmployee;
+import ManagerHolidays.ManagerHolidays;
 import integratedproject1.SwitchWindow;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -34,6 +35,8 @@ public class ManagementController implements Initializable {
     private Button manageService;
     @FXML
     private Button close;
+    @FXML
+    private Button holidays;
 
     /**
      * Initializes the controller class.
@@ -67,6 +70,11 @@ public class ManagementController implements Initializable {
     private void close(ActionEvent event) {
         Stage stage = (Stage) close.getScene().getWindow();
         stage.close();
+    }
+
+    @FXML
+    private void manageHolidays(ActionEvent event) {
+        SwitchWindow.switchWindow((Stage) manageService.getScene().getWindow(), new ManagerHolidays());
     }
     
 }

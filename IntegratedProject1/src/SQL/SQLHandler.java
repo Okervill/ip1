@@ -145,6 +145,25 @@ public class SQLHandler {
         query.close();
     }
 
+    //-------------------------------//
+    // ADD NEW DATA TO HOLIDAY TABLE //
+    //-------------------------------//
+    public void addToHoliday(String id, String employee, LocalDate start, LocalDate end, String approved) throws SQLException {
+
+        String sql = "INSERT INTO holiday (id, employee, datestart, dateend, approved) VALUES(?,?,?,?,?)";
+
+        query = conn.prepareStatement(sql);
+
+        query.setString(1, id);
+        query.setString(2, employee);
+        query.setString(3, start.toString());
+        query.setString(4, end.toString());
+        query.setString(5, approved);
+
+        query.executeUpdate();
+        query.close();
+    }
+
     //-----------------------------//
     // COUNT FIELDS IN GIVEN TABLE //
     //-----------------------------//
@@ -230,6 +249,19 @@ public class SQLHandler {
                     output.add((rs.getString("name")));
                     output.add((rs.getString("active")));
                     output.add((rs.getString("colour")));
+                }
+                break;
+            }
+            case "holiday": {
+                String sql = "SELECT id, employee, datestart, dateend, approved FROM holiday WHERE " + searchField + " = \"" + searchQuery + "\"";
+                query = conn.prepareStatement(sql);
+                ResultSet rs = query.executeQuery();
+                while (rs.next()) {
+                    output.add((rs.getString("id")));
+                    output.add((rs.getString("employee")));
+                    output.add((rs.getString("datestart")));
+                    output.add((rs.getString("dateend")));
+                    output.add((rs.getString("approved")));
                 }
                 break;
             }
@@ -432,6 +464,22 @@ public class SQLHandler {
         return exists;
     }
 
+    //---------------------------------------//
+    // CHECK IF HOLIDAY EXISTS //
+    //---------------------------------------//
+    public boolean checkHolidayExists(String id) throws SQLException {
+        boolean exists = false;
+
+        ArrayList<String> checkUser = search("holiday", "id", id);
+
+        if (checkUser.size() == 5) {
+            exists = true;
+        }
+
+        query.close();
+        return exists;
+    }
+
     //-----------------------------------------//
     // SEARCH LOGIN TABLE TO CHECK USER ACTIVE //
     //-----------------------------------------//
@@ -460,6 +508,75 @@ public class SQLHandler {
 
         while (rs.next()) {
             output.add((rs.getString("firstname")) + " " + (rs.getString("surname")));
+        }
+
+        query.close();
+        return output;
+    }
+
+    //---------------------------------//
+    // SEARCH FOR HOLIDAY BY THERAPIST //
+    //---------------------------------//
+    public ArrayList<String> getTherapistHoliday(String employee) throws SQLException {
+
+        ArrayList<String> output = new ArrayList<>();
+        String sql = "SELECT id, employee, datestart, dateend, approved FROM holiday WHERE employee = \"" + employee + "\"";
+        query = conn.prepareStatement(sql);
+        ResultSet rs = query.executeQuery();
+
+        while (rs.next()) {
+            output.add(
+                    "ID: " + rs.getString("id") 
+                    + " Start: " + rs.getString("datestart") 
+                    + " End: " + rs.getString("dateend") 
+                    + " Status: " + rs.getString("approved")
+            );
+        }
+
+        query.close();
+        return output;
+    }
+
+    //------------------//
+    // GET ALL HOLIDAYS //
+    //------------------//
+    public ArrayList<String> getAllHolidays() throws SQLException {
+
+        ArrayList<String> output = new ArrayList<>();
+        String sql = "SELECT id, employee, datestart, dateend, approved FROM holiday";
+        query = conn.prepareStatement(sql);
+        ResultSet rs = query.executeQuery();
+
+        while (rs.next()) {
+            output.add(
+                    "ID: " + rs.getString("id") 
+                    + " Employee: " + rs.getString("employee")
+                    + " Start: " + rs.getString("datestart") 
+                    + " End: " + rs.getString("dateend") 
+                    + " Status: " + rs.getString("approved")
+            );
+        }
+
+        query.close();
+        return output;
+    }
+
+    //----------------------------------//
+    // SEARCH FOR HOLIDAY BY UNAPPROVED //
+    //----------------------------------//
+    public ArrayList<String> getUnapprovedHoliday(String approved) throws SQLException {
+
+        ArrayList<String> output = new ArrayList<>();
+        String sql = "SELECT id, employee, datestart, dateend, approved FROM holiday WHERE approved = \"" + approved + "\"";
+        query = conn.prepareStatement(sql);
+        ResultSet rs = query.executeQuery();
+
+        while (rs.next()) {
+            output.add(rs.getString("id"));
+            output.add(rs.getString("employee"));
+            output.add(rs.getString("datestart"));
+            output.add(rs.getString("dateend"));
+            output.add(rs.getString("approved"));
         }
 
         query.close();
@@ -735,6 +852,25 @@ public class SQLHandler {
         query.setString(2, ServiceActive);
         query.setString(3, ServiceColour);
         query.setString(4, ServiceNumber);
+
+        query.executeUpdate();
+        query.close();
+
+    }
+
+    //------------------------------//
+    // EDIT RECORD IN HOLIDAY TABLE //
+    //------------------------------//
+    public void updateHoliday(String id, String employee, LocalDate start, LocalDate end, String approved) throws SQLException {
+
+        String sql = "UPDATE holiday SET datestart = ?, dateend = ?, approved = ? WHERE id = ?";
+
+        query = conn.prepareStatement(sql);
+
+        query.setString(1, start.toString());
+        query.setString(2, end.toString());
+        query.setString(3, approved);
+        query.setString(4, id);
 
         query.executeUpdate();
         query.close();

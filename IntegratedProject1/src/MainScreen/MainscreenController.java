@@ -6,13 +6,12 @@
 package MainScreen;
 
 import NewPatient.NewPatient;
-import Animation.Shaker;
 import EditAppointment.EditAppointment;
 import Login.Login;
 import MainscreenSearch.MainscreenSearch;
+import ManageHoliday.ManageHoliday;
 import Management.Management;
 import SQL.SQLHandler;
-import ViewPatient.ViewPatient;
 import integratedproject1.SwitchWindow;
 import integratedproject1.User;
 import java.io.IOException;
@@ -36,11 +35,9 @@ import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -53,8 +50,6 @@ public class MainscreenController implements Initializable {
 
     @FXML
     private Button logout;
-    @FXML
-    private TextField findPatient;
     @FXML
     private DatePicker datePicker;
     @FXML
@@ -109,7 +104,7 @@ public class MainscreenController implements Initializable {
     @FXML
     private Button search;
     @FXML
-    private ComboBox<String> chooseSearchField;
+    private Button manageholiday;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -469,5 +464,10 @@ public class MainscreenController implements Initializable {
             alert.setContentText("Error connecting to database, unable to load therapists");
             alert.showAndWait();
         }
+    }
+
+    @FXML
+    private void manageHoliday(ActionEvent event) {
+        SwitchWindow.switchWindow((Stage) manageholiday.getScene().getWindow(), new ManageHoliday(username));
     }
 }

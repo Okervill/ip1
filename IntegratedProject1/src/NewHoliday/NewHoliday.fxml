@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane id="AnchorPane" prefHeight="127.0" prefWidth="229.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="NewHoliday.NewHolidayController">
+   <children>
+      <DatePicker fx:id="startDate" layoutX="14.0" layoutY="14.0" promptText="Start Date" />
+      <DatePicker fx:id="endDate" layoutX="14.0" layoutY="48.0" promptText="End Date" />
+      <Button fx:id="Save" layoutX="14.0" layoutY="83.0" mnemonicParsing="false" onAction="#save" text="Save" />
+      <Button fx:id="cancel" layoutX="149.0" layoutY="83.0" mnemonicParsing="false" onAction="#Cancel" text="Cancel" />
+   </children>
+</AnchorPane>
