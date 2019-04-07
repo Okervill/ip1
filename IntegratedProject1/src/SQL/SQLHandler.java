@@ -17,6 +17,8 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.scene.control.Alert;
 
 /**
@@ -148,9 +150,9 @@ public class SQLHandler {
     //-------------------------------//
     // ADD NEW DATA TO HOLIDAY TABLE //
     //-------------------------------//
-    public void addToHoliday(String id, String employee, LocalDate start, LocalDate end, String approved) throws SQLException {
+    public void addToHoliday(String id, String employee, LocalDate start, LocalDate end, String approved, String updated) throws SQLException {
 
-        String sql = "INSERT INTO holiday (id, employee, datestart, dateend, approved) VALUES(?,?,?,?,?)";
+        String sql = "INSERT INTO holiday (id, employee, datestart, dateend, approved, updated) VALUES(?,?,?,?,?,?)";
 
         query = conn.prepareStatement(sql);
 
@@ -159,6 +161,7 @@ public class SQLHandler {
         query.setString(3, start.toString());
         query.setString(4, end.toString());
         query.setString(5, approved);
+        query.setString(6, updated);
 
         query.executeUpdate();
         query.close();
@@ -278,24 +281,23 @@ public class SQLHandler {
     // MAINSCREEN PATIENT SEARCH //
     //
     public ArrayList<String> searchPatientDetails(ArrayList<String> searchQuery) throws SQLException {
-        
-        if (searchQuery.get(0).equals(" ") && searchQuery.get(1).equals(" ") && searchQuery.get(2).equals(" ")){
+
+        if (searchQuery.get(0).equals(" ") && searchQuery.get(1).equals(" ") && searchQuery.get(2).equals(" ")) {
             return null;
         }
-        
+
         ArrayList<String> output = new ArrayList<>();
 
-        
         String searchFirstname = searchQuery.get(0);
         String searchSurname = searchQuery.get(1);
         String searchPostcode = searchQuery.get(2);
 
-         if (searchPostcode.equals(" ") && searchFirstname.equals(" ")){
+        if (searchPostcode.equals(" ") && searchFirstname.equals(" ")) {
             String sql = "SELECT firstname, surname, email, mobile, dob, gender, postcode, patientnumber FROM patient WHERE surname LIKE \"%" + searchSurname + "%\"";
 
             query = conn.prepareStatement(sql);
             ResultSet rs = query.executeQuery();
-            
+
             while (rs.next()) {
                 output.add((rs.getString("firstname")));
                 output.add((rs.getString("surname")));
@@ -307,12 +309,12 @@ public class SQLHandler {
                 output.add((rs.getString("patientnumber")));
             }
             return output;
-        }  else if (searchSurname.equals(" ") && searchFirstname.equals(" ")){
+        } else if (searchSurname.equals(" ") && searchFirstname.equals(" ")) {
             String sql = "SELECT firstname, surname, email, mobile, dob, gender, postcode, patientnumber FROM patient WHERE postcode LIKE \"%" + searchPostcode + "%\"";
 
             query = conn.prepareStatement(sql);
             ResultSet rs = query.executeQuery();
-            
+
             while (rs.next()) {
                 output.add((rs.getString("firstname")));
                 output.add((rs.getString("surname")));
@@ -324,12 +326,12 @@ public class SQLHandler {
                 output.add((rs.getString("patientnumber")));
             }
             return output;
-        } else if (searchPostcode.equals(" ") && searchSurname.equals(" ")){
+        } else if (searchPostcode.equals(" ") && searchSurname.equals(" ")) {
             String sql = "SELECT firstname, surname, email, mobile, dob, gender, postcode, patientnumber FROM patient WHERE firstname LIKE \"%" + searchFirstname + "%\"";
 
             query = conn.prepareStatement(sql);
             ResultSet rs = query.executeQuery();
-            
+
             while (rs.next()) {
                 output.add((rs.getString("firstname")));
                 output.add((rs.getString("surname")));
@@ -346,7 +348,7 @@ public class SQLHandler {
 
             query = conn.prepareStatement(sql);
             ResultSet rs = query.executeQuery();
-            
+
             while (rs.next()) {
                 output.add((rs.getString("firstname")));
                 output.add((rs.getString("surname")));
@@ -358,12 +360,12 @@ public class SQLHandler {
                 output.add((rs.getString("patientnumber")));
             }
             return output;
-        } else if (searchSurname.equals(" ")){
+        } else if (searchSurname.equals(" ")) {
             String sql = "SELECT firstname, surname, email, mobile, dob, gender, postcode, patientnumber FROM patient WHERE firstname LIKE \"%" + searchFirstname + "%\" AND postcode LIKE \"%" + searchPostcode + "%\"";
 
             query = conn.prepareStatement(sql);
             ResultSet rs = query.executeQuery();
-            
+
             while (rs.next()) {
                 output.add((rs.getString("firstname")));
                 output.add((rs.getString("surname")));
@@ -375,12 +377,12 @@ public class SQLHandler {
                 output.add((rs.getString("patientnumber")));
             }
             return output;
-        } else if (searchPostcode.equals(" ")){
+        } else if (searchPostcode.equals(" ")) {
             String sql = "SELECT firstname, surname, email, mobile, dob, gender, postcode, patientnumber FROM patient WHERE firstname LIKE \"%" + searchFirstname + "%\" and surname LIKE \"%" + searchSurname + "%\"";
 
             query = conn.prepareStatement(sql);
             ResultSet rs = query.executeQuery();
-            
+
             while (rs.next()) {
                 output.add((rs.getString("firstname")));
                 output.add((rs.getString("surname")));
@@ -397,7 +399,7 @@ public class SQLHandler {
 
             query = conn.prepareStatement(sql);
             ResultSet rs = query.executeQuery();
-            
+
             while (rs.next()) {
                 output.add((rs.getString("firstname")));
                 output.add((rs.getString("surname")));
@@ -464,9 +466,9 @@ public class SQLHandler {
         return exists;
     }
 
-    //---------------------------------------//
+    //-------------------------//
     // CHECK IF HOLIDAY EXISTS //
-    //---------------------------------------//
+    //-------------------------//
     public boolean checkHolidayExists(String id) throws SQLException {
         boolean exists = false;
 
@@ -478,6 +480,53 @@ public class SQLHandler {
 
         query.close();
         return exists;
+    }
+
+    //-----------------------------------//
+    // GET UPDATED HOLIDAYS PER EMPLOYEE //
+    //-----------------------------------//
+    public boolean getUpdatedHolidays(String employee) throws SQLException {
+
+        boolean updated = false;
+        ArrayList<String> output = new ArrayList<>();
+        String sql = "SELECT id, employee, datestart, dateend, approved, updated FROM holiday WHERE employee = \"" + employee + "\" AND updated = \"1\"";
+        query = conn.prepareStatement(sql);
+        ResultSet rs = query.executeQuery();
+
+        while (rs.next()) {
+            output.add(
+                    "ID: " + rs.getString("id")
+                    + " Employee: " + rs.getString("employee")
+                    + " Start: " + rs.getString("datestart")
+                    + " End: " + rs.getString("dateend")
+                    + " Status: " + rs.getString("approved")
+                    + " Updated: " + rs.getString("updated")
+            );
+        }
+
+        if (output.size() >= 1) {
+            updated = true;
+            updateHolidaySeen(output);
+        }
+
+        query.close();
+        return updated;
+    }
+
+    public void updateHolidaySeen(ArrayList<String> id) throws SQLException {
+
+        ArrayList<String> holidayIds = new ArrayList<>();
+
+        for (int i = 0; i < id.size(); i++) {
+            holidayIds.add(id.get(i).substring(id.get(i).indexOf("D:") + 3, id.get(i).indexOf(" E", 0)));
+        }
+
+        for (int i = 0; i < holidayIds.size(); i++) {
+            String sql = "UPDATE holiday SET updated = \"0\"  WHERE id = \"" + holidayIds.get(i) + "\"";
+            query = conn.prepareStatement(sql);
+            query.executeUpdate();
+            query.close();
+        }
     }
 
     //-----------------------------------------//
@@ -526,9 +575,9 @@ public class SQLHandler {
 
         while (rs.next()) {
             output.add(
-                    "ID: " + rs.getString("id") 
-                    + " Start: " + rs.getString("datestart") 
-                    + " End: " + rs.getString("dateend") 
+                    "ID: " + rs.getString("id")
+                    + " Start: " + rs.getString("datestart")
+                    + " End: " + rs.getString("dateend")
                     + " Status: " + rs.getString("approved")
             );
         }
@@ -549,10 +598,10 @@ public class SQLHandler {
 
         while (rs.next()) {
             output.add(
-                    "ID: " + rs.getString("id") 
+                    "ID: " + rs.getString("id")
                     + " Employee: " + rs.getString("employee")
-                    + " Start: " + rs.getString("datestart") 
-                    + " End: " + rs.getString("dateend") 
+                    + " Start: " + rs.getString("datestart")
+                    + " End: " + rs.getString("dateend")
                     + " Status: " + rs.getString("approved")
             );
         }
@@ -572,11 +621,13 @@ public class SQLHandler {
         ResultSet rs = query.executeQuery();
 
         while (rs.next()) {
-            output.add(rs.getString("id"));
-            output.add(rs.getString("employee"));
-            output.add(rs.getString("datestart"));
-            output.add(rs.getString("dateend"));
-            output.add(rs.getString("approved"));
+            output.add(
+                    "ID: " + rs.getString("id")
+                    + " Employee: " + rs.getString("employee")
+                    + " Start: " + rs.getString("datestart")
+                    + " End: " + rs.getString("dateend")
+                    + " Status: " + rs.getString("approved")
+            );
         }
 
         query.close();
@@ -861,16 +912,17 @@ public class SQLHandler {
     //------------------------------//
     // EDIT RECORD IN HOLIDAY TABLE //
     //------------------------------//
-    public void updateHoliday(String id, String employee, LocalDate start, LocalDate end, String approved) throws SQLException {
+    public void updateHoliday(String id, String employee, LocalDate start, LocalDate end, String approved, String updated) throws SQLException {
 
-        String sql = "UPDATE holiday SET datestart = ?, dateend = ?, approved = ? WHERE id = ?";
+        String sql = "UPDATE holiday SET datestart = ?, dateend = ?, approved = ?, updated = ? WHERE id = ?";
 
         query = conn.prepareStatement(sql);
 
         query.setString(1, start.toString());
         query.setString(2, end.toString());
         query.setString(3, approved);
-        query.setString(4, id);
+        query.setString(4, updated);
+        query.setString(5, id);
 
         query.executeUpdate();
         query.close();

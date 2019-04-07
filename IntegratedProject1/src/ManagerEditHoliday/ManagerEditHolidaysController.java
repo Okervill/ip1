@@ -83,7 +83,7 @@ public class ManagerEditHolidaysController implements Initializable {
         }
 
         try {
-            sql.updateHoliday(holidayId, holidayDetails.get(1), start, end, approved.getSelectionModel().getSelectedItem());
+            sql.updateHoliday(holidayId, holidayDetails.get(1), start, end, approved.getSelectionModel().getSelectedItem(), "1");
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Success!");
             alert.setHeaderText("Holiday Updated");

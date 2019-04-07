@@ -77,7 +77,7 @@ public class NewHolidayController implements Initializable {
             }
         }
 
-        sql.addToHoliday(String.valueOf(holidayCount), username, start, end, "Pending");
+        sql.addToHoliday(String.valueOf(holidayCount), username, start, end, "Pending", "0");
 
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Success!");

@@ -149,6 +149,11 @@ public class MainscreenController implements Initializable {
             //------------------------------------------------//
             LocalDate today = LocalDate.now();
             datePicker.setValue(today);
+            try {
+                checkHoliday();
+            } catch (SQLException ex) {
+                Logger.getLogger(MainscreenController.class.getName()).log(Level.SEVERE, null, ex);
+            }
         });
 
     }
@@ -172,6 +177,21 @@ public class MainscreenController implements Initializable {
         } catch (SQLException ex) {
             Logger.getLogger(MainscreenController.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    
+    public void checkHoliday() throws SQLException {
+            if (userType.equals("manager") && sql.getUnapprovedHoliday("Pending").size() >= 1) {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Alert!");
+                alert.setHeaderText("There are new holidays pending approval!");
+                alert.showAndWait();
+            }
+            if (!userType.equals("manager") && sql.getUpdatedHolidays(username)) {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Alert!");
+                alert.setHeaderText("Your holidays have been updated!");
+                alert.showAndWait();
+            }
     }
 
     public void setData(String u, String t) {
