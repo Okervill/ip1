@@ -68,11 +68,11 @@ public class NewHolidayController implements Initializable {
             alert.showAndWait();
             return;
         }
-        
+
         int holidayCount = sql.countRecords("holiday") + 1;
-        
-        if (sql.checkHolidayExists(String.valueOf(holidayCount))){
-            while(sql.search("holiday", "id", String.valueOf(holidayCount)).size() >= 4) {
+
+        if (sql.checkHolidayExists(String.valueOf(holidayCount))) {
+            while (sql.search("holiday", "id", String.valueOf(holidayCount)).size() >= 4) {
                 holidayCount++;
             }
         }
@@ -98,6 +98,20 @@ public class NewHolidayController implements Initializable {
 
     void setData(String user) {
         username = user;
+    }
+
+    @FXML
+    private void pickDate(ActionEvent event) {
+        if (startDate.getValue().isBefore(LocalDate.now())) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Error");
+            alert.setHeaderText("Date error");
+            alert.setContentText("Date is before today");
+            alert.showAndWait();
+            startDate.setValue(LocalDate.now());
+            return;
+        }
+        endDate.setValue(startDate.getValue());
     }
 
 }
