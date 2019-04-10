@@ -43,7 +43,8 @@ public class NewHolidayController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        startDate.setValue(LocalDate.now());
+        endDate.setValue(LocalDate.now());
     }
 
     @FXML
